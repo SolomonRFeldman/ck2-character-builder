@@ -8,15 +8,15 @@ const DEFAULT_ATTR = {
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits) {
-    this.attributes = attributes
+    this.attributes = attributes;
   };
 
   buildCard() {
-    const card = document.createElement("div")
-    card.setAttribute("style", "width: 800px;")
-    card.setAttribute("class", "card mx-auto my-4")
-    card.append(this.buildAttrs())
-    return card
+    const card = document.createElement("div");
+    card.setAttribute("style", "width: 800px;");
+    card.setAttribute("class", "card mx-auto my-4");
+    card.append(this.buildAttrs());
+    return card;
   };
 
   buildAttrs() {
@@ -27,9 +27,9 @@ class Character {
       item.setAttribute('class', 'list-group-item');
       item.innerHTML = `${attr[0].toUpperCase() + attr.slice(1)}: <div class="float-right">${this.attributes[attr]}</div>`;
       list.append(item);
-    }
-    return list
-  }
+    };
+    return list;
+  };
 };
 
 export default Character;
