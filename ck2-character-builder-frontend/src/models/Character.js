@@ -15,21 +15,33 @@ class Character {
     const card = document.createElement("div");
     card.setAttribute("style", "width: 800px;");
     card.setAttribute("class", "card mx-auto my-4");
-    card.append(this.buildAttrs());
+    card.append(this.buildAttrList());
     return card;
   };
 
-  buildAttrs() {
+  buildAttrList() {
     const list = document.createElement("ul");
     list.setAttribute('class', 'list-group');
     for(const attr in this.attributes) {
-      const item = document.createElement("li");
-      item.setAttribute('class', 'list-group-item');
-      item.innerHTML = `${attr[0].toUpperCase() + attr.slice(1)}: <div class="float-right">${this.attributes[attr]}</div>`;
-      list.append(item);
+      list.append(this.buildAttrItem(attr));
     };
     return list;
   };
+
+  buildAttrItem(attr) {
+    const item = document.createElement("li");
+    item.setAttribute('class', 'list-group-item');
+    item.innerText = `${attr[0].toUpperCase() + attr.slice(1)}`;
+    item.append(this.buildAttrValue(attr));
+    return item;
+  }
+
+  buildAttrValue(attr) {
+    const value = document.createElement('div');
+    value.setAttribute('class', 'float-right');
+    value.innerText = this.attributes[attr];
+    return value;
+  }
 };
 
 export default Character;
