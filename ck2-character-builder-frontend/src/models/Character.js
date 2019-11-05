@@ -1,18 +1,12 @@
-const DEFAULT_ATTR = {
-  diplomacy: 5,
-  martial: 5,
-  stewardship: 5,
-  intrigue: 5,
-  learning: 5
-};
+import Attribute from './Attribute.js'
 
-const ATTRIBUTE_INCREMENT = {
-  diplomacy: 1,
-  martial: 1,
-  stewardship: 1,
-  intrigue: 1,
-  learning: 1,
-}
+const DEFAULT_ATTR = {
+  diplomacy: new Attribute(5, 5, 1),
+  martial: new Attribute(5, 5, 1),
+  stewardship: new Attribute(5, 5, 1),
+  intrigue: new Attribute(5, 5, 1),
+  learning: new Attribute(5, 5, 1)
+};
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits) {
@@ -47,7 +41,7 @@ class Character {
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${this.attributes[attr]}</span>`;
+    value.innerHTML = `<span id="base">${this.attributes[attr].value}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -64,7 +58,7 @@ class Character {
     minus.innerText = '➖';
     target.append(minus);
     minus.addEventListener('click', () => { 
-      if (parseFloat(target.querySelector('#base').innerText) > 5) {
+      if (parseFloat(target.querySelector('#base').innerText) > this.attributes[attr].minVal) {
         this.plusMinusAttr(attr, target, -1);
       };
     }); 
@@ -72,10 +66,9 @@ class Character {
 
   plusMinusAttr(attr, target, direction) {
     const base = target.querySelector('#base');
-    let newVal = parseFloat(base.innerText) + (ATTRIBUTE_INCREMENT[attr] * direction);
+    let newVal = parseFloat(base.innerText) + (this.attributes[attr].increment * direction);
     if (newVal % 1 !== 0) { newVal = newVal.toFixed(2) };
     base.innerText = newVal
-    this[attr] = newVal
   };
 };
 
