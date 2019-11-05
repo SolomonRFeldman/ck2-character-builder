@@ -5,7 +5,9 @@ const DEFAULT_ATTR = {
   martial: new Attribute(5, 5, 1),
   stewardship: new Attribute(5, 5, 1),
   intrigue: new Attribute(5, 5, 1),
-  learning: new Attribute(5, 5, 1)
+  learning: new Attribute(5, 5, 1),
+  health: new Attribute(5, 5, 0.1),
+  fertility: new Attribute(50, 50, 5)
 };
 
 class Character {
