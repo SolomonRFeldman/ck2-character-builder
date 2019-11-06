@@ -1,15 +1,19 @@
 import Attribute from './Attribute.js'
 
+const displayHealth = (attr) => attr.base.toFixed(2) + ` ( ${attr.effective.toFixed(2)} )`;
+const displayFertility = (attr) => attr.base + '%' + ` ( ${attr.effective}% )`;
+const displayKin = (attr) => attr.base;
+
 const CHARACTER_ATTR = {
-  diplomacy: (base) => new Attribute(base, 5, 1, 1),
-  martial: (base) => new Attribute(base, 5, 1, 1),
-  stewardship: (base) => new Attribute(base, 5, 1, 1),
-  intrigue: (base) => new Attribute(base, 5, 1, 1),
-  learning: (base) => new Attribute(base, 5, 1, 1),
-  health: (base) => new Attribute(base, 5, 0.1, 1, (attr) => attr.base.toFixed(2) + ` ( ${attr.effective.toFixed(2)} )`),
-  fertility: (base) => new Attribute(base, 50, 5, 1, (attr) => attr.base + '%' + ` ( ${attr.effective}% )`),
-  sons: (base) => new Attribute(base, 0, 1, 3, (attr) => attr.base),
-  daughters: (base) => new Attribute(base, 0, 1, 2, (attr) => attr.base)
+  diplomacy: (base) => new Attribute({base}),
+  martial: (base) => new Attribute({base}),
+  stewardship: (base) => new Attribute({base}),
+  intrigue: (base) => new Attribute({base}),
+  learning: (base) => new Attribute({base}),
+  health: (base) => new Attribute({base, increment: 0.1, displayFunction: displayHealth}),
+  fertility: (base) => new Attribute({base, minVal: 50, increment: 5, displayFunction: displayFertility}),
+  sons: (base) => new Attribute({base, minVal: 0, cost: 3, displayFunction: displayKin}),
+  daughters: (base) => new Attribute({base, minVal: 0, cost: 2, displayFunction: displayKin})
 };
 
 const DEFAULT_ATTR = {

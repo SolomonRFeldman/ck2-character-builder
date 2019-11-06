@@ -1,5 +1,5 @@
 class Attribute {
-  constructor(base, minVal, increment, cost, displayFunction = (attr) => attr.base + ` ( ${attr.effective} )`) {
+  constructor({ base, minVal = 5, increment = 1, cost = 1, displayFunction = (attr) => attr.base + ` ( ${attr.effective} )` }) {
     this.base = base;
     this.effective = base;
     this.minVal = minVal;
