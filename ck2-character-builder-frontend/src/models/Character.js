@@ -6,10 +6,10 @@ const CHARACTER_ATTR = {
   stewardship: (base) => new Attribute(base, 5, 1, 1),
   intrigue: (base) => new Attribute(base, 5, 1, 1),
   learning: (base) => new Attribute(base, 5, 1, 1),
-  health: (base) => new Attribute(base, 5, 0.1, 1, (base) => base.toFixed(2)),
-  fertility: (base) => new Attribute(base, 50, 5, 1, (base) => base + '%'),
-  sons: (base) => new Attribute(base, 0, 1, 3),
-  daughters: (base) => new Attribute(base, 0, 1, 2)
+  health: (base) => new Attribute(base, 5, 0.1, 1, (attr) => attr.base.toFixed(2) + ` ( ${attr.effective.toFixed(2)} )`),
+  fertility: (base) => new Attribute(base, 50, 5, 1, (attr) => attr.base + '%' + ` ( ${attr.effective}% )`),
+  sons: (base) => new Attribute(base, 0, 1, 3, (attr) => attr.base),
+  daughters: (base) => new Attribute(base, 0, 1, 2, (attr) => attr.base)
 };
 
 const DEFAULT_ATTR = {
@@ -69,7 +69,7 @@ class Character {
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${attr.display(attr.base)}</span>`;
+    value.innerHTML = `<span id="base">${attr.display()}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -97,7 +97,7 @@ class Character {
     let newVal = attr.base + (attr.increment * direction);
     if (newVal % 1 !== 0) { newVal = parseFloat(newVal.toFixed(2)) };
     attr.base = newVal;
-    base.innerText = attr.display(attr.base);
+    base.innerText = attr.display();
 
     const age = document.querySelector('#age');
     const newAge = this.age + (attr.cost * direction);
