@@ -6,8 +6,8 @@ const DEFAULT_ATTR = {
   stewardship: new Attribute(5, 5, 1, 1),
   intrigue: new Attribute(5, 5, 1, 1),
   learning: new Attribute(5, 5, 1, 1),
-  health: new Attribute(5, 5, 0.1, 1),
-  fertility: new Attribute(50, 50, 5, 1),
+  health: new Attribute(5, 5, 0.1, 1, (value) => value.toFixed(2)),
+  fertility: new Attribute(50, 50, 5, 1, (value) => value + '%'),
   sons: new Attribute(0, 0, 1, 3),
   daughters: new Attribute(0, 0, 1, 2)
 };
@@ -28,9 +28,10 @@ class Character {
     const card = document.createElement("div");
     card.setAttribute("style", "width: 800px;");
     card.setAttribute("class", "card mx-auto my-4");
-    card.innerHTML += `<div class="card-header">
-      <div class="float-right">Age: <span id="age">${this.age}</span> ( Max: 50 )</div>
-    </div>`;
+    card.innerHTML += 
+      `<div class="card-header">
+        <div class="float-right">Age: <span id="age">${this.age}</span> ( Max: 50 )</div>
+      </div>`;
     card.append(this.buildAttrList());
     return card;
   };
@@ -55,7 +56,7 @@ class Character {
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${this.attributes[attr].value}</span>`;
+    value.innerHTML = `<span id="base">${this.attributes[attr].display(this.attributes[attr].value)}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -81,9 +82,9 @@ class Character {
   plusMinusAttr(attr, target, direction) {
     const base = target.querySelector('#base');
     let newVal = this.attributes[attr].value + (this.attributes[attr].increment * direction);
-    if (newVal % 1 !== 0) { newVal = newVal.toFixed(2) };
-    base.innerText = newVal;
+    if (newVal % 1 !== 0) { newVal = parseFloat(newVal.toFixed(2)) };
     this.attributes[attr].value = newVal;
+    base.innerText = this.attributes[attr].display(this.attributes[attr].value);
 
     const age = document.querySelector('#age');
     const newAge = this.age + (this.attributes[attr].cost * direction);
