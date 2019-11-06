@@ -28,7 +28,9 @@ class Character {
     const card = document.createElement("div");
     card.setAttribute("style", "width: 800px;");
     card.setAttribute("class", "card mx-auto my-4");
-    card.innerHTML += `<h1>Age: ${this.age}</h1>`;
+    card.innerHTML += `<div class="card-header">
+      <div class="float-right">Age: <span id="age">${this.age}</span> ( Max: 50 )</div>
+    </div>`;
     card.append(this.buildAttrList());
     return card;
   };
@@ -82,6 +84,11 @@ class Character {
     if (newVal % 1 !== 0) { newVal = newVal.toFixed(2) };
     base.innerText = newVal;
     this.attributes[attr].value = newVal;
+
+    const age = document.querySelector('#age');
+    const newAge = this.age + (this.attributes[attr].cost * direction);
+    age.innerText = newAge;
+    this.age = newAge;
   };
 };
 
