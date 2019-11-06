@@ -80,7 +80,7 @@ class Character {
 
   plusMinusAttr(attr, target, direction) {
     const base = target.querySelector('#base');
-    let newVal = parseFloat(base.innerText) + (this.attributes[attr].increment * direction);
+    let newVal = this.attributes[attr].value + (this.attributes[attr].increment * direction);
     if (newVal % 1 !== 0) { newVal = newVal.toFixed(2) };
     base.innerText = newVal;
     this.attributes[attr].value = newVal;
