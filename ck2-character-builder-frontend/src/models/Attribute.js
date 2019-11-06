@@ -1,6 +1,6 @@
 class Attribute {
-  constructor(value, minVal, increment, cost, displayFunction = (value) => this.value) {
-    this.value = value;
+  constructor(base, minVal, increment, cost, displayFunction = (value) => value) {
+    this.base = base;
     this.minVal = minVal;
     this.increment = increment;
     this.cost = cost

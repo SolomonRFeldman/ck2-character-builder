@@ -1,15 +1,15 @@
 import Attribute from './Attribute.js'
 
 const CHARACTER_ATTR = {
-  diplomacy: (value) => new Attribute(value, 5, 1, 1),
-  martial: (value) => new Attribute(value, 5, 1, 1),
-  stewardship: (value) => new Attribute(value, 5, 1, 1),
-  intrigue: (value) => new Attribute(value, 5, 1, 1),
-  learning: (value) => new Attribute(value, 5, 1, 1),
-  health: (value) => new Attribute(value, 5, 0.1, 1, (value) => value.toFixed(2)),
-  fertility: (value) => new Attribute(value, 50, 5, 1, (value) => value + '%'),
-  sons: (value) => new Attribute(value, 0, 1, 3),
-  daughters: (value) => new Attribute(value, 0, 1, 2)
+  diplomacy: (base) => new Attribute(base, 5, 1, 1),
+  martial: (base) => new Attribute(base, 5, 1, 1),
+  stewardship: (base) => new Attribute(base, 5, 1, 1),
+  intrigue: (base) => new Attribute(base, 5, 1, 1),
+  learning: (base) => new Attribute(base, 5, 1, 1),
+  health: (base) => new Attribute(base, 5, 0.1, 1, (base) => base.toFixed(2)),
+  fertility: (base) => new Attribute(base, 50, 5, 1, (base) => base + '%'),
+  sons: (base) => new Attribute(base, 0, 1, 3),
+  daughters: (base) => new Attribute(base, 0, 1, 2)
 };
 
 const DEFAULT_ATTR = {
@@ -33,7 +33,7 @@ class Character {
 
   calculateAge() {
     return Object.values(this.attributes).reduce( (age, attr) => {
-      return age + ((attr.value - attr.minVal) * (attr.cost / attr.increment));
+      return age + ((attr.base - attr.minVal) * (attr.cost / attr.increment));
     }, 16);
   };
 
@@ -69,7 +69,7 @@ class Character {
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${attr.display(attr.value)}</span>`;
+    value.innerHTML = `<span id="base">${attr.display(attr.base)}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -94,10 +94,10 @@ class Character {
 
   plusMinusAttr(attr, target, direction) {
     const base = target.querySelector('#base');
-    let newVal = attr.value + (attr.increment * direction);
+    let newVal = attr.base + (attr.increment * direction);
     if (newVal % 1 !== 0) { newVal = parseFloat(newVal.toFixed(2)) };
-    attr.value = newVal;
-    base.innerText = attr.display(attr.value);
+    attr.base = newVal;
+    base.innerText = attr.display(attr.base);
 
     const age = document.querySelector('#age');
     const newAge = this.age + (attr.cost * direction);
