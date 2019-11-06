@@ -7,7 +7,9 @@ const DEFAULT_ATTR = {
   intrigue: new Attribute(5, 5, 1, 1),
   learning: new Attribute(5, 5, 1, 1),
   health: new Attribute(5, 5, 0.1, 1),
-  fertility: new Attribute(50, 50, 5, 1)
+  fertility: new Attribute(50, 50, 5, 1),
+  sons: new Attribute(0, 0, 1, 3),
+  daughters: new Attribute(0, 0, 1, 2)
 };
 
 class Character {
