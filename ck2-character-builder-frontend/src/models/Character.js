@@ -1,24 +1,32 @@
 import Attribute from './Attribute.js'
 
 const DEFAULT_ATTR = {
-  diplomacy: new Attribute(5, 5, 1),
-  martial: new Attribute(5, 5, 1),
-  stewardship: new Attribute(5, 5, 1),
-  intrigue: new Attribute(5, 5, 1),
-  learning: new Attribute(5, 5, 1),
-  health: new Attribute(5, 5, 0.1),
-  fertility: new Attribute(50, 50, 5)
+  diplomacy: new Attribute(5, 5, 1, 1),
+  martial: new Attribute(5, 5, 1, 1),
+  stewardship: new Attribute(5, 5, 1, 1),
+  intrigue: new Attribute(5, 5, 1, 1),
+  learning: new Attribute(5, 5, 1, 1),
+  health: new Attribute(5, 5, 0.1, 1),
+  fertility: new Attribute(50, 50, 5, 1)
 };
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits) {
     this.attributes = attributes;
+    this.age = this.calculateAge();
+  };
+
+  calculateAge() {
+    return Object.values(this.attributes).reduce( (age, attr) => {
+      return age + ((attr.value - attr.minVal) * (attr.cost / attr.increment));
+    }, 16);
   };
 
   buildCard() {
     const card = document.createElement("div");
     card.setAttribute("style", "width: 800px;");
     card.setAttribute("class", "card mx-auto my-4");
+    card.innerHTML += `<h1>Age: ${this.age}</h1>`;
     card.append(this.buildAttrList());
     return card;
   };
@@ -70,7 +78,8 @@ class Character {
     const base = target.querySelector('#base');
     let newVal = parseFloat(base.innerText) + (this.attributes[attr].increment * direction);
     if (newVal % 1 !== 0) { newVal = newVal.toFixed(2) };
-    base.innerText = newVal
+    base.innerText = newVal;
+    this.attributes[attr].value = newVal;
   };
 };
 
