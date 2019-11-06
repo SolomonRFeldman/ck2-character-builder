@@ -49,14 +49,14 @@ class Character {
     const item = document.createElement("li");
     item.setAttribute('class', 'list-group-item');
     item.innerText = `${attr[0].toUpperCase() + attr.slice(1)}`;
-    item.append(this.buildAttrValue(attr));
+    item.append(this.buildAttrValue(this.attributes[attr]));
     return item;
   }
 
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${this.attributes[attr].display(this.attributes[attr].value)}</span>`;
+    value.innerHTML = `<span id="base">${attr.display(attr.value)}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -73,7 +73,7 @@ class Character {
     minus.innerText = '➖';
     target.append(minus);
     minus.addEventListener('click', () => { 
-      if (parseFloat(target.querySelector('#base').innerText) > this.attributes[attr].minVal) {
+      if (parseFloat(target.querySelector('#base').innerText) > attr.minVal) {
         this.plusMinusAttr(attr, target, -1);
       };
     }); 
@@ -81,13 +81,13 @@ class Character {
 
   plusMinusAttr(attr, target, direction) {
     const base = target.querySelector('#base');
-    let newVal = this.attributes[attr].value + (this.attributes[attr].increment * direction);
+    let newVal = attr.value + (attr.increment * direction);
     if (newVal % 1 !== 0) { newVal = parseFloat(newVal.toFixed(2)) };
-    this.attributes[attr].value = newVal;
-    base.innerText = this.attributes[attr].display(this.attributes[attr].value);
+    attr.value = newVal;
+    base.innerText = attr.display(attr.value);
 
     const age = document.querySelector('#age');
-    const newAge = this.age + (this.attributes[attr].cost * direction);
+    const newAge = this.age + (attr.cost * direction);
     age.innerText = newAge;
     this.age = newAge;
   };
