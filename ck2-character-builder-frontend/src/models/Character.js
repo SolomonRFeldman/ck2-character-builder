@@ -1,20 +1,33 @@
 import Attribute from './Attribute.js'
 
-const DEFAULT_ATTR = {
-  diplomacy: new Attribute(5, 5, 1, 1),
-  martial: new Attribute(5, 5, 1, 1),
-  stewardship: new Attribute(5, 5, 1, 1),
-  intrigue: new Attribute(5, 5, 1, 1),
-  learning: new Attribute(5, 5, 1, 1),
-  health: new Attribute(5, 5, 0.1, 1, (value) => value.toFixed(2)),
-  fertility: new Attribute(50, 50, 5, 1, (value) => value + '%'),
-  sons: new Attribute(0, 0, 1, 3),
-  daughters: new Attribute(0, 0, 1, 2)
+const CHARACTER_ATTR = {
+  diplomacy: (value) => new Attribute(value, 5, 1, 1),
+  martial: (value) => new Attribute(value, 5, 1, 1),
+  stewardship: (value) => new Attribute(value, 5, 1, 1),
+  intrigue: (value) => new Attribute(value, 5, 1, 1),
+  learning: (value) => new Attribute(value, 5, 1, 1),
+  health: (value) => new Attribute(value, 5, 0.1, 1, (value) => value.toFixed(2)),
+  fertility: (value) => new Attribute(value, 50, 5, 1, (value) => value + '%'),
+  sons: (value) => new Attribute(value, 0, 1, 3),
+  daughters: (value) => new Attribute(value, 0, 1, 2)
 };
+
+const DEFAULT_ATTR = {
+  diplomacy: 5,
+  martial: 5,
+  stewardship: 5,
+  intrigue: 5,
+  learning: 5,
+  health: 5,
+  fertility: 50,
+  sons: 0,
+  daughters: 0
+}
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits) {
-    this.attributes = attributes;
+    this.attributes = {}
+    for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
 
