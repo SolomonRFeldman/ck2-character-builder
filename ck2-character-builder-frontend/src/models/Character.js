@@ -37,7 +37,7 @@ class Character {
 
   calculateAge() {
     return Object.values(this.attributes).reduce( (age, attr) => {
-      return age + ((attr.base - attr.minVal) * (attr.cost / attr.increment));
+      return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
     }, 16);
   };
 
