@@ -59,7 +59,13 @@ class Character {
       `<div class="card-header" style="height: 49px;">
         <span id="name">${this.name} </span>
         <span id="dynasty">${this.dynasty}</span>
-      </div>`
+      </div>
+      <div class="card-body p-0">
+        <div class="card"><div class="card-body" style="height: 198px;"></div><div>
+        <div class="card"><div class="card-body" style="height: 150px;"></div><div>
+        <div class="card"><div class="card-body" style="height: 150px;"></div><div>
+      </div`
+    const cardBody = card.children[1]
     return card
   }
 
