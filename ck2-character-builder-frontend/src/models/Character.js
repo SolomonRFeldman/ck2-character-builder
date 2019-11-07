@@ -29,8 +29,10 @@ const DEFAULT_ATTR = {
 }
 
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits) {
+  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "") {
     this.attributes = {}
+    this.name = name;
+    this.dynasty = dynasty;
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
@@ -41,9 +43,28 @@ class Character {
     }, 16);
   };
 
-  buildCard() {
+  buildCards() {
+    const grid = document.createElement("div");
+    grid.setAttribute("class", "card-group mx-auto ");
+    grid.setAttribute("style", "width: 800px;")
+    grid.append(this.buildDetailsCard());
+    grid.append(this.buildAttrCard())
+    return grid;
+  };
+
+  buildDetailsCard() {
+    const card = document.createElement("div")
+    card.setAttribute("class", "card mx-auto my-4");
+    card.innerHTML += 
+      `<div class="card-header" style="height: 49px;">
+        <span id="name">${this.name} </span>
+        <span id="dynasty">${this.dynasty}</span>
+      </div>`
+    return card
+  }
+
+  buildAttrCard() {
     const card = document.createElement("div");
-    card.setAttribute("style", "width: 800px;");
     card.setAttribute("class", "card mx-auto my-4");
     card.innerHTML += 
       `<div class="card-header">
@@ -82,7 +103,7 @@ class Character {
     const plus = document.createElement('button');
     plus.setAttribute('class', 'btn btn-success btn-sm mx-2');
     plus.innerText = '➕';
-    target.append(plus);
+    target.append(plus); 
     plus.addEventListener('click', () => { this.plusMinusAttr(attr, target, 1) }); 
 
     const minus = document.createElement('button');
