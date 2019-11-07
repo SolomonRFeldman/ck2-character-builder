@@ -90,6 +90,9 @@ class Character {
           <input type="text" class="form-control" id="${detail}Input" value="${this[detail]}"></input>
         </div
       </div>`
+    form.children[0].children[1].children[0].addEventListener('input', (event) => {
+      document.querySelector(`#${detail}`).innerText = event.target.value;
+    });
     return form;
   };
 
