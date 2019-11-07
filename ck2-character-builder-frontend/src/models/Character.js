@@ -63,11 +63,27 @@ class Character {
       <div class="card-body p-0">
         <div class="card"></div>
         <div class="card"><div class="card-body" style="height: 150px;"></div></div>
-        <div class="card"><div class="card-body" style="height: 150px;"></div></div>
+        <div class="card"></div>
       </div`
     const cardBody = card.children[1]
     cardBody.children[0].append(this.buildIdentity())
+    cardBody.children[2].append(this.buildDBConnection())
     return card
+  }
+
+  buildDBConnection() {
+    const cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body");
+    cardBody.setAttribute("style", "height: 150px;");
+    cardBody.append(this.buildSaveButton())
+    return cardBody
+  }
+
+  buildSaveButton() {
+    const save = document.createElement("button");
+    save.setAttribute("class", "btn btn-success");
+    save.innerText = "Save"
+    return save
   }
 
   buildIdentity() {
