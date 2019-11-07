@@ -61,13 +61,37 @@ class Character {
         <span id="dynasty">${this.dynasty}</span>
       </div>
       <div class="card-body p-0">
-        <div class="card"><div class="card-body" style="height: 198px;"></div><div>
-        <div class="card"><div class="card-body" style="height: 150px;"></div><div>
-        <div class="card"><div class="card-body" style="height: 150px;"></div><div>
+        <div class="card"></div>
+        <div class="card"><div class="card-body" style="height: 150px;"></div></div>
+        <div class="card"><div class="card-body" style="height: 150px;"></div></div>
       </div`
     const cardBody = card.children[1]
+    cardBody.children[0].append(this.buildIdentity())
     return card
   }
+
+  buildIdentity() {
+    const cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body");
+    cardBody.setAttribute("style", "height: 198px");
+    cardBody.innerHTML = `<div class="row"></div>`
+    cardBody.children[0].append(this.buildTextForm("name"));
+    cardBody.children[0].append(this.buildTextForm("dynasty"));
+    return cardBody
+  };
+
+  buildTextForm(detail) {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row">
+        <label for="${detail}Input" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
+        <div class="col px-1">
+          <input type="text" class="form-control" id="${detail}Input" value="${this[detail]}"></input>
+        </div
+      </div>`
+    return form;
+  };
 
   buildAttrCard() {
     const card = document.createElement("div");
