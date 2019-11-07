@@ -57,8 +57,8 @@ class Character {
     card.setAttribute("class", "card mx-auto my-4");
     card.innerHTML += 
       `<div class="card-header" style="height: 49px;">
-        <span id="name">${this.name} </span>
-        <span id="dynasty">${this.dynasty}</span>
+        <span id="nameDisplay">${this.name} </span>
+        <span id="dynastyDisplay">${this.dynasty}</span>
       </div>
       <div class="card-body p-0">
         <div class="card"></div>
@@ -85,13 +85,13 @@ class Character {
     form.setAttribute("class", "col");
     form.innerHTML +=
       `<div class="form-group row">
-        <label for="${detail}Input" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
+        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
         <div class="col px-1">
-          <input type="text" class="form-control" id="${detail}Input" value="${this[detail]}"></input>
+          <input type="text" class="form-control" id="${detail}" value="${this[detail]}"></input>
         </div
       </div>`
     form.children[0].children[1].children[0].addEventListener('input', (event) => {
-      document.querySelector(`#${detail}`).innerText = event.target.value;
+      document.querySelector(`#${detail}Display`).innerText = event.target.value;
     });
     return form;
   };
