@@ -1,0 +1,3 @@
+class CharacterAttribute < ApplicationRecord
+
+end
