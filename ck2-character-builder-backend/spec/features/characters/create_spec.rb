@@ -21,6 +21,10 @@ describe 'Character Features', :type => :feature do
     it "creates the character" do
       expect(Character.all.last).to_not be_nil
     end
+
+    it "returns the character jsonified" do
+      expect(page).to have_content(CharacterSerializer.new(Character.all.last).to_serialized_json)
+    end
   end
 
 
