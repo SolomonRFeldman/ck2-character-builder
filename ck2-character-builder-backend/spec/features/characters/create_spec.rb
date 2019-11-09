@@ -13,9 +13,13 @@ describe 'Character Features', :type => :feature do
     }
   end
 
-  context "when a post request for a new character is sent" do
+  let(:valid_character_attribute) do
+
+  end
+
+  context "when a post request for a new character is sent with an attribute set" do
     before do
-      page.driver.submit :post, characters_path, character: valid_character
+      page.driver.submit :post, characters_path, character: valid_character.merge({ character_attribute: valid_character_attribute })
     end
 
     it "creates the character" do
