@@ -15,8 +15,30 @@ RSpec.describe CharacterAttribute, :type => :model do
     }
   end
 
+  let(:valid_character) do
+    {
+      name: "Ragnarr",
+      dynasty: "Loðbrók",
+      marriage_status: true,
+      culture: "Norse",
+      religion: "Germanic",
+      sex: "Male"
+    }
+  end
+
   it "is valid with all stats set to base level" do
     expect(CharacterAttribute.create(valid_character_attribute)).to be_valid
   end
 
+  context "when it has a character id set" do
+    before do
+      char_attr = CharacterAttribute.create(valid_character_attribute)
+      char_attr.character = Character.create(valid_character)
+      char_attr.save
+    end
+
+    it "belongs to a character" do
+      expect(CharacterAttribute.all.last.character).to eq(Character.all.last)
+    end
+  end
 end
