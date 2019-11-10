@@ -38,4 +38,15 @@ describe 'Character Features', :type => :feature do
       expect(page).to have_content(CharacterSerializer.new(Character.all).to_serialized_json)
     end
   end
+
+  context "when a get request is sent to /characters/:id" do
+    before do
+      page.driver.submit :get, character_path(Character.all.last.id), {}
+    end
+
+    it "serializes the character" do
+      expect(page).to have_content(CharacterSerializer.new(Character.all.last).to_serialized_json)
+    end
+  end
+
 end 
