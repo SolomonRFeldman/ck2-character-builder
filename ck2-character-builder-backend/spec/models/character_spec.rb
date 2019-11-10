@@ -41,7 +41,7 @@ RSpec.describe Character, :type => :model do
     end
 
     it "can serialize it's attributes" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(CharacterAttribute.all.last.to_json)
+      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(CharacterAttribute.all.last.to_json(except: [:id, :character_id]))
     end
   end
 

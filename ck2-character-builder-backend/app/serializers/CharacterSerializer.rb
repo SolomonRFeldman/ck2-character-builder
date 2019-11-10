@@ -6,8 +6,12 @@ class CharacterSerializer
 
   def to_serialized_json
     options = {
-      include: :character_attribute
+      include: {
+        character_attribute: {
+          except: [:id, :character_id]
+        }
       }
+    }
     @character.to_json(options)
   end
 
