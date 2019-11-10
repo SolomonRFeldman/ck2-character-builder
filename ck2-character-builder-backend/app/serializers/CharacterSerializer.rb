@@ -5,7 +5,10 @@ class CharacterSerializer
   end
 
   def to_serialized_json
-    @character.to_json()
+    options = {
+      include: :character_attribute
+      }
+    @character.to_json(options)
   end
 
 end
