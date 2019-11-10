@@ -25,15 +25,17 @@ describe 'Character Features', :type => :feature do
     }
   end
 
+  before do
+    page.driver.submit :post, characters_path, character: valid_character
+  end
+
   context "when a get request is sent to /characters" do
     before do
-      page.driver.submit :post, characters_path, character: valid_character
       page.driver.submit :get, characters_path, {}
     end
 
     it "serializes all the characters" do
-      expect(page).to have_content(CharacterSerializer.new(Character.all.last).to_serialized_json)
+      expect(page).to have_content(CharacterSerializer.new(Character.all).to_serialized_json)
     end
   end
-
 end 
