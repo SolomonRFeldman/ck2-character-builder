@@ -31,16 +31,17 @@ const DEFAULT_ATTR = {
   daughters: 0
 }
 
-const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture"]
+const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture", "sex"]
 
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, marriage_status, id) {
+  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, marriage_status, sex, id) {
     this.attributes = {}
     this.id = id;
     this.name = name;
     this.dynasty = dynasty;
     this.religion = religion;
     this.marriage_status = marriage_status;
+    this.sex = sex
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
@@ -129,14 +130,29 @@ class Character {
     cardBody.children[1].append(this.buildTextForm("dynasty"));
     cardBody.children[1].append(this.buildDropDown("culture"));
     cardBody.children[2].innerHTML += 
-      `<div class="form-group row ml-0">
-        <label for="marriage_status">Married: </label>
-        <div class="col px-1 ml-4">
-          <input class="form-check-input" type="checkbox" id="marriage_status">
+      `<div class="col">
+        <div class="form-group row mt-1">
+          <label for="marriage_status">Married: </label>
+          <div class="col px-1 ml-4">
+            <input class="form-check-input" type="checkbox" id="marriage_status">
+          </div>
         </div>
-      </div>`
-      if (this.marriage_status) { cardBody.querySelector("#marriage_status").setAttribute("checked", true) }
-    return cardBody
+      </div>`;
+    if (this.marriage_status) { cardBody.querySelector("#marriage_status").setAttribute("checked", true) };
+    cardBody.children[2].innerHTML +=
+      `<div class="col">
+        <div class="form-group row">
+          <label for="sex" class="col-form-label">Sex: </label>
+          <div class="col px-1">
+            <select class="custom-select" id="sex">
+              <option id="Male" value="Male">Male</option> 
+              <option id="Female" value="Female">Female</option> 
+            </select>
+          </div>
+        </div>
+      </div>`;
+      if (this.sex) { cardBody.querySelector(`#${this.sex}`).setAttribute("selected", true) };
+    return cardBody;
   };
 
   buildTextForm(detail) {
@@ -163,6 +179,7 @@ class Character {
         <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
         <div class="col px-1">
           <select class="custom-select" id="${detail}">
+          </select>
         </div>
       </div>`;
     fetch(BASE_URL + `/${detail}s`).then((response) => { return response.json() }).then((detailList) => {
