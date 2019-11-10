@@ -105,14 +105,18 @@ class Character {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
     cardBody.setAttribute("style", "height: 150px;");
-    cardBody.append(this.buildSaveButton());
-    cardBody.append(this.buildLoadButton());
+    cardBody.innerHTML +=
+      `<div class="row"></div>`
+    cardBody.children[0].append(this.buildSaveButton());
+    cardBody.children[0].append(this.buildLoadButton());
+    cardBody.children[0].append(this.buildLoadList());
     return cardBody
   }
 
   buildSaveButton() {
     const save = document.createElement("button");
     save.setAttribute("class", "btn btn-success");
+    save.setAttribute("style", "height: 40px;")
     save.innerText = "Save";
     save.addEventListener('click', () => this.saveCharacter());
     return save;
@@ -121,8 +125,20 @@ class Character {
   buildLoadButton() {
     const load = document.createElement("button");
     load.setAttribute("class", "btn btn-secondary mx-3");
+    load.setAttribute("style", "height: 40px;")
     load.innerText = "Load";
     return load;
+  };
+
+  buildLoadList() {
+    const list = document.createElement("div");
+    list.setAttribute("class", "form-group col");
+    list.innerHTML += 
+      `<div class="form-group row">
+        <select class="custom-select" id="character_load">
+        </select>
+      </div>`;
+    return list
   };
 
   buildIdentity() {
