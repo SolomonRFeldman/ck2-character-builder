@@ -75,6 +75,7 @@ class Character {
 
     return fetch(CHARACTER_URL, configObj).then((response) => { return response.json() }).then((char) => {
       this.id = char.id
+      this.refreshLoadList()
     });
   }
 
@@ -157,6 +158,7 @@ class Character {
   buildLoadList() {
     const list = document.createElement("div");
     list.setAttribute("class", "form-group col");
+    list.setAttribute("id", "load_list")
     list.innerHTML += 
       `<div class="form-group row">
         <select class="custom-select" id="character_load">
@@ -171,6 +173,12 @@ class Character {
     });
     return list
   };
+
+  refreshLoadList() {
+    const listParent = document.querySelector("#load_list");
+    listParent.removeChild(listParent.lastChild);
+    listParent.append(this.buildLoadList());
+  }
 
   buildIdentity() {
     const cardBody = document.createElement("div");
