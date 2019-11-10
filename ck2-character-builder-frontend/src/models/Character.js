@@ -244,7 +244,7 @@ class Character {
         for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
         formList.innerHTML += `</optgroup">`;
       };
-      if (this.religion) { form.querySelector(`#${this.religion}`).setAttribute('selected', true) };
+      if (this[detail]) { form.querySelector(`#${this[detail]}`).setAttribute('selected', true) };
     });
     return form;
   };
