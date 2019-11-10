@@ -1,6 +1,7 @@
 import Attribute from './Attribute.js'
 
-const CHARACTER_URL = "http://localhost:3000/characters"
+const BASE_URL = "http://localhost:3000"
+const CHARACTER_URL = BASE_URL + "/characters"
 
 const displayHealth = (attr) => attr.base.toFixed(2) + ` ( ${attr.effective.toFixed(2)} )`;
 const displayFertility = (attr) => attr.base + '%' + ` ( ${attr.effective}% )`;
@@ -30,7 +31,7 @@ const DEFAULT_ATTR = {
   daughters: 0
 }
 
-const IDENTITY_ATTR = ["name", "dynasty"]
+const IDENTITY_ATTR = ["name", "dynasty", "religion"]
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", id) {
@@ -47,7 +48,6 @@ class Character {
     for(const attr of IDENTITY_ATTR) { characterInfo[attr] = document.querySelector(`#${attr}`).value }
     characterInfo.character_attribute = {}
     for(const key in this.attributes) { characterInfo.character_attribute[key] = this.attributes[key].base }
-    console.log(characterInfo)
     
     const configObj = {
       method: "POST",
@@ -117,9 +117,13 @@ class Character {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
     cardBody.setAttribute("style", "height: 198px");
-    cardBody.innerHTML = `<div class="row"></div>`
+    cardBody.innerHTML = 
+      `<div class="row"></div>
+      <div class="row"></div>
+      <div class="row"></div>`
     cardBody.children[0].append(this.buildTextForm("name"));
-    cardBody.children[0].append(this.buildTextForm("dynasty"));
+    cardBody.children[0].append(this.buildDropDown("religion"));
+    cardBody.children[1].append(this.buildTextForm("dynasty"));
     return cardBody
   };
 
@@ -131,12 +135,33 @@ class Character {
         <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
         <div class="col px-1">
           <input type="text" class="form-control" id="${detail}" value="${this[detail]}"></input>
-        </div
+        </div>
       </div>`
     form.children[0].children[1].children[0].addEventListener('input', (event) => {
       document.querySelector(`#${detail}Display`).innerText = event.target.value;
     });
     return form;
+  };
+
+  buildDropDown(detail) {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row">
+        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
+        <div class="col px-1">
+          <select class="custom-select" id="${detail}">
+        </div>
+      </div>`;
+    fetch(BASE_URL + `/${detail}s`).then((response) => { return response.json() }).then((detailList) => {
+      const formList = form.querySelector(`#${detail}`);
+      for (const category in detailList) { 
+        formList.innerHTML += `<optgroup label="${category[0].toUpperCase() + category.slice(1)}:">`;
+        for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
+        formList.innerHTML += `</optgroup">`;
+      };
+    });
+    return form
   };
 
   buildAttrCard() {
