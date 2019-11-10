@@ -5,29 +5,51 @@ class Religion
       {
         "Christian": [
           "Catholic",
-          "Fraticelli",
           "Chathar",
-          "Lollard",
+          "Fraticelli",
           "Waldensian",
+          "Lollard",
           "Orthodox",
-          "Iconoclast",
-          "Bogomilist",
           "Miaphysite",
           "Monophysite",
+          "Bogomilist",
+          "Monothelite",
+          "Iconoclast",
+          "Paulician",
           "Nestorian",
           "Messalian"
         ],
 
-        "Islam": [
+        "Muslim": [
           "Sunni",
-          "Yazidi",
           "Zikri",
+          "Yazidi",
+          "Ibadi",
+          "Kharijite",
           "Shia",
           "Druze",
           "Hurufi",
-          "Qarmatian",
-          "Ibadi",
-          "Kharijite"
+          "Qarmatian"
+        ],
+
+        "Pagan": [
+          "Germanic",
+          "Tengri",
+          "Romuva",
+          "Suomenusko",
+          "Aztec",
+          "Slavic",
+          "African",
+          "Zunist",
+          "Hellenic",
+          "Bön"
+        ],
+
+        "Mazdan": [
+          "Zoroastrian",
+          "Mazdaki",
+          "Manichaean",
+          "Khurmazta"
         ],
 
         "Israelite": [
@@ -36,31 +58,11 @@ class Religion
           "Karaite"
         ],
 
-        "Mazdan": [
-          "Zoroastrian",
-          "Khurmazta",
-          "Mazdaki",
-          "Manichaean"
-        ],
-
         "Eastern": [
           "Hindu",
           "Buddhist",
-          "Jainist",
+          "Jain",
           "Taoist"
-        ],
-
-        "Pagan": [
-          "Germanic",
-          "Tengri",
-          "Aztec",
-          "Slavic",
-          "Romuva",
-          "Suomenusko",
-          "African",
-          "Zunist",
-          "Bön",
-          "Hellenic"
         ]
       }
     end
