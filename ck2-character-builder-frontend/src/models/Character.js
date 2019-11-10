@@ -167,7 +167,7 @@ class Character {
       for (const character of characters) {
         formList.innerHTML += `<option id="character_${character.id}" value="${character.id}">${character.name} ${character.dynasty}</option>`
       };
-      if (this.id) { form.querySelector(`#character_${this.id}`).setAttribute('selected', true) };
+      if (this.id) { list.querySelector(`#character_${this.id}`).setAttribute('selected', true) };
     });
     return list
   };
