@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_040045) do
+ActiveRecord::Schema.define(version: 2019_11_10_200455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_040045) do
     t.integer "stewardship"
     t.integer "intrigue"
     t.integer "learning"
-    t.integer "health"
+    t.float "health"
     t.integer "fertility"
     t.integer "sons"
     t.integer "daughters"
