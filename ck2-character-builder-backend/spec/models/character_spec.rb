@@ -32,11 +32,16 @@ RSpec.describe Character, :type => :model do
 
   context "when a valid character has been created" do
     before do
-      Character.create(valid_character)
+      character = Character.create(valid_character)
+      character.character_attribute = CharacterAttribute.create(valid_character_attribute)
     end
 
     it "can be serialized" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to eq(Character.all.last.to_json)
+      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include('"name":"Ragnarr","dynasty":"Loðbrók"')
+    end
+
+    it "can serialize it's attributes" do
+      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(CharacterAttribute.all.last.to_json)
     end
   end
 
