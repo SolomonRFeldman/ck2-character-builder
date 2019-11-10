@@ -3,7 +3,7 @@ class Religion
   class << self
     def all
       {
-        christian: [
+        "Christian": [
           "Catholic",
           "Fraticelli",
           "Chathar",
@@ -18,7 +18,7 @@ class Religion
           "Messalian"
         ],
 
-        islam: [
+        "Islam": [
           "Sunni",
           "Yazidi",
           "Zikri",
@@ -30,27 +30,27 @@ class Religion
           "Kharijite"
         ],
 
-        israelite: [
+        "Israelite": [
           "Jewish",
           "Samaritan",
           "Karaite"
         ],
 
-        mazdan: [
+        "Mazdan": [
           "Zoroastrian",
           "Khurmazta",
           "Mazdaki",
           "Manichaean"
         ],
 
-        eastern: [
+        "Eastern": [
           "Hindu",
           "Buddhist",
           "Jainist",
           "Taoist"
         ],
 
-        pagan: [
+        "Pagan": [
           "Germanic",
           "Tengri",
           "Aztec",

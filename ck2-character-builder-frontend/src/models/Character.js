@@ -157,7 +157,7 @@ class Character {
     fetch(BASE_URL + `/${detail}s`).then((response) => { return response.json() }).then((detailList) => {
       const formList = form.querySelector(`#${detail}`);
       for (const category in detailList) { 
-        formList.innerHTML += `<optgroup label="${category[0].toUpperCase() + category.slice(1)}:">`;
+        formList.innerHTML += `<optgroup label="${category}:">`;
         for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
         formList.innerHTML += `</optgroup">`;
       };
