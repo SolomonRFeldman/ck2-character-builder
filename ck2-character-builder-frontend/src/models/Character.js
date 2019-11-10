@@ -31,7 +31,7 @@ const DEFAULT_ATTR = {
   daughters: 0
 }
 
-const IDENTITY_ATTR = ["name", "dynasty", "religion"]
+const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture"]
 
 class Character {
   constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, id) {
@@ -125,6 +125,7 @@ class Character {
     cardBody.children[0].append(this.buildTextForm("name"));
     cardBody.children[0].append(this.buildDropDown("religion"));
     cardBody.children[1].append(this.buildTextForm("dynasty"));
+    cardBody.children[1].append(this.buildDropDown("culture"));
     return cardBody
   };
 
