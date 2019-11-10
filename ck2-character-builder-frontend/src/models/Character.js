@@ -105,17 +105,25 @@ class Character {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
     cardBody.setAttribute("style", "height: 150px;");
-    cardBody.append(this.buildSaveButton())
+    cardBody.append(this.buildSaveButton());
+    cardBody.append(this.buildLoadButton());
     return cardBody
   }
 
   buildSaveButton() {
     const save = document.createElement("button");
     save.setAttribute("class", "btn btn-success");
-    save.innerText = "Save"
+    save.innerText = "Save";
     save.addEventListener('click', () => this.saveCharacter());
-    return save
-  }
+    return save;
+  };
+
+  buildLoadButton() {
+    const load = document.createElement("button");
+    load.setAttribute("class", "btn btn-secondary mx-3");
+    load.innerText = "Load";
+    return load;
+  };
 
   buildIdentity() {
     const cardBody = document.createElement("div");
