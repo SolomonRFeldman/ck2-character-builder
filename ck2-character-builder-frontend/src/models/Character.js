@@ -1,5 +1,7 @@
 import Attribute from './Attribute.js'
 
+const CHARACTER_URL = "http://localhost:3000/characters"
+
 const displayHealth = (attr) => attr.base.toFixed(2) + ` ( ${attr.effective.toFixed(2)} )`;
 const displayFertility = (attr) => attr.base + '%' + ` ( ${attr.effective}% )`;
 const displayKin = (attr) => attr.base;
@@ -28,14 +30,38 @@ const DEFAULT_ATTR = {
   daughters: 0
 }
 
+const IDENTITY_ATTR = ["name", "dynasty"]
+
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "") {
+  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", id) {
     this.attributes = {}
+    this.id = id;
     this.name = name;
     this.dynasty = dynasty;
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
+
+  saveCharacter() {
+    const characterInfo = { id: this.id }
+    for(const attr of IDENTITY_ATTR) { characterInfo[attr] = document.querySelector(`#${attr}`).value }
+    characterInfo.character_attribute = {}
+    for(const key in this.attributes) { characterInfo.character_attribute[key] = this.attributes[key].base }
+    console.log(characterInfo)
+    
+    const configObj = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify( { character: characterInfo } )
+    };
+
+    return fetch(CHARACTER_URL, configObj).then((response) => { return response.json() }).then((char) => {
+      this.id = char.id
+    });
+  }
 
   calculateAge() {
     return Object.values(this.attributes).reduce( (age, attr) => {
@@ -83,6 +109,7 @@ class Character {
     const save = document.createElement("button");
     save.setAttribute("class", "btn btn-success");
     save.innerText = "Save"
+    save.addEventListener('click', () => this.saveCharacter());
     return save
   }
 
