@@ -34,15 +34,26 @@ const DEFAULT_ATTR = {
 const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture", "sex"]
 
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, marriage_status, sex, id) {
+  constructor({ 
+      character_attribute = DEFAULT_ATTR,
+      traits, 
+      name = "", 
+      dynasty = "", 
+      religion, 
+      culture, 
+      marriage_status, 
+      sex, 
+      id 
+    } = {}) {
     this.attributes = {}
     this.id = id;
     this.name = name;
     this.dynasty = dynasty;
     this.religion = religion;
+    this.culture = culture;
     this.marriage_status = marriage_status;
     this.sex = sex
-    for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
+    for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge();
   };
 
@@ -67,6 +78,18 @@ class Character {
     });
   }
 
+  static loadCharacter(id) {
+    return fetch(CHARACTER_URL + `/${id}`).then((response) => { return response.json() }).then((char) => {
+      const mainBody = document.querySelector("main");
+      while (mainBody.firstChild) {
+        mainBody.removeChild(mainBody.firstChild);
+      };
+      console.log(char)
+      const character = new Character(char)
+      mainBody.append(character.buildCards());
+    });
+  }
+
   calculateAge() {
     return Object.values(this.attributes).reduce( (age, attr) => {
       return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
@@ -75,7 +98,7 @@ class Character {
 
   buildCards() {
     const grid = document.createElement("div");
-    grid.setAttribute("class", "card-group mx-auto ");
+    grid.setAttribute("class", "card-group mx-auto");
     grid.setAttribute("style", "width: 800px;")
     grid.append(this.buildDetailsCard());
     grid.append(this.buildAttrCard())
@@ -127,6 +150,7 @@ class Character {
     load.setAttribute("class", "btn btn-secondary mx-3");
     load.setAttribute("style", "height: 40px;")
     load.innerText = "Load";
+    load.addEventListener('click', () => Character.loadCharacter(document.querySelector("#character_load").value));
     return load;
   };
 
@@ -138,6 +162,13 @@ class Character {
         <select class="custom-select" id="character_load">
         </select>
       </div>`;
+    fetch(CHARACTER_URL).then((response) => { return response.json() }).then((characters) => {
+      const formList = list.querySelector(`#character_load`);
+      for (const character of characters) {
+        formList.innerHTML += `<option id="character_${character.id}" value="${character.id}">${character.name} ${character.dynasty}</option>`
+      };
+      if (this.id) { form.querySelector(`#character_${this.id}`).setAttribute('selected', true) };
+    });
     return list
   };
 
