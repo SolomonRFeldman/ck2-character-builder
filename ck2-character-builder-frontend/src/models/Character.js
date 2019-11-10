@@ -34,11 +34,12 @@ const DEFAULT_ATTR = {
 const IDENTITY_ATTR = ["name", "dynasty", "religion"]
 
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", id) {
+  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, id) {
     this.attributes = {}
     this.id = id;
     this.name = name;
     this.dynasty = dynasty;
+    this.religion = religion;
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
@@ -160,8 +161,9 @@ class Character {
         for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
         formList.innerHTML += `</optgroup">`;
       };
+      if (this.religion) { form.querySelector(`#${this.religion}`).setAttribute('selected', true) };
     });
-    return form
+    return form;
   };
 
   buildAttrCard() {
