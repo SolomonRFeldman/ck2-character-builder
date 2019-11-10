@@ -34,12 +34,13 @@ const DEFAULT_ATTR = {
 const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture"]
 
 class Character {
-  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, id) {
+  constructor(attributes = DEFAULT_ATTR, traits, name = "", dynasty = "", religion, marriage_status, id) {
     this.attributes = {}
     this.id = id;
     this.name = name;
     this.dynasty = dynasty;
     this.religion = religion;
+    this.marriage_status = marriage_status;
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](DEFAULT_ATTR[attr]) };
     this.age = this.calculateAge();
   };
@@ -47,6 +48,7 @@ class Character {
   saveCharacter() {
     const characterInfo = { id: this.id }
     for(const attr of IDENTITY_ATTR) { characterInfo[attr] = document.querySelector(`#${attr}`).value }
+    characterInfo.marriage_status = document.querySelector(`#marriage_status`).checked
     characterInfo.character_attribute = {}
     for(const key in this.attributes) { characterInfo.character_attribute[key] = this.attributes[key].base }
     
@@ -126,6 +128,14 @@ class Character {
     cardBody.children[0].append(this.buildDropDown("religion"));
     cardBody.children[1].append(this.buildTextForm("dynasty"));
     cardBody.children[1].append(this.buildDropDown("culture"));
+    cardBody.children[2].innerHTML += 
+      `<div class="form-group row ml-0">
+        <label for="marriage_status">Married: </label>
+        <div class="col px-1 ml-4">
+          <input class="form-check-input" type="checkbox" id="marriage_status">
+        </div>
+      </div>`
+      if (this.marriage_status) { cardBody.querySelector("#marriage_status").setAttribute("checked", true) }
     return cardBody
   };
 
