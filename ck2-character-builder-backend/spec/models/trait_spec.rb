@@ -9,11 +9,19 @@ RSpec.describe Character, :type => :model do
         The sixth virtue, 'Humanitas', is popular with vassals, but makes for a rather poor Spymaster.
       DESC
       cost: 5,
-      group: "moral_6"
+      group: "moral_6",
+      effects: {
+        intrigue: -2,
+        diplomacy: 2,
+        personal_combat_skill: -5,
+        vassal_opinion: 5,
+        same_trait_opinion: 5,
+        opposite_trait_opinion: -5
+      }
     }
   end
 
-  it "is valid with a name, description, cost, and group" do
+  it "is valid with a name, description, cost, group, and effects" do
     expect(Trait.create(valid_trait)).to be_valid
   end
 
