@@ -1,3 +1,4 @@
+require('bootstrap.native');
 import Character from './models/Character.js';
 
 const mainBody = document.querySelector("main");
