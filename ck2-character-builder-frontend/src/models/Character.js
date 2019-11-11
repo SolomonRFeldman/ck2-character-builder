@@ -92,9 +92,18 @@ class Character {
   }
 
   calculateAge() {
-    return Object.values(this.attributes).reduce( (age, attr) => {
+    let age = Object.values(this.attributes).reduce( (age, attr) => {
       return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
     }, 16);
+    if (this.marriage_status) { age += 2 };
+    return age
+  };
+
+  changeAge(amount) {
+    const age = document.querySelector('#age');
+    const newAge = this.age + amount;
+    age.innerText = newAge;
+    this.age = newAge;
   };
 
   buildCards() {
@@ -192,29 +201,8 @@ class Character {
     cardBody.children[0].append(this.buildDropDown("religion"));
     cardBody.children[1].append(this.buildTextForm("dynasty"));
     cardBody.children[1].append(this.buildDropDown("culture"));
-    cardBody.children[2].innerHTML += 
-      `<div class="col">
-        <div class="form-group row mt-1">
-          <label for="marriage_status">Married: </label>
-          <div class="col px-1 ml-4">
-            <input class="form-check-input" type="checkbox" id="marriage_status">
-          </div>
-        </div>
-      </div>`;
-    if (this.marriage_status) { cardBody.querySelector("#marriage_status").setAttribute("checked", true) };
-    cardBody.children[2].innerHTML +=
-      `<div class="col">
-        <div class="form-group row">
-          <label for="sex" class="col-form-label">Sex: </label>
-          <div class="col px-1">
-            <select class="custom-select" id="sex">
-              <option id="Male" value="Male">Male</option> 
-              <option id="Female" value="Female">Female</option> 
-            </select>
-          </div>
-        </div>
-      </div>`;
-      if (this.sex) { cardBody.querySelector(`#${this.sex}`).setAttribute("selected", true) };
+    cardBody.children[2].append(this.buildMarriageCheckbox());
+    cardBody.children[2].append(this.buildSexDropDown());
     return cardBody;
   };
 
@@ -256,6 +244,40 @@ class Character {
     });
     return form;
   };
+
+  buildSexDropDown() {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row">
+      <label for="sex" class="col-form-label">Sex: </label>
+      <div class="col px-1">
+        <select class="custom-select" id="sex">
+          <option id="Male" value="Male">Male</option> 
+          <option id="Female" value="Female">Female</option> 
+        </select>
+      </div>
+    </div>`;
+    if (this.sex) { form.querySelector(`#${this.sex}`).setAttribute("selected", true) };
+    return form;
+  };
+
+  buildMarriageCheckbox() {
+    const form = document.createElement("div")
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row mt-1">
+        <label for="marriage_status">Married: </label>
+        <div class="col px-1 ml-4">
+          <input class="form-check-input" type="checkbox" id="marriage_status">
+        </div>
+      </div>`
+    if (this.marriage_status) { form.querySelector("#marriage_status").setAttribute("checked", true) };
+    form.querySelector("#marriage_status").addEventListener('change', (event) => { 
+      if (event.target.checked) { this.changeAge(2) } else { this.changeAge(-2) }
+    });
+    return form
+  }
 
   buildAttrCard() {
     const card = document.createElement("div");
@@ -318,10 +340,7 @@ class Character {
     attr.base = newVal;
     base.innerText = attr.display();
 
-    const age = document.querySelector('#age');
-    const newAge = this.age + (attr.cost * direction);
-    age.innerText = newAge;
-    this.age = newAge;
+    this.changeAge(attr.cost * direction)
   };
 };
 
