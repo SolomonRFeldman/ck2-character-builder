@@ -16,13 +16,8 @@ RSpec.describe Character, :type => :model do
         vassal_opinion: 5,
         same_trait_opinion: 5,
         opposite_trait_opinion: -5
-      },
-      opposites: ["Envious"]
+      }
     }
-  end
-
-  before do
-    puts Trait.create(valid_trait).opposites
   end
 
   it "is valid with a name, description, cost, group, and effects" do
