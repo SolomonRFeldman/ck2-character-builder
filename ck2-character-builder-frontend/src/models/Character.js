@@ -1,4 +1,5 @@
 import Attribute from './Attribute.js'
+import Trait from './Trait.js'
 
 const BASE_URL = "http://localhost:3000"
 const CHARACTER_URL = BASE_URL + "/characters"
@@ -194,6 +195,16 @@ class Character {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
     cardBody.setAttribute("style", "height: 150px;");
+    Trait.all((traits) => {
+      // cardBody.append(this.buildEducationTraitsCard(traits.education))
+      cardBody.append(this.buildDefaultTraitsCard(traits)) //change to traits.default once edu added
+    })
+    return cardBody;
+  }
+
+  buildDefaultTraitsCard(traits) {
+    const cardBody = document.createElement("div")
+    cardBody.append(Trait.buildTraitList(traits));
     return cardBody
   }
 
