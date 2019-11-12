@@ -125,11 +125,12 @@ class Character {
       </div>
       <div class="card-body p-0">
         <div class="card"></div>
-        <div class="card"><div class="card-body" style="height: 150px;"></div></div>
+        <div class="card"></div>
         <div class="card"></div>
       </div`
     const cardBody = card.children[1]
     cardBody.children[0].append(this.buildIdentity())
+    cardBody.children[1].append(this.buildTraits())
     cardBody.children[2].append(this.buildDBConnection())
     return card
   }
@@ -187,6 +188,13 @@ class Character {
     const listParent = document.querySelector("#load_list");
     listParent.removeChild(listParent.lastChild);
     listParent.append(this.buildLoadList());
+  }
+
+  buildTraits() {
+    const cardBody = document.createElement("div");
+    cardBody.setAttribute("class", "card-body");
+    cardBody.setAttribute("style", "height: 150px;");
+    return cardBody
   }
 
   buildIdentity() {
