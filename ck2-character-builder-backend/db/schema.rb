@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_180532) do
     t.integer "cost"
     t.string "type"
     t.json "effects", default: {}
-    t.json "opposites", default: {}
+    t.json "opposites", default: []
   end
 
 end
