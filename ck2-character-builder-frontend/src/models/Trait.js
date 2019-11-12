@@ -34,12 +34,9 @@ class Trait {
     dropdown.innerHTML +=
       `<img class="dropdown-toggle" src="https://via.placeholder.com/24" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <div class="dropdown-menu" style="max-height: 200px; overflow-x: hidden;" aria-labelledby="dropdownMenuButton"></div>`
-    for (const trait of traits) {
-      dropdown.querySelector('.dropdown-menu').append(trait.buildSelect(listenerFunction));
-    };
-    dropdown.querySelector(".dropdown-menu").addEventListener('click', function (event) {
-      event.stopPropagation(); 
-    });
+    const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+    for (const trait of traits) { dropdownMenu.append(trait.buildSelect(listenerFunction)) };
+    dropdownMenu.addEventListener('click', function (event) { event.stopPropagation() });
     new Boots.Dropdown(dropdown.children[0]);
     console.log(traits);
     return dropdown;
