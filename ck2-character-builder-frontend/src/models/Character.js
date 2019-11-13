@@ -342,7 +342,7 @@ class Character {
   buildAttrValue(attr) {
     const value = document.createElement('div');
     value.setAttribute('class', 'float-right');
-    value.innerHTML = `<span id="base">${attr.display()}</span>`;
+    value.innerHTML = `<span class="value">${attr.display()}</span>`;
     this.appendPlusMinusButtons(attr, value);
     return value;
   };
@@ -359,14 +359,14 @@ class Character {
     minus.innerText = '➖';
     target.append(minus);
     minus.addEventListener('click', () => { 
-      if (parseFloat(target.querySelector('#base').innerText) > attr.minVal) {
+      if (parseFloat(target.querySelector('.value').innerText) > attr.minVal) {
         this.plusMinusAttr(attr, target, -1);
       };
     }); 
   }
 
   plusMinusAttr(attr, target, direction) {
-    const base = target.querySelector('#base');
+    const base = target.querySelector('.value');
     let newVal = attr.base + (attr.increment * direction);
     if (newVal % 1 !== 0) { newVal = parseFloat(newVal.toFixed(2)) };
     attr.base = newVal;
