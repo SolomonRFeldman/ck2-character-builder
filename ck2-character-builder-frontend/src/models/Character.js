@@ -219,7 +219,12 @@ class Character {
   addTrait(trait) {
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
     for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
-    document.querySelector('#character_traits').append(trait.buildIcon());
+    const traitElement = trait.buildIcon()
+    document.querySelector('#character_traits').append(traitElement);
+    traitElement.addEventListener('contextmenu', (event) => { 
+      event.preventDefault();
+      this.removeTrait(trait);
+    });
     this.changeAge(trait.cost);
     for (const attr in this.attributes) {
       if (trait.effects[attr]) { 
@@ -228,6 +233,12 @@ class Character {
       }
     };
   };
+
+  removeTrait(trait) {
+    document.querySelector('#character_traits').removeChild(document.querySelector(`#character_trait_${trait.id}`));
+    document.querySelector(`#trait_${trait.id}`).removeAttribute('hidden');
+    for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).removeAttribute('hidden') };
+  }
 
   buildIdentity() {
     const cardBody = document.createElement("div");

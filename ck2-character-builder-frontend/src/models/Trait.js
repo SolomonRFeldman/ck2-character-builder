@@ -24,6 +24,7 @@ class Trait {
   buildIcon() {
     const icon = document.createElement("img")
     icon.setAttribute('src', 'https://via.placeholder.com/24')
+    icon.setAttribute('id', `character_trait_${this.id}`)
     return icon
   };
 
