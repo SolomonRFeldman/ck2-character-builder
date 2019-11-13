@@ -66,6 +66,9 @@ class Character {
     characterInfo.marriage_status = document.querySelector(`#marriage_status`).checked
     characterInfo.character_attribute = {}
     for(const key in this.attributes) { characterInfo.character_attribute[key] = this.attributes[key].base }
+
+    const character_trait_ids = [];
+    for(const trait of this.traits) { character_trait_ids.push(trait.id)}
     
     const configObj = {
       method: "POST",
@@ -73,7 +76,7 @@ class Character {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify( { character: characterInfo } )
+      body: JSON.stringify( { character: characterInfo, character_trait_ids: character_trait_ids } )
     };
 
     return fetch(CHARACTER_URL, configObj).then((response) => { return response.json() }).then((char) => {
