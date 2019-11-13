@@ -36,7 +36,6 @@ class Trait {
       <div class="dropdown-menu" style="max-height: 200px; overflow-x: hidden;" aria-labelledby="dropdownMenuButton"></div>`
     const dropdownMenu = dropdown.querySelector('.dropdown-menu');
     for (const trait of traits) { dropdownMenu.append(trait.buildSelect(listenerFunction)) };
-    dropdownMenu.addEventListener('click', function (event) { event.stopPropagation() });
     new Boots.Dropdown(dropdown.children[0]);
     console.log(traits);
     return dropdown;

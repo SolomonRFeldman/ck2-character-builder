@@ -205,6 +205,7 @@ class Character {
   buildDefaultTraitsCard(traits) {
     const cardBody = document.createElement("div")
     cardBody.append(Trait.buildTraitList(traits));
+    cardBody.querySelector('.dropdown-menu').addEventListener('click', function (event) { event.stopPropagation() });
     return cardBody
   }
 
