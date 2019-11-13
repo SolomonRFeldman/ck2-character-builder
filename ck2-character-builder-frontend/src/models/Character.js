@@ -220,6 +220,12 @@ class Character {
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
     document.querySelector('#character_traits').append(trait.buildIcon());
     this.changeAge(trait.cost);
+    for (const attr in this.attributes) {
+      if (trait.effects[attr]) { 
+        this.attributes[attr].effective += trait.effects[attr]
+        document.querySelector(`#${attr}_display`).querySelector('.value').innerText = this.attributes[attr].display();
+      }
+    };
   };
 
   buildIdentity() {
