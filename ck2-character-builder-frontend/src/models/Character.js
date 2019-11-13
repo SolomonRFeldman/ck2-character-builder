@@ -218,6 +218,7 @@ class Character {
 
   addTrait(trait) {
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
+    for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
     document.querySelector('#character_traits').append(trait.buildIcon());
     this.changeAge(trait.cost);
     for (const attr in this.attributes) {
