@@ -37,7 +37,7 @@ const IDENTITY_ATTR = ["name", "dynasty", "religion", "culture", "sex"]
 class Character {
   constructor({ 
       character_attribute = DEFAULT_ATTR,
-      traits, 
+      traits = [], 
       name = "", 
       dynasty = "", 
       religion, 
@@ -53,7 +53,9 @@ class Character {
     this.religion = religion;
     this.culture = culture;
     this.marriage_status = marriage_status;
-    this.sex = sex
+    this.sex = sex;
+    this.traits = [];
+    for(const trait of traits) { this.traits.push(new Trait(trait)) };
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge();
   };
@@ -217,7 +219,7 @@ class Character {
   }
 
   addTrait(trait) {
-    this.traits
+    this.traits.push(trait)
     this.parseTraitEffect(trait, 1)
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
     for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
@@ -230,7 +232,8 @@ class Character {
   };
 
   removeTrait(trait) {
-    this.parseTraitEffect(trait, -1)
+    this.traits.splice(this.traits.findIndex((character_trait) => character_trait.id === trait.id), 1);
+    this.parseTraitEffect(trait, -1);
     document.querySelector('#character_traits').removeChild(document.querySelector(`#character_trait_${trait.id}`));
     document.querySelector(`#trait_${trait.id}`).removeAttribute('hidden');
     for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).removeAttribute('hidden') };
