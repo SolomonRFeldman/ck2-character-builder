@@ -217,6 +217,8 @@ class Character {
   }
 
   addTrait(trait) {
+    this.traits
+    this.parseTraitEffect(trait, 1)
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
     for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
     const traitElement = trait.buildIcon()
@@ -225,19 +227,23 @@ class Character {
       event.preventDefault();
       this.removeTrait(trait);
     });
-    this.changeAge(trait.cost);
-    for (const attr in this.attributes) {
-      if (trait.effects[attr]) { 
-        this.attributes[attr].effective += trait.effects[attr]
-        document.querySelector(`#${attr}_display`).querySelector('.value').innerText = this.attributes[attr].display();
-      }
-    };
   };
 
   removeTrait(trait) {
+    this.parseTraitEffect(trait, -1)
     document.querySelector('#character_traits').removeChild(document.querySelector(`#character_trait_${trait.id}`));
     document.querySelector(`#trait_${trait.id}`).removeAttribute('hidden');
     for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).removeAttribute('hidden') };
+  }
+
+  parseTraitEffect(trait, weight) {
+    this.changeAge(trait.cost * weight);
+    for (const attr in this.attributes) {
+      if (trait.effects[attr]) { 
+        this.attributes[attr].effective += (trait.effects[attr] * weight)
+        document.querySelector(`#${attr}_display`).querySelector('.value').innerText = this.attributes[attr].display();
+      }
+    };
   }
 
   buildIdentity() {
