@@ -10,7 +10,10 @@ class CharactersController < ApplicationController
 
   def create
     character = Character.find_or_create_with_attributes(character_params)
-    render json: CharacterSerializer.new(character).to_serialized_json if character.save
+    if character.save
+      character.trait_ids = params[:character_trait_ids]
+      render json: CharacterSerializer.new(character).to_serialized_json
+    end
   end
 
   private
