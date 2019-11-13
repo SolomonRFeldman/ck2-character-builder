@@ -218,7 +218,8 @@ class Character {
 
   addTrait(trait) {
     document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
-    document.querySelector('#character_traits').append(trait.buildIcon())
+    document.querySelector('#character_traits').append(trait.buildIcon());
+    this.changeAge(trait.cost);
   };
 
   buildIdentity() {
@@ -334,6 +335,7 @@ class Character {
   buildAttrItem(attr) {
     const item = document.createElement("li");
     item.setAttribute('class', 'list-group-item');
+    item.setAttribute('id', `${attr}_display`);
     item.innerText = `${attr[0].toUpperCase() + attr.slice(1)}`;
     item.append(this.buildAttrValue(this.attributes[attr]));
     return item;
