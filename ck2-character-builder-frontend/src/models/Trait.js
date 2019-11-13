@@ -21,6 +21,12 @@ class Trait {
     return traitSelect;
   };
 
+  buildIcon() {
+    const icon = document.createElement("img")
+    icon.setAttribute('src', 'https://via.placeholder.com/24')
+    return icon
+  };
+
   static all(callback = () => {}) {
     return fetch(`http://localhost:3000/traits`).then((response) => { return response.json() }).then((json) => {
       const traits = json.map((trait) => new Trait(trait));
@@ -29,10 +35,10 @@ class Trait {
   };
 
   static buildTraitList(traits, listenerFunction) {
-    const dropdown = document.createElement("div");
+    const dropdown = document.createElement("span");
     dropdown.setAttribute("class", "dropdown");
     dropdown.innerHTML +=
-      `<img class="dropdown-toggle" src="https://via.placeholder.com/24" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      `<img class="dropdown-toggle mb-3" src="https://via.placeholder.com/24" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <div class="dropdown-menu" style="max-height: 200px; overflow-x: hidden;" aria-labelledby="dropdownMenuButton"></div>`
     const dropdownMenu = dropdown.querySelector('.dropdown-menu');
     for (const trait of traits) { dropdownMenu.append(trait.buildSelect(listenerFunction)) };

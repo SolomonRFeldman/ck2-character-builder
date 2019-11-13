@@ -203,11 +203,23 @@ class Character {
   }
 
   buildDefaultTraitsCard(traits) {
-    const cardBody = document.createElement("div")
-    cardBody.append(Trait.buildTraitList(traits));
+    const cardBody = document.createElement("div");
+    cardBody.append(Trait.buildTraitList(traits, this.addTrait.bind(this)));
     cardBody.querySelector('.dropdown-menu').addEventListener('click', function (event) { event.stopPropagation() });
-    return cardBody
+    cardBody.append(this.buildTraitBox());
+    return cardBody;
   }
+
+  buildTraitBox() {
+    const box = document.createElement("span");
+    box.setAttribute('id', 'character_traits');
+    return box
+  }
+
+  addTrait(trait) {
+    document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
+    document.querySelector('#character_traits').append(trait.buildIcon())
+  };
 
   buildIdentity() {
     const cardBody = document.createElement("div");

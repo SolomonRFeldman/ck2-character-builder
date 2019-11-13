@@ -1,0 +1,7 @@
+#character_traits {
+  overflow-y: hidden;
+  overflow-x: auto;
+  max-width: 200px;
+  display: inline-block;
+  white-space: nowrap;
+}
