@@ -9,7 +9,8 @@ class CharacterSerializer
       include: {
         character_attribute: {
           except: [:id, :character_id]
-        }
+        },
+        traits: {}
       }
     }
     @character.to_json(options)
