@@ -43,13 +43,6 @@ RSpec.describe Character, :type => :model do
     it "can serialize it's attributes" do
       expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(CharacterAttribute.all.last.to_json(except: [:id, :character_id]))
     end
-  end
-
-  context "when a character has an attribute set's char id set to it" do
-    before do
-      char = Character.create(valid_character)
-      char.character_attribute = CharacterAttribute.create(valid_character_attribute)
-    end
 
     it "has one attribute set" do
       expect(Character.all.last.character_attribute).to eq(CharacterAttribute.all.last)
