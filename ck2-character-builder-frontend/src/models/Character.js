@@ -95,7 +95,6 @@ class Character {
       while (mainBody.firstChild) {
         mainBody.removeChild(mainBody.firstChild);
       };
-      console.log(char)
       const character = new Character(char)
       mainBody.append(character.buildCards());
     });
@@ -148,7 +147,7 @@ class Character {
   buildDBConnection() {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
-    cardBody.setAttribute("style", "height: 150px;");
+    cardBody.setAttribute("style", "height: 80px;");
     cardBody.innerHTML +=
       `<div class="row"></div>`
     cardBody.children[0].append(this.buildSaveButton());
@@ -203,7 +202,7 @@ class Character {
   buildTraits() {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
-    cardBody.setAttribute("style", "height: 150px;");
+    cardBody.setAttribute("style", "height: 60px;");
     Trait.all((traits) => {
       cardBody.append(this.buildEducationTraitsCard(traits.education))
       cardBody.append(this.buildDefaultTraitsCard(traits.default))

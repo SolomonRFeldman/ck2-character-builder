@@ -51,7 +51,6 @@ class Trait {
     const dropdownMenu = dropdown.querySelector('.dropdown-menu');
     for (const trait of traits) { dropdownMenu.append(trait.buildSelect(listenerFunction)) };
     new Boots.Dropdown(dropdown.children[0]);
-    console.log(traits);
     return dropdown;
   };
 
