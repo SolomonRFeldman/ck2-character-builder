@@ -203,12 +203,14 @@ class Character {
     Trait.all((traits) => {
       // cardBody.append(this.buildEducationTraitsCard(traits.education))
       cardBody.append(this.buildDefaultTraitsCard(traits)) //change to traits.default once edu added
-    })
+      for (const trait of this.traits) { this.addTrait(trait) };
+    });
     return cardBody;
   }
 
   buildDefaultTraitsCard(traits) {
     const cardBody = document.createElement("div");
+    this.traitsCard = cardBody;
     cardBody.append(Trait.buildTraitList(traits, this.addTrait.bind(this)));
     cardBody.querySelector('.dropdown-menu').addEventListener('click', function (event) { event.stopPropagation() });
     cardBody.append(this.buildTraitBox());
@@ -222,12 +224,12 @@ class Character {
   }
 
   addTrait(trait) {
-    this.traits.push(trait)
+    if (!this.traits.find(char_trait => trait.id === char_trait.id)) { this.traits.push(trait) }
     this.parseTraitEffect(trait, 1)
-    document.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
-    for (const oppositeID of trait.opposites) { document.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
+    this.traitsCard.querySelector(`#trait_${trait.id}`).setAttribute('hidden', true);
+    for (const oppositeID of trait.opposites) { this.traitsCard.querySelector(`#trait_${oppositeID}`).setAttribute('hidden', true) };
     const traitElement = trait.buildIcon()
-    document.querySelector('#character_traits').append(traitElement);
+    this.traitsCard.querySelector('#character_traits').append(traitElement);
     traitElement.addEventListener('contextmenu', (event) => { 
       event.preventDefault();
       this.removeTrait(trait);
