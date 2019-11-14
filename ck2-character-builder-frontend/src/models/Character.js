@@ -216,6 +216,7 @@ class Character {
     const cardBody = document.createElement("span");
     cardBody.setAttribute('class', 'mr-2')
     cardBody.append(Trait.buildTraitList(traits, this.changeEducation.bind(this)));
+    cardBody.querySelector('.dropdown-toggle').setAttribute('src', '../public/images/add_education.png')
     if (!this.education) { this.education = traits[0] };
     this.parseTraitEffect(this.education, 1);
     cardBody.append(this.buildEducationBox());
@@ -235,6 +236,7 @@ class Character {
     const cardBody = document.createElement("span");
     this.traitsCard = cardBody;
     cardBody.append(Trait.buildTraitList(traits, this.addTrait.bind(this)));
+    cardBody.querySelector('.dropdown-toggle').setAttribute('src', '../public/images/add_traits.png')
     cardBody.querySelector('.dropdown-menu').addEventListener('click', function (event) { event.stopPropagation() });
     cardBody.append(this.buildTraitBox());
     return cardBody;
