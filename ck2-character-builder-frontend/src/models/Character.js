@@ -202,7 +202,7 @@ class Character {
     cardBody.setAttribute("style", "height: 150px;");
     Trait.all((traits) => {
       // cardBody.append(this.buildEducationTraitsCard(traits.education))
-      cardBody.append(this.buildDefaultTraitsCard(traits)) //change to traits.default once edu added
+      cardBody.append(this.buildDefaultTraitsCard(traits.default))
       for (const trait of this.traits) { this.addTrait(trait) };
     });
     return cardBody;

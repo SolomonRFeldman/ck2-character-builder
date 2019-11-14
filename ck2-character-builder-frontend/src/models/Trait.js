@@ -2,9 +2,10 @@ import Boots from 'bootstrap.native';
 
 class Trait {
 
-  constructor({ id, name, description, cost, effects, opposites}) {
+  constructor({ id, name, type, description, cost, effects, opposites}) {
     this.id = id;
     this.name = name;
+    this.type = type;
     this.description = description;
     this.cost = cost;
     this.effects = effects;
@@ -30,7 +31,9 @@ class Trait {
 
   static all(callback = () => {}) {
     return fetch(`http://localhost:3000/traits`).then((response) => { return response.json() }).then((json) => {
-      const traits = json.map((trait) => new Trait(trait));
+      const traits = {}
+      traits.default = json.default.map((trait) => new Trait(trait));
+      traits.education = json.education.map((trait) => new Trait(trait));
       callback(traits);
     });
   };
