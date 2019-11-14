@@ -31,6 +31,7 @@ class CharactersController < ApplicationController
       :culture,
       :religion,
       :sex,
+      :education_id,
       character_attribute_params
     ).tap do |character_params|
       character_params.require(:character_attribute)
