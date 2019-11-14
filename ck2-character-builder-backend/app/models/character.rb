@@ -2,6 +2,7 @@ class Character < ApplicationRecord
   has_one :character_attribute
   has_many :character_traits
   has_many :traits, through: :character_traits
+  belongs_to :education, optional: :true
 
   before_update do
     self.character_attribute.save if self.character_attribute
