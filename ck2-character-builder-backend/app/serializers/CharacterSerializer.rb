@@ -10,6 +10,7 @@ class CharacterSerializer
         character_attribute: {
           except: [:id, :character_id]
         },
+        education: {},
         traits: {}
       }
     }
