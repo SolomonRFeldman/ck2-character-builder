@@ -201,15 +201,33 @@ class Character {
     cardBody.setAttribute("class", "card-body");
     cardBody.setAttribute("style", "height: 150px;");
     Trait.all((traits) => {
-      // cardBody.append(this.buildEducationTraitsCard(traits.education))
+      cardBody.append(this.buildEducationTraitsCard(traits.education))
       cardBody.append(this.buildDefaultTraitsCard(traits.default))
       for (const trait of this.traits) { this.addTrait(trait) };
     });
     return cardBody;
   }
 
+  buildEducationTraitsCard(traits) {
+    const cardBody = document.createElement("span");
+    cardBody.setAttribute('class', 'mr-2')
+    cardBody.append(Trait.buildTraitList(traits, this.changeTrait.bind(this)));
+    if (!this.education) { this.education = traits[0] };
+    this.parseTraitEffect(this.education, 1);
+    cardBody.append(this.buildEducationBox());
+    return cardBody;
+  }
+
+  buildEducationBox() {
+    const box = document.createElement("span");
+    box.setAttribute('id', 'character_education');
+    box.append(this.education.buildIcon());
+    box.firstChild.setAttribute('class', 'mb-3')
+    return box;
+  }
+
   buildDefaultTraitsCard(traits) {
-    const cardBody = document.createElement("div");
+    const cardBody = document.createElement("span");
     this.traitsCard = cardBody;
     cardBody.append(Trait.buildTraitList(traits, this.addTrait.bind(this)));
     cardBody.querySelector('.dropdown-menu').addEventListener('click', function (event) { event.stopPropagation() });
@@ -221,6 +239,10 @@ class Character {
     const box = document.createElement("span");
     box.setAttribute('id', 'character_traits');
     return box
+  }
+
+  changeTrait(trait) {
+
   }
 
   addTrait(trait) {
