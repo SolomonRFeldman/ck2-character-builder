@@ -16,11 +16,26 @@ class Trait {
     return this.name.replace(/[ ]/g, '_').replace('-', '').toLowerCase();
   }
 
+  get tooltip() {
+    let effects = ''
+    for (const key in this.effects) { effects += `<div class="ml-n5">${key[0].toUpperCase() + key.slice(1)}: ${this.effects[key]}</div>` }
+    return `<h4>${this.name}:</h4>
+    -------------------------
+    <p>${this.description}</p>
+    <ul>
+    ${effects}
+    </ul>`
+  }
+
   buildSelect(listenerFunction = () => {}) {
     const traitSelect = document.createElement("a");
     traitSelect.setAttribute("class", "dropdown-item");
     traitSelect.setAttribute("href", "#");
     traitSelect.setAttribute("id", `trait_${this.id}`);
+    traitSelect.setAttribute('data-toggle', 'tooltip');
+    traitSelect.setAttribute('data-placement', 'right');
+    traitSelect.setAttribute('title', this.tooltip)
+    new Boots.Tooltip(traitSelect);
     traitSelect.innerHTML = `<img src="../public/images/${this.nameSlug}.png"> ${this.name} <div class="float-right">${this.cost}</div>`
     traitSelect.addEventListener('click', () => { listenerFunction(this) });
     return traitSelect;
@@ -30,6 +45,10 @@ class Trait {
     const icon = document.createElement("img")
     icon.setAttribute('src', `../public/images/${this.nameSlug}.png`)
     icon.setAttribute('id', `character_trait_${this.id}`)
+    icon.setAttribute('data-toggle', 'tooltip');
+    icon.setAttribute('data-placement', 'bottom');
+    icon.setAttribute('title', this.tooltip)
+    new Boots.Tooltip(icon);
     return icon
   };
 
