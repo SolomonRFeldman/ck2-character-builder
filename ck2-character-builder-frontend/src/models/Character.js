@@ -211,10 +211,11 @@ class Character {
   buildEducationTraitsCard(traits) {
     const cardBody = document.createElement("span");
     cardBody.setAttribute('class', 'mr-2')
-    cardBody.append(Trait.buildTraitList(traits, this.changeTrait.bind(this)));
+    cardBody.append(Trait.buildTraitList(traits, this.changeEducation.bind(this)));
     if (!this.education) { this.education = traits[0] };
     this.parseTraitEffect(this.education, 1);
     cardBody.append(this.buildEducationBox());
+    cardBody.querySelector(`#trait_${this.education.id}`).setAttribute('hidden', true);
     return cardBody;
   }
 
@@ -241,8 +242,16 @@ class Character {
     return box
   }
 
-  changeTrait(trait) {
+  changeEducation(education) {
+    const educationBox = document.querySelector('#character_education')
 
+    this.parseTraitEffect(this.education, -1);
+    document.querySelector(`#trait_${education.id}`).setAttribute('hidden', true);
+    educationBox.replaceChild(education.buildIcon(), educationBox.firstChild);
+    educationBox.firstChild.setAttribute('class', 'mb-3');
+    document.querySelector(`#trait_${this.education.id}`).removeAttribute('hidden');
+    this.education = education;
+    this.parseTraitEffect(this.education, 1);
   }
 
   addTrait(trait) {
