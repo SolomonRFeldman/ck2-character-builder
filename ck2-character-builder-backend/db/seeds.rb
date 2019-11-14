@@ -1521,6 +1521,297 @@ traits = [
   }
 ]
 
+educations = [
+  {
+    name: "Amateurish Plotter",
+    description: <<~DESC.strip,
+      The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.
+    DESC
+    cost: 0,
+    effects: {
+      intrigue: 1,
+      stewardship: -1,
+      personal_combat_skill: 4
+    }
+  },
+
+  {
+    name: "Flamboyant Schemer",
+    description: <<~DESC.strip,
+      Flamboyant Schemers thrive on court intrigue and fancy themselves masters of the trade. \
+      However, their lack of secrecy tends to endanger even their best efforts.
+    DESC
+    cost: 2,
+    effects: {
+      intrigue: 3,
+      stewardship: -1,
+      personal_combat_skill: 8
+    }
+  },
+
+  {
+    name: "Intricate Webweaver",
+    description: <<~DESC.strip,
+      The Intricate Webweaver is a master manipulator, well suited to a life of intrigue.
+    DESC
+    cost: 7,
+    effects: {
+      martial: 1,
+      intrigue: 6,
+      diplomacy: 1,
+      stewardship: -1,
+      personal_combat_skill: 12
+    }
+  },
+
+  {
+    name: "Elusive Shadow",
+    description: <<~DESC.strip,
+      The Elusive Shadow has mastered the art of Intrigue \
+      and should make a perfect Spymaster - as well as an idea mentor for prospective schemers.
+    DESC
+    cost: 12,
+    effects: {
+      martial: 2,
+      intrigue: 9,
+      diplomacy: 2,
+      stewardship: -1,
+      personal_combat_skill: 16
+    }
+  },
+
+  {
+    name: "Naive Appeaser",
+    description: <<~DESC.strip,
+      Naive Appeasers want to be well liked and fancy themselves diplomates. \
+      Unfortunately, everyone else just tends to bully them.
+    DESC
+    cost: 0,
+    effects: {
+      martial: -1,
+      diplomacy: 1
+    }
+  },
+
+  {
+    name: "Underhanded Rogue",
+    description: <<~DESC.strip,
+      The Underhanded Rogue is a rough but decently effective diplomat.
+    DESC
+    cost: 3,
+    effects: {
+      martial: -1,
+      diplomacy: 3,
+      fertility: 5
+    }
+  },
+
+  {
+    name: "Charismatic Negotiator",
+    description: <<~DESC.strip,
+      The Charismatic Negotiator is an excellent diplomat, impressing dignitaries with elegant dress and persuasive rhetoric.
+    DESC
+    cost: 8,
+    effects: {
+      martial: -1,
+      intrigue: 1,
+      diplomacy: 6,
+      learning: 1,
+      fertility: 5
+    }
+  },
+
+  {
+    name: "Grey Eminence",
+    description: <<~DESC.strip,
+      The Grey Eminence is the epitome of statesmenship having fully mastered the art of diplomacy.
+    DESC
+    cost: 14,
+    effects: {
+      martial: -1,
+      intrigue: 2,
+      diplomacy: 9,
+      learning: 2,
+      fertility: 10
+    }
+  },
+
+  {
+    name: "Indulgent Wastrel",
+    description: <<~DESC.strip,
+      The Indulgent Wastrel was groomed to become good with money, \
+      and if good means spending it quickly, the Indulgent Wastrel certainly is.
+    DESC
+    cost: 0,
+    effects: {
+      diplomacy: -1,
+      stewardship: 1
+    }
+  },
+
+  {
+    name: "Thrifty Clerk",
+    description: <<~DESC.strip,
+      The Thrifty Clerk is a dutiful, if not particularly skilled, administrator.
+    DESC
+    cost: 3,
+    effects: {
+      diplomacy: -1,
+      stewardship: 3,
+      fertility: 5
+    }
+  },
+
+  {
+    name: "Fortune Builder",
+    description: <<~DESC.strip,
+      The Fortune Builder came out of adolescence armed with a well honed business sense, determined to live a life of luxury.
+    DESC
+    cost: 9,
+    effects: {
+      martial: 1,
+      diplomacy: -1,
+      stewardship: 6,
+      learning: 1,
+      fertility: 10
+    }
+  },
+
+  {
+    name: "Midas Touched",
+    description: <<~DESC.strip,
+      This character is truly Midas Touched, never seeming to run out of funds \
+      - an excellent choice for Steward and mentor to children destined to become administrators.
+    DESC
+    cost: 15,
+    effects: {
+      martial: 2,
+      diplomacy: -1,
+      stewardship: 9,
+      learning: 2,
+      fertility: 15
+    }
+  },
+
+  {
+    name: "Misguided Warrior",
+    description: <<~DESC.strip,
+      The Misguided Warrior was trained in warfare and the martial arts, but sadly lacks all talent for it.
+    DESC
+    cost: 5,
+    effects: {
+      martial: 1,
+      learning: -1,
+      health: 0.50,
+      personal_combat_skill: 5
+    }
+  },
+
+  {
+    name: "Tough Soldier",
+    description: <<~DESC.strip,
+      The Tough Soldier is fearsome on the battlefield, but only a mediocre commander.
+    DESC
+    cost: 7,
+    effects: {
+      martial: 3,
+      learning: -1,
+      health: 0.50,
+      personal_combat_skill: 10
+    }
+  },
+
+  {
+    name: "Skilled Tactician",
+    description: <<~DESC.strip,
+      The Skilled Tactician is an adept in the art of war - a valiant warrior and reliable commander.
+    DESC
+    cost: 12,
+    effects: {
+      martial: 6,
+      intrigue: 1,
+      stewardship: 1,
+      learning: -1,
+      health: 0.50,
+      personal_combat_skill: 15
+    }
+  },
+
+  {
+    name: "Brilliant Strategist",
+    description: <<~DESC.strip,
+      The Brilliant Strategist has an almost preternatural understanding of all things martial, \
+      hacing the perfect makings for a Marshal or a military tutor.
+    DESC
+    cost: 17,
+    effects: {
+      martial: 9,
+      intrigue: 2,
+      stewardship: 2,
+      learning: -1,
+      health: 0.50,
+      personal_combat_skill: 20
+    }
+  },
+
+  {
+    name: "Detached Priest",
+    description: <<~DESC.strip,
+      The Detached Priest received a clerical education but displays no talent beyond basic literacy.
+    DESC
+    cost: 0,
+    effects: {
+      intrigue: -1,
+      learning: 1
+    }
+  },
+
+  {
+    name: "Dutiful Cleric",
+    description: <<~DESC.strip,
+      The Dutiful Cleric is learned and possessed of beautiful penmanship, but lacks particular interest in theology.
+    DESC
+    cost: 2,
+    effects: {
+      intrigue: -1,
+      learning: 3
+    }
+  },
+
+  {
+    name: "Scholarly Theologian",
+    description: <<~DESC.strip,
+      The Scholarly Theologian is wise and well read, with a deep understanding of philosophy and theology.
+    DESC
+    cost: 6,
+    effects: {
+      intrigue: -1,
+      diplomacy: 1,
+      stewardship: 1,
+      learning: 6,
+      fertility: -5
+    }
+  },
+
+  {
+    name: "Mastermind Theologian",
+    description: <<~DESC.strip,
+      The Mastermind Theologian is recognized as one of the top scholars of the Faith.
+    DESC
+    cost: 11,
+    effects: {
+      intrigue: -1,
+      diplomacy: 2,
+      stewardship: 2,
+      learning: 9,
+      fertility: -5
+    }
+  }
+]
+
+educations.each { |education| education[:type] = "Education" }
+
+Trait.create(educations)
 Trait.create(traits)
 
 Trait.all.each do |trait|
