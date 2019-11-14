@@ -44,7 +44,8 @@ class Character {
       culture, 
       marriage_status, 
       sex, 
-      id 
+      id,
+      education
     } = {}) {
     this.attributes = {}
     this.id = id;
@@ -55,6 +56,7 @@ class Character {
     this.marriage_status = marriage_status;
     this.sex = sex;
     this.traits = [];
+    if (education) { this.education = new Trait(education) }
     for(const trait of traits) { this.traits.push(new Trait(trait)) };
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge();
