@@ -67,6 +67,8 @@ class Character {
     characterInfo.character_attribute = {}
     for(const key in this.attributes) { characterInfo.character_attribute[key] = this.attributes[key].base }
 
+    characterInfo.education_id = this.education.id
+
     const character_trait_ids = [];
     for(const trait of this.traits) { character_trait_ids.push(trait.id)}
     
