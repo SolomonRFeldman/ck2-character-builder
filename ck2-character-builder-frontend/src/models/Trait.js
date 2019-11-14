@@ -45,10 +45,6 @@ class Trait {
     const icon = document.createElement("img")
     icon.setAttribute('src', `../public/images/${this.nameSlug}.png`)
     icon.setAttribute('id', `character_trait_${this.id}`)
-    icon.setAttribute('data-toggle', 'tooltip');
-    icon.setAttribute('data-placement', 'bottom');
-    icon.setAttribute('title', this.tooltip)
-    new Boots.Tooltip(icon);
     return icon
   };
 
