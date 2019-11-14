@@ -112,7 +112,7 @@ class Character {
   changeAge(amount) {
     const age = document.querySelector('#age');
     const newAge = this.age + amount;
-    age.innerText = newAge;
+    if(newAge > 16) { age.innerText = newAge } else { age.innerText = 16 }
     this.age = newAge;
   };
 
