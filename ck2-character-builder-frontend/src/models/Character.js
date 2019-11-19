@@ -84,13 +84,13 @@ class Character {
       body: JSON.stringify( { character: characterInfo, character_trait_ids: character_trait_ids } )
     };
 
-    return fetch(CHARACTER_URL, configObj).then((response) => { return response.json() }).then((char) => {
-      if (char.status != 200) {
-        this.handleErrors(char.errors.character)
-      } else {
-        this.id = char.id
-        this.refreshLoadList()
-      };
+    return fetch(CHARACTER_URL, configObj).then((response) => { 
+      if (response.ok) { return response.json() } else { throw response.json() }; 
+    }).then((char) => {
+      this.id = char.id
+      this.refreshLoadList()
+    }).catch((char) => { 
+      char.then((char) => { this.handleErrors(char.errors.character) });
     });
   };
 
