@@ -110,7 +110,7 @@ class Character {
       return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
     }, 16);
     if (this.marriage_status) { age += 2 };
-    return age
+    return Math.round(age)
   };
 
   changeAge(amount) {
