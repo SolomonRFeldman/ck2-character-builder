@@ -63,6 +63,7 @@ class Character {
   };
 
   saveCharacter() {
+    this.removeFormErrors();
     const characterInfo = { id: this.id }
     for(const attr of IDENTITY_ATTR) { characterInfo[attr] = document.querySelector(`#${attr}`).value }
     characterInfo.marriage_status = document.querySelector(`#marriage_status`).checked
@@ -84,10 +85,14 @@ class Character {
     };
 
     return fetch(CHARACTER_URL, configObj).then((response) => { return response.json() }).then((char) => {
-      this.id = char.id
-      this.refreshLoadList()
+      if (char.status != 200) {
+        this.handleErrors(char.errors.character)
+      } else {
+        this.id = char.id
+        this.refreshLoadList()
+      };
     });
-  }
+  };
 
   static loadCharacter(id) {
     return fetch(CHARACTER_URL + `/${id}`).then((response) => { return response.json() }).then((char) => {
@@ -444,6 +449,32 @@ class Character {
 
     this.changeAge(attr.cost * direction)
   };
+
+  formError(errorMessage) {
+    const message = document.createElement("small");
+    message.setAttribute("class", "form-text text-danger form-error mb-n3");
+    message.innerText = `${errorMessage}`;
+    return message;
+  }
+
+  handleErrors(errors) {
+    if (errors.name) { 
+      document.querySelector("#name").classList.add('is-invalid')
+      document.querySelector("#name").parentElement.append(this.formError(errors.name)) 
+    };
+    if (errors.dynasty) { 
+      document.querySelector("#dynasty").classList.add('is-invalid')
+      document.querySelector("#dynasty").parentElement.append(this.formError(errors.dynasty)) 
+    };
+  };
+
+  removeFormErrors() {
+    for (const form of document.querySelectorAll(".form-control")) {
+      form.classList.remove('is-invalid');
+      const errorMessage = form.nextSibling;
+      if (errorMessage) { errorMessage.parentElement.removeChild(errorMessage) };
+    }
+  }
 };
 
 export default Character;
