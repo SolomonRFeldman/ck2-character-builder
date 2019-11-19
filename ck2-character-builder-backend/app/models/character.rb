@@ -8,6 +8,9 @@ class Character < ApplicationRecord
   validates :dynasty, presence: :true
   validates :name, uniqueness: { scope: :dynasty, message: "name must be unique within a dynasty" }
 
+  validates :religion, inclusion: { in: Religion.all.values.first }
+  validates :culture, inclusion: { in: Culture.all.values.first }
+
   before_update do
     self.character_attribute.save if self.character_attribute
   end
