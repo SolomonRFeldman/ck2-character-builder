@@ -4,6 +4,9 @@ class Character < ApplicationRecord
   has_many :traits, through: :character_traits
   belongs_to :education, optional: :true
 
+  validates :name, presence: :true
+  validates :dynasty, presence: :true
+
   before_update do
     self.character_attribute.save if self.character_attribute
   end
