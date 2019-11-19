@@ -6,6 +6,7 @@ class Character < ApplicationRecord
 
   validates :name, presence: :true
   validates :dynasty, presence: :true
+  validates :name, uniqueness: { scope: :dynasty, message: "name must be unique within a dynasty" }
 
   before_update do
     self.character_attribute.save if self.character_attribute
