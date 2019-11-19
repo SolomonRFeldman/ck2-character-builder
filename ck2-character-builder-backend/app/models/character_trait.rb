@@ -2,8 +2,12 @@ class CharacterTrait < ApplicationRecord
   belongs_to :character
   belongs_to :trait
 
+  validate :trait_is_not_education
   validate :disallow_opposites_to_join
 
+  def trait_is_not_education
+    errors.add(:trait, 'cannot be an education') if trait.type == 'Education'
+  end
 
 
   def disallow_opposites_to_join
