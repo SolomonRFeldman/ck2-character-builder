@@ -1,7 +1,7 @@
 class Character < ApplicationRecord
-  has_one :character_attribute
+  has_one :character_attribute, dependent: :destroy
   has_many :character_traits
-  has_many :traits, through: :character_traits
+  has_many :traits, through: :character_traits, dependent: :destroy
   belongs_to :education, optional: :true
 
   validates :name, presence: :true
