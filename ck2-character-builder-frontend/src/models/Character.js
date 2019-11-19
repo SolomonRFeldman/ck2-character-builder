@@ -62,6 +62,14 @@ class Character {
     this.age = this.calculateAge();
   };
 
+  calculateAge() {
+    let age = Object.values(this.attributes).reduce( (age, attr) => {
+      return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
+    }, 16);
+    if (this.marriage_status) { age += 2 };
+    return Math.round(age)
+  };
+
   saveCharacter() {
     this.removeFormErrors();
     const characterInfo = { id: this.id }
@@ -105,20 +113,33 @@ class Character {
     });
   }
 
-  calculateAge() {
-    let age = Object.values(this.attributes).reduce( (age, attr) => {
-      return age + ((attr.effective - attr.minVal) * (attr.cost / attr.increment));
-    }, 16);
-    if (this.marriage_status) { age += 2 };
-    return Math.round(age)
+  removeFormErrors() {
+    for (const form of document.querySelectorAll(".form-control")) {
+      form.classList.remove('is-invalid');
+      const errorMessage = form.nextSibling;
+      if (errorMessage) { errorMessage.parentElement.removeChild(errorMessage) };
+    }
+  }
+
+  formError(errorMessage) {
+    const message = document.createElement("small");
+    message.setAttribute("class", "form-text text-danger form-error mb-n3");
+    message.innerText = `${errorMessage}`;
+    return message;
+  }
+
+  handleErrors(errors) {
+    if (errors.name) { 
+      document.querySelector("#name").classList.add('is-invalid')
+      document.querySelector("#name").parentElement.append(this.formError(errors.name)) 
+    };
+    if (errors.dynasty) { 
+      document.querySelector("#dynasty").classList.add('is-invalid')
+      document.querySelector("#dynasty").parentElement.append(this.formError(errors.dynasty)) 
+    };
   };
 
-  changeAge(amount) {
-    const age = document.querySelector('#age');
-    const newAge = this.age + amount;
-    if(newAge > 16) { age.innerText = newAge } else { age.innerText = 16 }
-    this.age = newAge;
-  };
+  
 
   buildCards() {
     const grid = document.createElement("div");
@@ -149,59 +170,94 @@ class Character {
     return card
   }
 
-  buildDBConnection() {
+  buildIdentity() {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
-    cardBody.setAttribute("style", "height: 80px;");
-    cardBody.innerHTML +=
-      `<div class="row"></div>`
-    cardBody.children[0].append(this.buildSaveButton());
-    cardBody.children[0].append(this.buildLoadButton());
-    cardBody.children[0].append(this.buildLoadList());
-    return cardBody
-  }
-
-  buildSaveButton() {
-    const save = document.createElement("button");
-    save.setAttribute("class", "btn btn-success");
-    save.setAttribute("style", "height: 40px;")
-    save.innerText = "Save";
-    save.addEventListener('click', () => this.saveCharacter());
-    return save;
+    cardBody.setAttribute("style", "height: 198px");
+    cardBody.innerHTML = 
+      `<div class="row"></div>
+      <div class="row"></div>
+      <div class="row"></div>`
+    cardBody.children[0].append(this.buildTextForm("name"));
+    cardBody.children[0].append(this.buildDropDown("religion"));
+    cardBody.children[1].append(this.buildTextForm("dynasty"));
+    cardBody.children[1].append(this.buildDropDown("culture"));
+    cardBody.children[2].append(this.buildMarriageCheckbox());
+    cardBody.children[2].append(this.buildSexDropDown());
+    return cardBody;
   };
 
-  buildLoadButton() {
-    const load = document.createElement("button");
-    load.setAttribute("class", "btn btn-secondary mx-3");
-    load.setAttribute("style", "height: 40px;")
-    load.innerText = "Load";
-    load.addEventListener('click', () => Character.loadCharacter(document.querySelector("#character_load").value));
-    return load;
-  };
-
-  buildLoadList() {
-    const list = document.createElement("div");
-    list.setAttribute("class", "form-group col");
-    list.setAttribute("id", "load_list")
-    list.innerHTML += 
+  buildTextForm(detail) {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
       `<div class="form-group row">
-        <select class="custom-select" id="character_load">
-        </select>
-      </div>`;
-    fetch(CHARACTER_URL).then((response) => { return response.json() }).then((characters) => {
-      const formList = list.querySelector(`#character_load`);
-      for (const character of characters) {
-        formList.innerHTML += `<option id="character_${character.id}" value="${character.id}">${character.name} ${character.dynasty}</option>`
-      };
-      if (this.id) { list.querySelector(`#character_${this.id}`).setAttribute('selected', true) };
+        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
+        <div class="col px-1">
+          <input type="text" class="form-control" id="${detail}" value="${this[detail]}"></input>
+        </div>
+      </div>`
+    form.children[0].children[1].children[0].addEventListener('input', (event) => {
+      document.querySelector(`#${detail}Display`).innerText = event.target.value;
     });
-    return list
+    return form;
   };
 
-  refreshLoadList() {
-    const listParent = document.querySelector("#load_list");
-    listParent.removeChild(listParent.lastChild);
-    listParent.append(this.buildLoadList());
+  buildDropDown(detail) {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row">
+        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
+        <div class="col px-1">
+          <select class="custom-select" id="${detail}">
+          </select>
+        </div>
+      </div>`;
+    fetch(BASE_URL + `/${detail}s`).then((response) => { return response.json() }).then((detailList) => {
+      const formList = form.querySelector(`#${detail}`);
+      for (const category in detailList) { 
+        formList.innerHTML += `<optgroup label="${category}:">`;
+        for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
+        formList.innerHTML += `</optgroup">`;
+      };
+      if (this[detail]) { form.querySelector(`#${this[detail]}`).setAttribute('selected', true) };
+    });
+    return form;
+  };
+
+  buildSexDropDown() {
+    const form = document.createElement("div");
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row">
+      <label for="sex" class="col-form-label">Sex: </label>
+      <div class="col px-1">
+        <select class="custom-select" id="sex">
+          <option id="Male" value="Male">Male</option> 
+          <option id="Female" value="Female">Female</option> 
+        </select>
+      </div>
+    </div>`;
+    if (this.sex) { form.querySelector(`#${this.sex}`).setAttribute("selected", true) };
+    return form;
+  };
+
+  buildMarriageCheckbox() {
+    const form = document.createElement("div")
+    form.setAttribute("class", "col");
+    form.innerHTML +=
+      `<div class="form-group row mt-1">
+        <label for="marriage_status">Married: </label>
+        <div class="col px-1 ml-4">
+          <input class="form-check-input" type="checkbox" id="marriage_status">
+        </div>
+      </div>`
+    if (this.marriage_status) { form.querySelector("#marriage_status").setAttribute("checked", true) };
+    form.querySelector("#marriage_status").addEventListener('change', (event) => { 
+      if (event.target.checked) { this.changeAge(2) } else { this.changeAge(-2) }
+    });
+    return form
   }
 
   buildTraits() {
@@ -295,95 +351,62 @@ class Character {
     };
   }
 
-  buildIdentity() {
+  buildDBConnection() {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
-    cardBody.setAttribute("style", "height: 198px");
-    cardBody.innerHTML = 
-      `<div class="row"></div>
-      <div class="row"></div>
-      <div class="row"></div>`
-    cardBody.children[0].append(this.buildTextForm("name"));
-    cardBody.children[0].append(this.buildDropDown("religion"));
-    cardBody.children[1].append(this.buildTextForm("dynasty"));
-    cardBody.children[1].append(this.buildDropDown("culture"));
-    cardBody.children[2].append(this.buildMarriageCheckbox());
-    cardBody.children[2].append(this.buildSexDropDown());
-    return cardBody;
-  };
-
-  buildTextForm(detail) {
-    const form = document.createElement("div");
-    form.setAttribute("class", "col");
-    form.innerHTML +=
-      `<div class="form-group row">
-        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
-        <div class="col px-1">
-          <input type="text" class="form-control" id="${detail}" value="${this[detail]}"></input>
-        </div>
-      </div>`
-    form.children[0].children[1].children[0].addEventListener('input', (event) => {
-      document.querySelector(`#${detail}Display`).innerText = event.target.value;
-    });
-    return form;
-  };
-
-  buildDropDown(detail) {
-    const form = document.createElement("div");
-    form.setAttribute("class", "col");
-    form.innerHTML +=
-      `<div class="form-group row">
-        <label for="${detail}" class="col-form-label">${detail[0].toUpperCase() + detail.slice(1)}: </label>
-        <div class="col px-1">
-          <select class="custom-select" id="${detail}">
-          </select>
-        </div>
-      </div>`;
-    fetch(BASE_URL + `/${detail}s`).then((response) => { return response.json() }).then((detailList) => {
-      const formList = form.querySelector(`#${detail}`);
-      for (const category in detailList) { 
-        formList.innerHTML += `<optgroup label="${category}:">`;
-        for (const item of detailList[category]) { formList.innerHTML += `<option id="${item}" value="${item}">${item}</option>` };
-        formList.innerHTML += `</optgroup">`;
-      };
-      if (this[detail]) { form.querySelector(`#${this[detail]}`).setAttribute('selected', true) };
-    });
-    return form;
-  };
-
-  buildSexDropDown() {
-    const form = document.createElement("div");
-    form.setAttribute("class", "col");
-    form.innerHTML +=
-      `<div class="form-group row">
-      <label for="sex" class="col-form-label">Sex: </label>
-      <div class="col px-1">
-        <select class="custom-select" id="sex">
-          <option id="Male" value="Male">Male</option> 
-          <option id="Female" value="Female">Female</option> 
-        </select>
-      </div>
-    </div>`;
-    if (this.sex) { form.querySelector(`#${this.sex}`).setAttribute("selected", true) };
-    return form;
-  };
-
-  buildMarriageCheckbox() {
-    const form = document.createElement("div")
-    form.setAttribute("class", "col");
-    form.innerHTML +=
-      `<div class="form-group row mt-1">
-        <label for="marriage_status">Married: </label>
-        <div class="col px-1 ml-4">
-          <input class="form-check-input" type="checkbox" id="marriage_status">
-        </div>
-      </div>`
-    if (this.marriage_status) { form.querySelector("#marriage_status").setAttribute("checked", true) };
-    form.querySelector("#marriage_status").addEventListener('change', (event) => { 
-      if (event.target.checked) { this.changeAge(2) } else { this.changeAge(-2) }
-    });
-    return form
+    cardBody.setAttribute("style", "height: 80px;");
+    cardBody.innerHTML +=
+      `<div class="row"></div>`
+    cardBody.children[0].append(this.buildSaveButton());
+    cardBody.children[0].append(this.buildLoadButton());
+    cardBody.children[0].append(this.buildLoadList());
+    return cardBody
   }
+
+  buildSaveButton() {
+    const save = document.createElement("button");
+    save.setAttribute("class", "btn btn-success");
+    save.setAttribute("style", "height: 40px;")
+    save.innerText = "Save";
+    save.addEventListener('click', () => this.saveCharacter());
+    return save;
+  };
+
+  buildLoadButton() {
+    const load = document.createElement("button");
+    load.setAttribute("class", "btn btn-secondary mx-3");
+    load.setAttribute("style", "height: 40px;")
+    load.innerText = "Load";
+    load.addEventListener('click', () => Character.loadCharacter(document.querySelector("#character_load").value));
+    return load;
+  };
+
+  buildLoadList() {
+    const list = document.createElement("div");
+    list.setAttribute("class", "form-group col");
+    list.setAttribute("id", "load_list")
+    list.innerHTML += 
+      `<div class="form-group row">
+        <select class="custom-select" id="character_load">
+        </select>
+      </div>`;
+    fetch(CHARACTER_URL).then((response) => { return response.json() }).then((characters) => {
+      const formList = list.querySelector(`#character_load`);
+      for (const character of characters) {
+        formList.innerHTML += `<option id="character_${character.id}" value="${character.id}">${character.name} ${character.dynasty}</option>`
+      };
+      if (this.id) { list.querySelector(`#character_${this.id}`).setAttribute('selected', true) };
+    });
+    return list
+  };
+
+  refreshLoadList() {
+    const listParent = document.querySelector("#load_list");
+    listParent.removeChild(listParent.lastChild);
+    listParent.append(this.buildLoadList());
+  }
+
+
 
   buildAttrCard() {
     const card = document.createElement("div");
@@ -394,6 +417,13 @@ class Character {
       </div>`;
     card.append(this.buildAttrList());
     return card;
+  };
+
+  changeAge(amount) {
+    const age = document.querySelector('#age');
+    const newAge = this.age + amount;
+    if(newAge > 16) { age.innerText = newAge } else { age.innerText = 16 }
+    this.age = newAge;
   };
 
   buildAttrList() {
@@ -450,31 +480,6 @@ class Character {
     this.changeAge(attr.cost * direction)
   };
 
-  formError(errorMessage) {
-    const message = document.createElement("small");
-    message.setAttribute("class", "form-text text-danger form-error mb-n3");
-    message.innerText = `${errorMessage}`;
-    return message;
-  }
-
-  handleErrors(errors) {
-    if (errors.name) { 
-      document.querySelector("#name").classList.add('is-invalid')
-      document.querySelector("#name").parentElement.append(this.formError(errors.name)) 
-    };
-    if (errors.dynasty) { 
-      document.querySelector("#dynasty").classList.add('is-invalid')
-      document.querySelector("#dynasty").parentElement.append(this.formError(errors.dynasty)) 
-    };
-  };
-
-  removeFormErrors() {
-    for (const form of document.querySelectorAll(".form-control")) {
-      form.classList.remove('is-invalid');
-      const errorMessage = form.nextSibling;
-      if (errorMessage) { errorMessage.parentElement.removeChild(errorMessage) };
-    }
-  }
 };
 
 export default Character;
