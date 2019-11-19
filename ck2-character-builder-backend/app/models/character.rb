@@ -11,8 +11,14 @@ class Character < ApplicationRecord
   validates :religion, inclusion: { in: Religion.all.values.first }
   validates :culture, inclusion: { in: Culture.all.values.first }
 
+  validate :education_is_trait_type_education
+
   before_update do
     self.character_attribute.save if self.character_attribute
+  end
+
+  def education_is_trait_type_education
+    errors.add(:education, 'must be type Education') if education.type != 'Education'
   end
 
   class << self
