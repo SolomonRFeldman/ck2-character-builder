@@ -8,8 +8,8 @@ class Character < ApplicationRecord
   validates :dynasty, presence: :true
   validates :name, uniqueness: { scope: :dynasty, message: "name must be unique within a dynasty" }
 
-  validates :religion, inclusion: { in: Religion.all.values.first }
-  validates :culture, inclusion: { in: Culture.all.values.first }
+  validates :religion, inclusion: { in: Religion.all.values.flatten }
+  validates :culture, inclusion: { in: Culture.all.values.flatten }
 
   validate :education_is_trait_type_education
 
