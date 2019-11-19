@@ -13,6 +13,8 @@ class CharactersController < ApplicationController
     if character.save
       character.trait_ids = params[:character_trait_ids]
       render json: CharacterSerializer.new(character).to_serialized_json
+    else
+      return render json: { errors: { character: character.errors } }.to_json, status: 400
     end
   end
 
