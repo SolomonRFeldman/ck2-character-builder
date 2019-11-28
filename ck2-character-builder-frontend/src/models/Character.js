@@ -139,7 +139,7 @@ class Character {
     };
   };
 
-  
+
 
   buildCards() {
     const grid = document.createElement("div");
@@ -354,12 +354,14 @@ class Character {
   buildDBConnection() {
     const cardBody = document.createElement("div");
     cardBody.setAttribute("class", "card-body");
-    cardBody.setAttribute("style", "height: 80px;");
+    cardBody.setAttribute("style", "height: 160px;");
     cardBody.innerHTML +=
-      `<div class="row"></div>`
+      `<div class="row"></div>
+      <div class="row"></div>`
     cardBody.children[0].append(this.buildSaveButton());
     cardBody.children[0].append(this.buildLoadButton());
     cardBody.children[0].append(this.buildLoadList());
+    cardBody.children[1].append(this.buildSortButton());
     return cardBody
   }
 
@@ -381,6 +383,36 @@ class Character {
     return load;
   };
 
+  buildSortButton() {
+    const sort = document.createElement("button");
+    sort.setAttribute("class", "btn btn-danger mx-3");
+    sort.setAttribute("style", "height: 40px;");
+    sort.innerText = "Sort";
+    sort.addEventListener('click', () => {
+      fetch(CHARACTER_URL).then((response) => { return response.json() }).then((characters) => {
+        console.log(characters);
+        characters.sort(function(a, b) {
+          var nameA = a.name.toUpperCase();
+          var nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          return 0;
+        });
+        console.log(characters)
+        this.loadList.querySelector("#character_load").innerHTML = ''
+        for (const character of characters) {
+          this.loadList.querySelector("#character_load").innerHTML += `<option id="character_${character.id}" value="${character.id}">${character.name} ${character.dynasty}</option>`
+        };
+      });
+    });
+    return sort;
+  };
+
   buildLoadList() {
     const list = document.createElement("div");
     list.setAttribute("class", "form-group col");
@@ -390,6 +422,7 @@ class Character {
         <select class="custom-select" id="character_load">
         </select>
       </div>`;
+    this.loadList = list
     fetch(CHARACTER_URL).then((response) => { return response.json() }).then((characters) => {
       const formList = list.querySelector(`#character_load`);
       for (const character of characters) {
