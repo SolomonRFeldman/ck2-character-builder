@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar/NavBar';
+import CharacterCard from './components/Character/CharacterCard';
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <header>
         <NavBar />
       </header>
+      <CharacterCard />
     </div>
   );
 }
