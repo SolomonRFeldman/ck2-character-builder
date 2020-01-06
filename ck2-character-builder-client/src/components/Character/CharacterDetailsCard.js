@@ -5,7 +5,7 @@ import CharacterIdentityCard from './CharacterIdentityCard';
 export default function CharacterDetailsCard(props) {
   return(
     <Card>
-      <Card.Header data-testid='detailsHeader' style={{height: '49px'}}>
+      <Card.Header data-testid='detailsHeader' style={{minHeight: '49px'}}>
         <span>{props.character.name} </span>
         <span>{props.character.dynasty}</span>
       </Card.Header>
