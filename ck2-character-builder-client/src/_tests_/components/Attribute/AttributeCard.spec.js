@@ -1,6 +1,19 @@
 import React from 'react'
-import { render, fireEvent, within, act, waitForDomChange } from '@testing-library/react'
+import { render, fireEvent, within } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
+
+const TEST_ATTR = {
+  diplomacy: 7,
+  martial: 8,
+  stewardship: 7,
+  intrigue: 9,
+  learning: 6,
+  health: 5.5,
+  fertility: 60,
+  sons: 2,
+  daughters: 3
+}
+const TEST_AGE = 47
 
 describe(`when a new character's attributes are initialized`, () => {
   const characterCard = render(<CharacterCard />)
@@ -28,6 +41,36 @@ describe(`when a new character's attributes are initialized`, () => {
 
   it('displays the proper default value of 0 for a child attr', () => {
     expect(sonsRow).toHaveTextContent('0')
+  })
+  characterCard.unmount()
+})
+
+describe(`when attributes are provided to the character card`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
+  const healthRow = characterCard.getByText('Health', { exact: false})
+  const fertilityRow = characterCard.getByText('Fertility', { exact: false})
+  const sonsRow = characterCard.getByText('Sons', { exact: false})
+
+  it('displays the proper age of 47', () => {
+    expect(age).toHaveTextContent(/^Age: 47$/)
+  })
+
+  it('displays the proper value of 7 for a default attr', () => {
+    expect(diplomacyRow).toHaveTextContent('7 ( 7 )')
+  })
+
+  it('displays the proper value of 5.50 for the health attr', () => {
+    expect(healthRow).toHaveTextContent('5.50 ( 5.50 )')
+  })
+
+  it('displays the proper value of 60% for the fertility attr', () => {
+    expect(fertilityRow).toHaveTextContent('60% ( 60% )')
+  })
+
+  it('displays the proper value of 2 for a child attr', () => {
+    expect(sonsRow).toHaveTextContent('2')
   })
   characterCard.unmount()
 })
