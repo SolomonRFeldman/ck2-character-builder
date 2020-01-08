@@ -149,3 +149,78 @@ describe(`when a user increments the daughter stat`, () => {
   })
   characterCard.unmount()
 })
+
+describe(`when a user decriments a basic stat`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
+  fireEvent.click(within(diplomacyRow).getByText('➖'))
+
+  it('reduces the display value by 1', () => {
+    expect(diplomacyRow).toHaveTextContent('6 ( 6 )')
+  })
+  it('reduces the age by one', () => {
+    expect(age).toHaveTextContent(/^Age: 46$/)
+  })
+  characterCard.unmount()
+})
+
+describe(`when a user decriments the health stat`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const healthRow = characterCard.getByText('Health', { exact: false})
+  fireEvent.click(within(healthRow).getByText('➖'))
+
+  it('reduces the display value by .1', () => {
+    expect(healthRow).toHaveTextContent('5.40 ( 5.40 )')
+  })
+  it('reduces the age by one', () => {
+    expect(age).toHaveTextContent(/^Age: 46$/)
+  })
+  characterCard.unmount()
+})
+
+describe(`when a user decriments the fertility stat`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const fertilityRow = characterCard.getByText('Fertility', { exact: false})
+  fireEvent.click(within(fertilityRow).getByText('➖'))
+
+  it('reduces the display value by 5%', () => {
+    expect(fertilityRow).toHaveTextContent('55% ( 55% )')
+  })
+  it('reduces the age by one', () => {
+    expect(age).toHaveTextContent(/^Age: 46$/)
+  })
+  characterCard.unmount()
+})
+
+describe(`when a user decriments the son stat`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const sonsRow = characterCard.getByText('Sons', { exact: false})
+  fireEvent.click(within(sonsRow).getByText('➖'))
+
+  it('reduces the display value by one', () => {
+    expect(sonsRow).toHaveTextContent('1')
+  })
+  it('reduces the age by three', () => {
+    expect(age).toHaveTextContent(/^Age: 44$/)
+  })
+  characterCard.unmount()
+})
+
+describe(`when a user decriments the daughter stat`, () => {
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
+  const age = characterCard.getByText('Age:', { exact: false })
+  const daughtersRow = characterCard.getByText('Daughters', { exact: false})
+  fireEvent.click(within(daughtersRow).getByText('➖'))
+
+  it('reduces the display value by one', () => {
+    expect(daughtersRow).toHaveTextContent('2')
+  })
+  it('reduces the age by two', () => {
+    expect(age).toHaveTextContent(/^Age: 45$/)
+  })
+  characterCard.unmount()
+})
