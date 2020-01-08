@@ -27,5 +27,9 @@ describe(`when a character's name and dynasty are provided to a character card c
     expect(header).toHaveTextContent('Marshmallow')
     expect(header).toHaveTextContent('Mann')
   })
+  it('puts the given name and dynasty in the input boxes', () => {
+    expect(nameField).toHaveValue('Marshmallow')
+    expect(dynastyField).toHaveValue('Mann')
+  })
   characterCard.unmount()
 })
