@@ -10,14 +10,14 @@ export default function CharacterIdentityForm({character, setCharacter}) {
       <Form.Row>
         <Form.Label className='mb-0 mt-1'>Name: </Form.Label>
         <Form.Group as={Col}>
-          <Form.Control id='name' onChange={handleChange} type='text' placeholder='Name' />
+          <Form.Control id='name' onChange={handleChange} type='text' placeholder='Name' value={character.name} />
         </Form.Group>
       </Form.Row>
 
       <Form.Row>
         <Form.Label className='mb-0 mt-1'>Dynasty: </Form.Label>
         <Form.Group as={Col}>
-          <Form.Control id='dynasty' onChange={handleChange} type='text' placeholder='Dynasty' />
+          <Form.Control id='dynasty' onChange={handleChange} type='text' placeholder='Dynasty' value={character.dynasty} />
         </Form.Group>
       </Form.Row>
     </Form>
