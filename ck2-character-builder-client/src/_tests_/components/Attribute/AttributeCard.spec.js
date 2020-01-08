@@ -76,76 +76,76 @@ describe(`when attributes are provided to the character card`, () => {
 })
 
 describe(`when a user increments a basic stat`, () => {
-  const characterCard = render(<CharacterCard />)
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
   const age = characterCard.getByText('Age:', { exact: false })
   const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
   fireEvent.click(within(diplomacyRow).getByText('➕'))
 
-  it('increases the display value to 6', () => {
-    expect(diplomacyRow).toHaveTextContent('6 ( 6 )')
+  it('increases the display value by 1', () => {
+    expect(diplomacyRow).toHaveTextContent('8 ( 8 )')
   })
   it('increases the age by one', () => {
-    expect(age).toHaveTextContent(/^Age: 17$/)
+    expect(age).toHaveTextContent(/^Age: 48$/)
   })
   characterCard.unmount()
 })
 
 describe(`when a user increments the health stat`, () => {
-  const characterCard = render(<CharacterCard />)
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
   const age = characterCard.getByText('Age:', { exact: false })
   const healthRow = characterCard.getByText('Health', { exact: false})
   fireEvent.click(within(healthRow).getByText('➕'))
 
-  it('increases the display value to 6', () => {
-    expect(healthRow).toHaveTextContent('5.10 ( 5.10 )')
+  it('increases the display value by .1', () => {
+    expect(healthRow).toHaveTextContent('5.60 ( 5.60 )')
   })
   it('increases the age by one', () => {
-    expect(age).toHaveTextContent(/^Age: 17$/)
+    expect(age).toHaveTextContent(/^Age: 48$/)
   })
   characterCard.unmount()
 })
 
 describe(`when a user increments the fertility stat`, () => {
-  const characterCard = render(<CharacterCard />)
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
   const age = characterCard.getByText('Age:', { exact: false })
   const fertilityRow = characterCard.getByText('Fertility', { exact: false})
   fireEvent.click(within(fertilityRow).getByText('➕'))
 
-  it('increases the display value to 55%', () => {
-    expect(fertilityRow).toHaveTextContent('55% ( 55% )')
+  it('increases the display value by 5%', () => {
+    expect(fertilityRow).toHaveTextContent('65% ( 65% )')
   })
   it('increases the age by one', () => {
-    expect(age).toHaveTextContent(/^Age: 17$/)
+    expect(age).toHaveTextContent(/^Age: 48$/)
   })
   characterCard.unmount()
 })
 
 describe(`when a user increments the son stat`, () => {
-  const characterCard = render(<CharacterCard />)
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
   const age = characterCard.getByText('Age:', { exact: false })
   const sonsRow = characterCard.getByText('Sons', { exact: false})
   fireEvent.click(within(sonsRow).getByText('➕'))
 
-  it('increases the display value to 1', () => {
-    expect(sonsRow).toHaveTextContent('1')
+  it('increases the display value by one', () => {
+    expect(sonsRow).toHaveTextContent('3')
   })
   it('increases the age by three', () => {
-    expect(age).toHaveTextContent(/^Age: 19$/)
+    expect(age).toHaveTextContent(/^Age: 50$/)
   })
   characterCard.unmount()
 })
 
 describe(`when a user increments the daughter stat`, () => {
-  const characterCard = render(<CharacterCard />)
+  const characterCard = render(<CharacterCard character={{character_attribute: TEST_ATTR}} />)
   const age = characterCard.getByText('Age:', { exact: false })
   const daughtersRow = characterCard.getByText('Daughters', { exact: false})
   fireEvent.click(within(daughtersRow).getByText('➕'))
 
-  it('increases the display value to 1', () => {
-    expect(daughtersRow).toHaveTextContent('1')
+  it('increases the display value by one', () => {
+    expect(daughtersRow).toHaveTextContent('4')
   })
   it('increases the age by two', () => {
-    expect(age).toHaveTextContent(/^Age: 18$/)
+    expect(age).toHaveTextContent(/^Age: 49$/)
   })
   characterCard.unmount()
 })
