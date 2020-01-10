@@ -31,15 +31,17 @@ const DEFAULT_ATTR = {
 export default class Character {
   constructor({ 
       character_attribute = DEFAULT_ATTR,
+      id,
       name = "", 
       dynasty = "",
-      id
+      religion = "Catholic"
     } = {}) {
 
     this.attributes = {}
     this.id = id;
     this.name = name;
     this.dynasty = dynasty;
+    this.religion = religion;
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge()
