@@ -18,10 +18,10 @@ export default function CharacterIdentityForm({character, setCharacter}) {
         </Form.Group>
 
         <Form.Group as={Col}>
-          <Form.Label>Religion</Form.Label>
+          <Form.Label htmlFor='charReligion'>Religion</Form.Label>
           <Dropdown alignRight as={ButtonGroup} className='w-100'>
-            <Button variant='outline-secondary w-75'><span className='float-left'>{character.religion}</span></Button>
-            <Dropdown.Toggle variant='outline-secondary' split>
+            <Button variant='outline-secondary w-75'><span id='charReligion' className='float-left'>{character.religion}</span></Button>
+            <Dropdown.Toggle data-testid='religionDropdown' variant='outline-secondary' split>
               <NestedDropDownMenu id='religion' handleChange={handleChange} items={religions} />
             </Dropdown.Toggle>
           </Dropdown>
