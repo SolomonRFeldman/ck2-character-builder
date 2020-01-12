@@ -67,6 +67,14 @@ export default function CharacterIdentityForm({character, setCharacter}) {
           </Form.Control>
         </Form.Group>
 
+        <Form.Group as={Col}>
+          <Form.Label>Sex</Form.Label>
+          <Form.Control id='sex' onChange={handleChange} value={character.sex} as='select'>
+            <option>Male</option>
+            <option>Female</option>
+          </Form.Control>
+        </Form.Group>
+
       </Form.Row>
     </Form>
   )

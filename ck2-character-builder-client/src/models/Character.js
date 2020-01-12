@@ -36,7 +36,8 @@ export default class Character {
       dynasty = "",
       religion = "Catholic",
       culture = "Norse",
-      marriage_status = false
+      marriage_status = false,
+      sex = 'Male'
     } = {}) {
 
     this.attributes = {}
@@ -46,6 +47,7 @@ export default class Character {
     this.religion = religion;
     this.culture = culture;
     this.marriage_status = marriage_status;
+    this.sex = sex;
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge()
