@@ -34,7 +34,8 @@ export default class Character {
       id,
       name = "", 
       dynasty = "",
-      religion = "Catholic"
+      religion = "Catholic",
+      culture = "Norse"
     } = {}) {
 
     this.attributes = {}
@@ -42,6 +43,7 @@ export default class Character {
     this.name = name;
     this.dynasty = dynasty;
     this.religion = religion;
+    this.culture = culture;
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge()
