@@ -35,7 +35,8 @@ export default class Character {
       name = "", 
       dynasty = "",
       religion = "Catholic",
-      culture = "Norse"
+      culture = "Norse",
+      marriage_status = false
     } = {}) {
 
     this.attributes = {}
@@ -44,6 +45,7 @@ export default class Character {
     this.dynasty = dynasty;
     this.religion = religion;
     this.culture = culture;
+    this.marriage_status = marriage_status;
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge()
@@ -53,6 +55,7 @@ export default class Character {
     let age = Object.values(this.attributes).reduce( (age, attr) => {
       return age + ((attr.bonus + attr.base - attr.minVal) * (attr.cost / attr.increment))
     }, 16)
+    if (this.marriage_status) { age += 2 };
     return Math.round(age)
   }
 }

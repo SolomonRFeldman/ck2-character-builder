@@ -4,6 +4,13 @@ import NestedDropDownMenu from './NestedDropdownMenu'
 
 export default function CharacterIdentityForm({character, setCharacter}) {
   const handleChange = event => setCharacter({ ...character, [event.target.id]: event.target.value })
+
+  const handleMarriedChange = event => {
+    const value = event.target.value === 'true'
+    setCharacter({ ...character, [event.target.id]: value, age: character.age + marriedCost(value)})
+  }
+  const marriedCost = marriage_status => marriage_status ? 2 : -2
+
   const [religions, setReligions] = useState({})
   const [cultures, setCultures] = useState({})
 
@@ -46,6 +53,18 @@ export default function CharacterIdentityForm({character, setCharacter}) {
               <NestedDropDownMenu id='culture' handleChange={handleChange} items={cultures} />
             </Dropdown.Toggle>
           </Dropdown>
+        </Form.Group>
+
+      </Form.Row>
+
+      <Form.Row>
+
+        <Form.Group as={Col}>
+          <Form.Label>Married</Form.Label>
+          <Form.Control id='marriage_status' onChange={handleMarriedChange} value={character.marriage_status} as='select'>
+            <option value={true}>Yes</option>
+            <option value={false}>No</option>
+          </Form.Control>
         </Form.Group>
 
       </Form.Row>
