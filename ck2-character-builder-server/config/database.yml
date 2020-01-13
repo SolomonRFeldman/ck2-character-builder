@@ -15,11 +15,13 @@
 # gem 'pg'
 #
 default: &default
+  host: 127.0.0.1
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 development:
   <<: *default
@@ -81,5 +83,3 @@ test:
 production:
   <<: *default
   database: ck2_character_builder_server_production
-  username: ck2_character_builder_server
-  password: <%= ENV['CK2_CHARACTER_BUILDER_SERVER_DATABASE_PASSWORD'] %>
