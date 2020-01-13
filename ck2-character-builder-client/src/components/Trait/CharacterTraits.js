@@ -7,7 +7,7 @@ export default function CharacterTraits(props) {
       style={{
         overflowY: 'hidden', 
         overflowX: 'auto', 
-        width: 'calc(100% - 30px)', 
+        width: 'calc(100% - 90px)', 
         maxHeight: '30px', 
         display: 'inline-block', 
         whiteSpace: 'nowrap'

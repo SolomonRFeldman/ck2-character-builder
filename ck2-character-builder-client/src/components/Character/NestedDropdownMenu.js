@@ -15,7 +15,7 @@ export default function NestedDropDownMenu({id, handleChange, items}) {
   useEffect(() => console.log(items))
 
   return(
-    <Dropdown.Menu>
+    <Dropdown.Menu style={{maxHeight: '200px', overflowX: 'hidden'}}>
       {
         Object.keys(items).map((itemGroup) => {
           return(
