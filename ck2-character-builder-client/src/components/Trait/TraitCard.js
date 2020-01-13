@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Card from "react-bootstrap/Card";
 import DefaultTraitsDropdown from './DefaultTraitsDropdown';
 import Trait from '../../models/Trait';
+import CharacterTraits from './CharacterTraits';
 
 export default function TraitCard(props) {
   const [defaultTraits, setDefaultTraits] = useState([])
@@ -14,8 +15,11 @@ export default function TraitCard(props) {
   
   return(
     <Card>
-      <Card.Body>
-        <DefaultTraitsDropdown traits={defaultTraits} {...props} />
+      <Card.Body style={{maxHeight: '65.8px'}}>
+        <div style={{width: '80%'}}>
+          <DefaultTraitsDropdown traits={defaultTraits} {...props} />
+          <CharacterTraits {...props} />
+        </div>
       </Card.Body>
     </Card>
   )
