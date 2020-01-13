@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Image } from 'react-bootstrap'
+import { Image, OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
+import TraitTooltip from './TraitTooltip'
 
 export default function TraitItem({trait, character, setCharacter}) {
   const path = `../trait_icons/${trait.nameSlug}.png`
@@ -24,10 +25,22 @@ export default function TraitItem({trait, character, setCharacter}) {
   }, [character.traits])
 
   return(
-    <button className='dropdown-item' onClick={handleClick} hidden={hidden}>
-      <Image src={path} className='mr-2' /> 
-      {trait.name} 
-      <div className="float-right ml-2">{trait.cost}</div>
-    </button>
+    <OverlayTrigger 
+      placement='right' 
+      popperConfig={{
+        modifiers: {
+          preventOverflow: {
+            enabled: false
+          }
+        }
+      }} 
+      overlay={<Tooltip><TraitTooltip trait={trait} /></Tooltip>}
+    >
+      <Button className='dropdown-item' onClick={handleClick} hidden={hidden} style={{overflow: 'visible'}}>
+        <Image src={path} className='mr-2' /> 
+        {trait.name} 
+        <div className="float-right ml-2">{trait.cost}</div>
+      </Button>
+    </OverlayTrigger>
   )
 }
