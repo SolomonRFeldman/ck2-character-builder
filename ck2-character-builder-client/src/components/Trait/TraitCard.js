@@ -15,7 +15,7 @@ export default function TraitCard(props) {
   return(
     <Card>
       <Card.Body>
-        <DefaultTraitsDropdown traits={defaultTraits} />
+        <DefaultTraitsDropdown traits={defaultTraits} {...props} />
       </Card.Body>
     </Card>
   )

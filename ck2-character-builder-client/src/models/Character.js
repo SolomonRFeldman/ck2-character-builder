@@ -1,4 +1,5 @@
 import Attribute from "./Attribute";
+import Trait from "./Trait";
 
 const displayHealth = (attr) => attr.base.toFixed(2) + ` ( ${(attr.base+ attr.bonus).toFixed(2)} )`;
 const displayFertility = (attr) => attr.base + `% ( ${attr.base + attr.bonus}% )`;
@@ -37,7 +38,8 @@ export default class Character {
       religion = "Catholic",
       culture = "Norse",
       marriage_status = false,
-      sex = 'Male'
+      sex = 'Male',
+      traits = []
     } = {}) {
 
     this.attributes = {}
@@ -48,7 +50,9 @@ export default class Character {
     this.culture = culture;
     this.marriage_status = marriage_status;
     this.sex = sex;
+    this.traits = [];
     
+    for(const trait of traits) { this.traits.push(new Trait(trait)) };
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     this.age = this.calculateAge()
   }
