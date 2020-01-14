@@ -19,6 +19,6 @@ export default function CharacterTrait({trait, character, setCharacter}) {
   }
 
   return(
-    <Image onClick={handleClick} src={path} className='d-inline-block' />
+    <Image onClick={handleClick} src={path} style={{touchAction: 'manipulation'}} className='d-inline-block' />
   )
 }

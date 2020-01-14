@@ -36,7 +36,7 @@ export default function TraitItem({trait, character, setCharacter}) {
       }} 
       overlay={<Tooltip><TraitTooltip trait={trait} /></Tooltip>}
     >
-      <Button className='dropdown-item' onClick={handleClick} hidden={hidden} style={{overflow: 'visible'}}>
+      <Button className='dropdown-item' onClick={handleClick} hidden={hidden} style={{overflow: 'visible', touchAction: 'manipulation'}}>
         <Image src={path} className='mr-2' /> 
         {trait.name} 
         <div className="float-right ml-2">{trait.cost}</div>
