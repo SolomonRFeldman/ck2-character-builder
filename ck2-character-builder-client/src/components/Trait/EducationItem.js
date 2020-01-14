@@ -39,7 +39,7 @@ export default function EducationItem({trait, character, setCharacter}) {
       }} 
       overlay={<Tooltip><TraitTooltip trait={trait} /></Tooltip>}
     >
-      <Button className='dropdown-item' onClick={handleClick} hidden={hidden} style={{overflow: 'visible', touchAction: 'manipulation'}}>
+      <Button className='dropdown-item px-3 py-1' onClick={handleClick} hidden={hidden} style={{overflow: 'visible', touchAction: 'manipulation'}}>
         <Image src={path} className='mr-2' /> 
         {trait.name} 
         <div className="float-right ml-2">{trait.cost}</div>
