@@ -43,9 +43,8 @@ export default function EducationItem({trait, character, setCharacter, windowWid
       placement={windowWidth > 540 ? 'right' : 'bottom'}
       popperConfig={{
         modifiers: {
-          preventOverflow: {
-            enabled: false
-          }
+          preventOverflow: { enabled: false },
+          hide: { enabled: false }
         }
       }}
       overlay={<Tooltip><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
