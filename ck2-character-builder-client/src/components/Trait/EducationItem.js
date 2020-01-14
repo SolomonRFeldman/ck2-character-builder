@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Image, OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
+import { Image, OverlayTrigger, Tooltip, Button, Dropdown } from 'react-bootstrap'
 import TraitTooltip from './TraitTooltip'
 
 export default function EducationItem({trait, character, setCharacter}) {
@@ -50,8 +50,8 @@ export default function EducationItem({trait, character, setCharacter}) {
       }}
       overlay={<Tooltip><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
     >
-      <Button 
-        className='dropdown-item px-3 py-1'
+      <Dropdown.Item
+        className='px-3 py-1'
         ref={item}
         onTouchMove={() => tooltip.current.hide()}
         onMouseEnter={handleMouseEnter}
@@ -63,7 +63,7 @@ export default function EducationItem({trait, character, setCharacter}) {
         <Image src={path} className='mr-2'/> 
         {trait.name} 
         <div className="float-right ml-2">{trait.cost}</div>
-      </Button>
+      </Dropdown.Item>
     </OverlayTrigger>
   )
 }
