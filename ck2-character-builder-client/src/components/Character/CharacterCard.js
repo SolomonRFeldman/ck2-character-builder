@@ -8,7 +8,7 @@ export default function CharacterCard(props) {
   const [character, setCharacter] = useState({...new Character(props.character)})
 
   return(
-    <CardGroup className='mx-auto' style={{maxWidth: '800px'}}>
+    <CardGroup className='mx-auto my-4' style={{maxWidth: '800px'}}>
       <CharacterDetailsCard character={character} setCharacter={setCharacter} />
       <AttributeCard character={character} setCharacter={setCharacter} />
     </CardGroup>
