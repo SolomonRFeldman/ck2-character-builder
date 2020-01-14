@@ -29,7 +29,7 @@ export default function EducationItem({trait, character, setCharacter}) {
 
   return(
     <OverlayTrigger 
-      placement='right' 
+      placement={window.innerWidth > 540 ? 'right' : 'bottom'}
       popperConfig={{
         modifiers: {
           preventOverflow: {

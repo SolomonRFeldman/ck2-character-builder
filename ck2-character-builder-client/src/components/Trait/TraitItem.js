@@ -26,7 +26,7 @@ export default function TraitItem({trait, character, setCharacter}) {
 
   return(
     <OverlayTrigger 
-      placement='right' 
+      placement={window.innerWidth > 540 ? 'right' : 'bottom'} 
       popperConfig={{
         modifiers: {
           preventOverflow: {
