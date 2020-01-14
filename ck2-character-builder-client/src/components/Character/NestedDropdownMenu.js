@@ -4,7 +4,6 @@ import { Dropdown, Form } from 'react-bootstrap'
 export default function NestedDropDownMenu({id, handleChange, items}) {
   const handleSelect = event => {
     handleChange(event)
-    console.log(event.target.parent)
     event.target.value=''
   }
 
@@ -12,7 +11,6 @@ export default function NestedDropDownMenu({id, handleChange, items}) {
     event.stopPropagation()
     event.preventDefault()
   }
-  useEffect(() => console.log(items))
 
   return(
     <Dropdown.Menu style={{maxHeight: '200px', overflowX: 'hidden'}}>

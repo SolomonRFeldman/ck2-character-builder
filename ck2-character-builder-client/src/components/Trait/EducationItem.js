@@ -25,7 +25,6 @@ export default function EducationItem({trait, character, setCharacter}) {
   const isHidden = () => character.education && character.education.id === trait.id
   useEffect(() => {
     setHidden(isHidden())
-    console.log(character)
   }, [character.education])
 
   return(
