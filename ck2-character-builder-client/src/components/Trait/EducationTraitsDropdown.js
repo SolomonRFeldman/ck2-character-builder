@@ -8,7 +8,7 @@ export default function EducationTraitsDropdown(props) {
     const handleResize = () => setWindowWidth(window.innerWidth)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  })
+  }, [])
 
   return(
     <Dropdown className='d-inline-block mr-2 float-left'>
