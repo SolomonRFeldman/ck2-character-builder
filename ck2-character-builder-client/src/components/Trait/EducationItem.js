@@ -51,9 +51,9 @@ export default function EducationItem({trait, character, setCharacter, windowWid
       overlay={<Tooltip><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
     >
       <Dropdown.Item
+        as={Button}
         className='px-3 py-1'
         ref={item}
-        onTouchMove={() => tooltip.current.hide()}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick} 

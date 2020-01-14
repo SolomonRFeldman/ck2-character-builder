@@ -50,7 +50,6 @@ export default function TraitItem({trait, character, setCharacter, windowWidth})
       <Button 
         className='dropdown-item px-3 py-1'
         ref={item}
-        onTouchMove={() => tooltip.current.hide()}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick} 
