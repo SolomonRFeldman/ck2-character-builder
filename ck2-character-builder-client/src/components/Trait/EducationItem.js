@@ -9,6 +9,7 @@ export default function EducationItem({trait, character, setCharacter}) {
   const item = useRef(null)
   
   const handleClick = () => {
+    tooltip.current.hide()
     const effectiveAttributes = {}
     Object.keys(character.attributes).forEach(key => {
       effectiveAttributes[key] = {

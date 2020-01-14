@@ -9,6 +9,7 @@ export default function TraitItem({trait, character, setCharacter}) {
   const item = useRef(null)
   
   const handleClick = () => {
+    tooltip.current.hide()
     const effectiveAttributes = {}
     Object.keys(character.attributes).forEach(key => {
       effectiveAttributes[key] = {...character.attributes[key], bonus: character.attributes[key].bonus + (trait.effects[key] || 0)}
