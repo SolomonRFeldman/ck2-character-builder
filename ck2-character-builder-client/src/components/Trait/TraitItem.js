@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Image, OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
 import TraitTooltip from './TraitTooltip'
 
-export default function TraitItem({trait, character, setCharacter}) {
+export default function TraitItem({trait, character, setCharacter, windowWidth}) {
   const path = `../trait_icons/${trait.nameSlug}.png`
   const [hidden, setHidden] = useState(false)
   const tooltip = useRef(null)
@@ -37,7 +37,7 @@ export default function TraitItem({trait, character, setCharacter}) {
   return(
     <OverlayTrigger 
       ref={tooltip}
-      placement={window.innerWidth > 540 ? 'right' : 'bottom'}
+      placement={windowWidth > 540 ? 'right' : 'bottom'}
       popperConfig={{
         modifiers: {
           preventOverflow: {
