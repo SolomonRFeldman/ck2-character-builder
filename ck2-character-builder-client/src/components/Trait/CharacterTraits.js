@@ -9,8 +9,9 @@ export default function CharacterTraits(props) {
   }
 
   useEffect(() => {
-    characterTraits.current.addEventListener('wheel', handleWheel)
-    return () => characterTraits.current.removeEventListener('wheel', handleWheel)
+    const node = characterTraits.current
+    node.addEventListener('wheel', handleWheel)
+    return () => node.removeEventListener('wheel', handleWheel)
   }, [])
 
   return(
