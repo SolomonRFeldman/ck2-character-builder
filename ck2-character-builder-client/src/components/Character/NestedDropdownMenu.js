@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Dropdown, Form, Button } from 'react-bootstrap'
+import React from 'react'
+import { Dropdown, Form } from 'react-bootstrap'
 
 export default function NestedDropDownMenu({id, handleChange, items}) {
   const handleSelect = event => {
