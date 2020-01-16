@@ -34,9 +34,11 @@ it(`renders character names when provided to the CharCard component`, async() =>
 it(`defaults religion to catholic and culture to norse when a user is initialized`, async() => {
   await act(async () => characterCard = render(<CharacterCard />))
   expect(characterCard.getByLabelText('Religion')).toHaveTextContent('Catholic')
+  expect(characterCard.getByLabelText('Culture')).toHaveTextContent('Norse')
 })
 
 it('uses provided religion when provided to CharacterCard', async() => {
-  await act(async () => characterCard = render(<CharacterCard character={{religion: 'Sunni'}} />))
+  await act(async () => characterCard = render(<CharacterCard character={{religion: 'Sunni', culture: 'Irish'}} />))
   expect(characterCard.getByLabelText('Religion')).toHaveTextContent('Sunni')
+  expect(characterCard.getByLabelText('Culture')).toHaveTextContent('Irish')
 })
