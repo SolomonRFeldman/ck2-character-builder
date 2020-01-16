@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
 
-it(`renders char info in the header when a character's name and dynasty are entered`, async() => {
+it(`renders char names in the header and input when a character's name and dynasty are entered`, async() => {
   const characterCard = render(<CharacterCard />)
   const nameField = characterCard.getByPlaceholderText('Name')
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
@@ -12,11 +12,13 @@ it(`renders char info in the header when a character's name and dynasty are ente
 
   expect(header).toHaveTextContent('Marshmallow')
   expect(header).toHaveTextContent('Mann')
+  expect(nameField).toHaveValue('Marshmallow')
+  expect(dynastyField).toHaveValue('Mann')
 
   await wait()
 })
 
-it(`renders character info when provided to the CharCard compoenent`, async() => {
+it(`renders character names when provided to the CharCard component`, async() => {
   const characterCard = render(<CharacterCard character={{name: 'Marshmallow', dynasty: 'Mann'}} />)
   const nameField = characterCard.getByPlaceholderText('Name')
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
