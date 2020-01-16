@@ -1,9 +1,12 @@
 import React from 'react'
-import { render, fireEvent, wait } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
+import { act } from 'react-dom/test-utils'
+
+let characterCard
 
 it(`renders char names in the header and input when a character's name and dynasty are entered`, async() => {
-  const characterCard = render(<CharacterCard />)
+  await act(async () => characterCard = render(<CharacterCard />))
   const nameField = characterCard.getByPlaceholderText('Name')
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
   fireEvent.change(nameField, { target: { value: 'Marshmallow' } })
@@ -14,12 +17,10 @@ it(`renders char names in the header and input when a character's name and dynas
   expect(header).toHaveTextContent('Mann')
   expect(nameField).toHaveValue('Marshmallow')
   expect(dynastyField).toHaveValue('Mann')
-
-  await wait()
 })
 
 it(`renders character names when provided to the CharCard component`, async() => {
-  const characterCard = render(<CharacterCard character={{name: 'Marshmallow', dynasty: 'Mann'}} />)
+  await act(async () => characterCard = render(<CharacterCard character={{name: 'Marshmallow', dynasty: 'Mann'}} />))
   const nameField = characterCard.getByPlaceholderText('Name')
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
   const header = characterCard.getByTestId('detailsHeader')
@@ -28,22 +29,14 @@ it(`renders character names when provided to the CharCard component`, async() =>
   expect(header).toHaveTextContent('Mann')
   expect(nameField).toHaveValue('Marshmallow')
   expect(dynastyField).toHaveValue('Mann')
-
-  await wait()
 })
 
-it(`defaults religion to catholic when a user is initialized`, async() => {
-  const characterCard = render(<CharacterCard />)
-
+it(`defaults religion to catholic and culture to norse when a user is initialized`, async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
   expect(characterCard.getByLabelText('Religion')).toHaveTextContent('Catholic')
-
-  await wait()
 })
 
 it('uses provided religion when provided to CharacterCard', async() => {
-  const characterCard = render(<CharacterCard character={{religion: 'Sunni'}} />)
-
+  await act(async () => characterCard = render(<CharacterCard character={{religion: 'Sunni'}} />))
   expect(characterCard.getByLabelText('Religion')).toHaveTextContent('Sunni')
-
-  await wait()
 })
