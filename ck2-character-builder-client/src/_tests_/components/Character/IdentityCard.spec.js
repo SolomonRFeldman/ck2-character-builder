@@ -77,7 +77,7 @@ it(`displays provided sex when provided to character card`, async() => {
   expect(characterCard.getByLabelText('Sex')).toHaveValue('Female')
 })
 
-it(`can set marriage status and it increases age by two`, async() => {
+it(`can set marriage status to true and it increases age by two`, async() => {
   await act(async () => characterCard = render(<CharacterCard />))
   const marriedField = characterCard.getByLabelText('Married')
 
@@ -85,6 +85,16 @@ it(`can set marriage status and it increases age by two`, async() => {
 
   expect(marriedField).toHaveValue('true')
   expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 18')
+})
+
+it(`can set marriage status to false and it decreases age by two`, async() => {
+  await act(async () => characterCard = render(<CharacterCard character={{marriage_status: true}} />))
+  const marriedField = characterCard.getByLabelText('Married')
+
+  fireEvent.change(marriedField, { target: { value: "false"} })
+
+  expect(marriedField).toHaveValue('false')
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 16')
 })
 
 it(`can set sex status`, async() => {
