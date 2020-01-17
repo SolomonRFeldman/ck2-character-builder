@@ -30,7 +30,7 @@ export default function CharacterIdentityForm({character, setCharacter}) {
           <Form.Label htmlFor='charReligion'>Religion</Form.Label>
           <Dropdown alignRight as={ButtonGroup} className='w-100'>
             <Button variant='outline-secondary w-75'><span id='charReligion' className='float-left'>{character.religion}</span></Button>
-            <Dropdown.Toggle data-testid='religionDropdown' variant='outline-secondary' split>
+            <Dropdown.Toggle aria-label='Religion Dropdown' variant='outline-secondary' split>
               <NestedDropDownMenu id='religion' handleChange={handleChange} items={religions} />
             </Dropdown.Toggle>
           </Dropdown>
@@ -49,7 +49,7 @@ export default function CharacterIdentityForm({character, setCharacter}) {
           <Form.Label htmlFor='charCulture'>Culture</Form.Label>
           <Dropdown alignRight as={ButtonGroup} className='w-100'>
             <Button variant='outline-secondary w-75'><span id='charCulture' className='float-left'>{character.culture}</span></Button>
-            <Dropdown.Toggle variant='outline-secondary' split>
+            <Dropdown.Toggle aria-label='Culture Dropdown' variant='outline-secondary' split>
               <NestedDropDownMenu id='culture' handleChange={handleChange} items={cultures} />
             </Dropdown.Toggle>
           </Dropdown>
