@@ -54,7 +54,7 @@ it(`when a user increments a basic stat`, async() => {
   const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
   fireEvent.click(within(diplomacyRow).getByText('➕'))
 
-  expect(diplomacyRow).toHaveTextContent('8 ( 8 )')
+  expect(diplomacyRow).toHaveTextContent(`${TEST_ATTR.diplomacy + 1} ( ${TEST_ATTR.diplomacy + 1} )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE + 1}`)
 })
 
@@ -64,7 +64,7 @@ it(`when a user increments the health stat`, async() => {
   const healthRow = characterCard.getByText('Health', { exact: false})
   fireEvent.click(within(healthRow).getByText('➕'))
 
-  expect(healthRow).toHaveTextContent('5.60 ( 5.60 )')
+  expect(healthRow).toHaveTextContent(`${(TEST_ATTR.health + .10).toFixed(2)} ( ${(TEST_ATTR.health + .10).toFixed(2)} )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE + 1}`)
 })
 
@@ -74,7 +74,7 @@ it(`when a user increments the fertility stat`, async() => {
   const fertilityRow = characterCard.getByText('Fertility', { exact: false})
   fireEvent.click(within(fertilityRow).getByText('➕'))
 
-  expect(fertilityRow).toHaveTextContent('65% ( 65% )')
+  expect(fertilityRow).toHaveTextContent(`${TEST_ATTR.fertility + 5}% ( ${TEST_ATTR.fertility + 5}% )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE + 1}`)
 })
 
@@ -85,7 +85,7 @@ it(`when a user increments the son stat`, async() => {
   fireEvent.click(within(sonsRow).getByText('➕'))
   
 
-  expect(sonsRow).toHaveTextContent('3')
+  expect(sonsRow).toHaveTextContent(`${TEST_ATTR.sons + 1}`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE + 3}`)
 })
 
@@ -95,7 +95,7 @@ it(`when a user increments the daughter stat`, async() => {
   const daughtersRow = characterCard.getByText('Daughters', { exact: false})
   fireEvent.click(within(daughtersRow).getByText('➕'))
 
-  expect(daughtersRow).toHaveTextContent('4')
+  expect(daughtersRow).toHaveTextContent(`${TEST_ATTR.daughters + 1}`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE + 2}`)
 })
 
@@ -105,7 +105,7 @@ it(`when a user decriments a basic stat`, async() => {
   const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
   fireEvent.click(within(diplomacyRow).getByText('➖'))
 
-  expect(diplomacyRow).toHaveTextContent('6 ( 6 )')
+  expect(diplomacyRow).toHaveTextContent(`${TEST_ATTR.diplomacy - 1} ( ${TEST_ATTR.diplomacy - 1} )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE - 1}`)
 })
 
@@ -115,7 +115,7 @@ it(`when a user decriments the health stat`, async() => {
   const healthRow = characterCard.getByText('Health', { exact: false})
   fireEvent.click(within(healthRow).getByText('➖'))
 
-  expect(healthRow).toHaveTextContent('5.40 ( 5.40 )')
+  expect(healthRow).toHaveTextContent(`${(TEST_ATTR.health - .10).toFixed(2)} ( ${(TEST_ATTR.health - .10).toFixed(2)} )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE - 1}`)
 })
 
@@ -125,7 +125,7 @@ it(`when a user decriments the fertility stat`, async() => {
   const fertilityRow = characterCard.getByText('Fertility', { exact: false})
   fireEvent.click(within(fertilityRow).getByText('➖'))
 
-  expect(fertilityRow).toHaveTextContent('55% ( 55% )')
+  expect(fertilityRow).toHaveTextContent(`${TEST_ATTR.fertility - 5}% ( ${TEST_ATTR.fertility - 5}% )`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE - 1}`)
 })
 
@@ -135,7 +135,7 @@ it(`when a user decriments the son stat`, async() => {
   const sonsRow = characterCard.getByText('Sons', { exact: false})
   fireEvent.click(within(sonsRow).getByText('➖'))
 
-  expect(sonsRow).toHaveTextContent('1')
+  expect(sonsRow).toHaveTextContent(`${TEST_ATTR.sons - 1}`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE - 3}`)
 })
 
@@ -145,6 +145,6 @@ it(`when a user decriments the daughter stat`, async() => {
   const daughtersRow = characterCard.getByText('Daughters', { exact: false})
   fireEvent.click(within(daughtersRow).getByText('➖'))
 
-  expect(daughtersRow).toHaveTextContent('2')
+  expect(daughtersRow).toHaveTextContent(`${TEST_ATTR.daughters - 1}`)
   expect(age).toHaveTextContent(`Age: ${TEST_AGE - 2}`)
 })
