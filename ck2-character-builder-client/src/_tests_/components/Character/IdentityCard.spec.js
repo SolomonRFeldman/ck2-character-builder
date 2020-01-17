@@ -58,3 +58,9 @@ it(`can set religion and culture`, async() => {
   expect(religionField).toHaveTextContent('Zikri')
   expect(cultureField).toHaveTextContent('Scottish')
 })
+
+it(`defaults marriage status to no and sex to male when a user is initialized`, async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+  expect(characterCard.getByLabelText('Married')).toHaveValue('false')
+  expect(characterCard.getByLabelText('Sex')).toHaveValue('Male')
+})
