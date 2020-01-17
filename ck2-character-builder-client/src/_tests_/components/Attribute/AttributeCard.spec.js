@@ -26,7 +26,7 @@ it(`when a new character's attributes are initialized`, async() => {
   const fertilityRow = characterCard.getByText('Fertility', { exact: false})
   const sonsRow = characterCard.getByText('Sons', { exact: false})
 
-  expect(age).toHaveTextContent(/^Age: 16$/)
+  expect(age).toHaveTextContent('Age: 16')
   expect(diplomacyRow).toHaveTextContent('5 ( 5 )')
   expect(healthRow).toHaveTextContent('5.00 ( 5.00 )')
   expect(fertilityRow).toHaveTextContent('50% ( 50% )')
@@ -41,7 +41,7 @@ it(`it renders attributes correctly when attributes are provided to the characte
   const fertilityRow = characterCard.getByText('Fertility', { exact: false})
   const sonsRow = characterCard.getByText('Sons', { exact: false})
 
-  expect(age).toHaveTextContent(/^Age: 47$/)
+  expect(age).toHaveTextContent('Age: 47')
   expect(diplomacyRow).toHaveTextContent('7 ( 7 )')
   expect(healthRow).toHaveTextContent('5.50 ( 5.50 )')
   expect(fertilityRow).toHaveTextContent('60% ( 60% )')
@@ -55,7 +55,7 @@ it(`when a user increments a basic stat`, async() => {
   fireEvent.click(within(diplomacyRow).getByText('➕'))
 
   expect(diplomacyRow).toHaveTextContent('8 ( 8 )')
-  expect(age).toHaveTextContent(/^Age: 48$/)
+  expect(age).toHaveTextContent('Age: 48')
 })
 
 it(`when a user increments the health stat`, async() => {
@@ -65,7 +65,7 @@ it(`when a user increments the health stat`, async() => {
   fireEvent.click(within(healthRow).getByText('➕'))
 
   expect(healthRow).toHaveTextContent('5.60 ( 5.60 )')
-  expect(age).toHaveTextContent(/^Age: 48$/)
+  expect(age).toHaveTextContent('Age: 48')
 })
 
 it(`when a user increments the fertility stat`, async() => {
@@ -75,7 +75,7 @@ it(`when a user increments the fertility stat`, async() => {
   fireEvent.click(within(fertilityRow).getByText('➕'))
 
   expect(fertilityRow).toHaveTextContent('65% ( 65% )')
-  expect(age).toHaveTextContent(/^Age: 48$/)
+  expect(age).toHaveTextContent('Age: 48')
 })
 
 it(`when a user increments the son stat`, async() => {
@@ -86,7 +86,7 @@ it(`when a user increments the son stat`, async() => {
   
 
   expect(sonsRow).toHaveTextContent('3')
-  expect(age).toHaveTextContent(/^Age: 50$/)
+  expect(age).toHaveTextContent('Age: 50')
 })
 
 it(`when a user increments the daughter stat`, async() => {
@@ -96,7 +96,7 @@ it(`when a user increments the daughter stat`, async() => {
   fireEvent.click(within(daughtersRow).getByText('➕'))
 
   expect(daughtersRow).toHaveTextContent('4')
-  expect(age).toHaveTextContent(/^Age: 49$/)
+  expect(age).toHaveTextContent('Age: 49')
 })
 
 it(`when a user decriments a basic stat`, async() => {
@@ -106,7 +106,7 @@ it(`when a user decriments a basic stat`, async() => {
   fireEvent.click(within(diplomacyRow).getByText('➖'))
 
   expect(diplomacyRow).toHaveTextContent('6 ( 6 )')
-  expect(age).toHaveTextContent(/^Age: 46$/)
+  expect(age).toHaveTextContent('Age: 46')
 })
 
 it(`when a user decriments the health stat`, async() => {
@@ -116,7 +116,7 @@ it(`when a user decriments the health stat`, async() => {
   fireEvent.click(within(healthRow).getByText('➖'))
 
   expect(healthRow).toHaveTextContent('5.40 ( 5.40 )')
-  expect(age).toHaveTextContent(/^Age: 46$/)
+  expect(age).toHaveTextContent('Age: 46')
 })
 
 it(`when a user decriments the fertility stat`, async() => {
@@ -126,7 +126,7 @@ it(`when a user decriments the fertility stat`, async() => {
   fireEvent.click(within(fertilityRow).getByText('➖'))
 
   expect(fertilityRow).toHaveTextContent('55% ( 55% )')
-  expect(age).toHaveTextContent(/^Age: 46$/)
+  expect(age).toHaveTextContent('Age: 46')
 })
 
 it(`when a user decriments the son stat`, async() => {
@@ -136,7 +136,7 @@ it(`when a user decriments the son stat`, async() => {
   fireEvent.click(within(sonsRow).getByText('➖'))
 
   expect(sonsRow).toHaveTextContent('1')
-  expect(age).toHaveTextContent(/^Age: 44$/)
+  expect(age).toHaveTextContent('Age: 44')
 })
 
 it(`when a user decriments the daughter stat`, async() => {
@@ -146,5 +146,5 @@ it(`when a user decriments the daughter stat`, async() => {
   fireEvent.click(within(daughtersRow).getByText('➖'))
 
   expect(daughtersRow).toHaveTextContent('2')
-  expect(age).toHaveTextContent(/^Age: 45$/)
+  expect(age).toHaveTextContent('Age: 45')
 })
