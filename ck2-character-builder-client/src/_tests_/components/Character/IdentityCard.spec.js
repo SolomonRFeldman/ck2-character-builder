@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, within, wait } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
 import { act } from 'react-dom/test-utils'
 
@@ -41,4 +41,20 @@ it('uses provided religion when provided to CharacterCard', async() => {
   await act(async () => characterCard = render(<CharacterCard character={{religion: 'Sunni', culture: 'Irish'}} />))
   expect(characterCard.getByLabelText('Religion')).toHaveTextContent('Sunni')
   expect(characterCard.getByLabelText('Culture')).toHaveTextContent('Irish')
+})
+
+it(`can set religion and culture`, async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+  const religionField = characterCard.getByLabelText('Religion')
+  const cultureField = characterCard.getByLabelText('Culture')
+  const religionDropdown = characterCard.getByLabelText('Religion Dropdown')
+  const cultureDropdown = characterCard.getByLabelText('Culture Dropdown')
+
+  await act(async () => fireEvent.click(religionDropdown))
+  fireEvent.change(within(religionDropdown).getByLabelText('Muslim Group'), { target: { value: "Zikri"} })
+  await act(async () => fireEvent.click(cultureDropdown))
+  fireEvent.change(within(cultureDropdown).getByLabelText('Celtic Group'), { target: { value: "Scottish"} })
+
+  expect(religionField).toHaveTextContent('Zikri')
+  expect(cultureField).toHaveTextContent('Scottish')
 })
