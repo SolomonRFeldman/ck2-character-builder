@@ -28,21 +28,42 @@ const mockTraits = {
       opposites: []
     },
     {
-      id: 42,
-      name: "Genius",
-      description: "This character is blessed with a towering intellect.",
-      cost: 30,
-      effects: {martial: 5, intrigue: 5, diplomacy: 5, stewardship: 5, learning: 5, personal_combat_skill: 10, vassal_opinion: 5},
-      opposites: (3) [43, 44, 45]
+      "id": 47,
+      "name": "Strong",
+      "description": "This character is blessed with a powerful physique.",
+      "cost": 25,
+      "effects": {
+        "martial": 2,
+        "diplomacy": 1,
+        "fertility": 10,
+        "health": 1.0,
+        "personal_combat_skill": 10,
+        "attraction_opinion": 10,
+        "vassal_opinion": 5,
+        "tribal_opinion": 10
+      },
+      "opposites": [
+        48
+      ]
     },
     {
-      id: 45,
-      name: "Imbecile",
-      description: "This character is a drooling imbecile.",
-      cost: -65,
-      effects: {martial: -8, intrigue: -8, diplomacy: -8, stewardship: -8, learning: -8, personal_combat_skill: -30, attraction_opinion: -30, vassal_opinion: -10},
-      opposites: (3) [42, 43, 45]
-    }
+      "id": 48,
+      "name": "Weak",
+      "description": "This character had been cursed with a weak physique.",
+      "cost": -22,
+      "effects": {
+        "martial": -1,
+        "fertility": -5,
+        "health": -1.0,
+        "personal_combat_skill": -10,
+        "attraction_opinion": -10,
+        "vassal_opinion": -5,
+        "tribal_opinion": -10
+      },
+      "opposites": [
+        47
+      ]
+    },
   ],
   education: [
     {
