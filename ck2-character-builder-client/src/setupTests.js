@@ -1,5 +1,15 @@
 import '@testing-library/jest-dom/extend-expect'
 import fetchMock from 'fetch-mock'
+import { act } from 'react-dom/test-utils';
+
+global.document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document,
+  },
+});
 
 const mockReligions = {'Christian': ['Catholic', 'Cathar'], 'Muslim': ['Sunni', 'Zikri']};
 fetchMock.get('/religions', mockReligions)
