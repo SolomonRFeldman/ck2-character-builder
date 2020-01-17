@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
 import fetchMock from 'fetch-mock'
 
-global.DEFAULT_AGE = 16
-
 global.document.createRange = () => ({
   setStart: () => {},
   setEnd: () => {},
