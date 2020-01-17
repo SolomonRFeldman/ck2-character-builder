@@ -18,7 +18,14 @@ export default function NestedDropDownMenu({id, handleChange, items}) {
         Object.keys(items).map((itemGroup) => {
           return(
             <div className='dropdown-item p-0 my-2' onClick={event => event.stopPropagation()} key={itemGroup}>
-              <Form.Control id={id} onClick={preventEvents} defaultValue='' onChange={handleSelect} as="select">
+              <Form.Control
+                id={id}
+                aria-label={`${itemGroup} Group`}
+                onClick={preventEvents}
+                defaultValue=''
+                onChange={handleSelect}
+                as="select"
+              >
                 <option value="" disabled hidden>{itemGroup}</option>
                 {items[itemGroup].map(item => <option key={item}>{item}</option>)}
               </Form.Control>
