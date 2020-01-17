@@ -68,7 +68,7 @@ it(`defaults marriage status to no and sex to male when a user is initialized`, 
 it(`displays provided marriage status and effects when provided to character card`, async() => {
   await act(async () => characterCard = render(<CharacterCard character={{marriage_status: true}} />))
 
-  expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 18')
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE + 2}`)
   expect(characterCard.getByLabelText('Married')).toHaveValue('true')
 })
 
@@ -84,7 +84,7 @@ it(`can set marriage status to true and it increases age by two`, async() => {
   fireEvent.change(marriedField, { target: { value: "true"} })
 
   expect(marriedField).toHaveValue('true')
-  expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 18')
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE + 2}`)
 })
 
 it(`can set marriage status to false and it decreases age by two`, async() => {
@@ -94,7 +94,7 @@ it(`can set marriage status to false and it decreases age by two`, async() => {
   fireEvent.change(marriedField, { target: { value: "false"} })
 
   expect(marriedField).toHaveValue('false')
-  expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 16')
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE}`)
 })
 
 it(`can set sex status`, async() => {
