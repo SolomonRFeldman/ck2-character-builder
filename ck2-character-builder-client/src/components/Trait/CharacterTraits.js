@@ -17,6 +17,7 @@ export default function CharacterTraits(props) {
   return(
     <span 
       ref={characterTraits}
+      aria-label='Character Traits'
       className='float-right'
       style={{
         overflowY: 'hidden', 
