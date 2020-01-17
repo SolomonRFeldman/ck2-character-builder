@@ -5,7 +5,7 @@ import Attributes from './Attributes'
 export default function AttributeCard(props) {
   return(
     <Card>
-      <Card.Header>Age: {props.character.age > 16 ? props.character.age : 16}</Card.Header>
+      <Card.Header aria-label='Age'>Age: {props.character.age > 16 ? props.character.age : 16}</Card.Header>
       <Attributes {...props} />
     </Card>
   )
