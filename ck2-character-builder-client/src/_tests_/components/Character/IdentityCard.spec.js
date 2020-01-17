@@ -64,3 +64,11 @@ it(`defaults marriage status to no and sex to male when a user is initialized`, 
   expect(characterCard.getByLabelText('Married')).toHaveValue('false')
   expect(characterCard.getByLabelText('Sex')).toHaveValue('Male')
 })
+
+it(`displays provided marriage status, sex, and effects when provided to character card`, async() => {
+  await act(async () => characterCard = render(<CharacterCard character={{marriage_status: true, sex: 'Female'}} />))
+
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent('Age: 18')
+  expect(characterCard.getByLabelText('Married')).toHaveValue('true')
+  expect(characterCard.getByLabelText('Sex')).toHaveValue('Female')
+})
