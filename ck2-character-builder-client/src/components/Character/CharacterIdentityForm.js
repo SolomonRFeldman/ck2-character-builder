@@ -60,7 +60,7 @@ export default function CharacterIdentityForm({character, setCharacter}) {
       <Form.Row>
 
         <Form.Group as={Col}>
-          <Form.Label>Married</Form.Label>
+          <Form.Label htmlFor='marriage_status'>Married</Form.Label>
           <Form.Control id='marriage_status' onChange={handleMarriedChange} value={character.marriage_status} as='select'>
             <option value={true}>Yes</option>
             <option value={false}>No</option>
@@ -68,7 +68,7 @@ export default function CharacterIdentityForm({character, setCharacter}) {
         </Form.Group>
 
         <Form.Group as={Col}>
-          <Form.Label>Sex</Form.Label>
+          <Form.Label htmlFor='sex'>Sex</Form.Label>
           <Form.Control id='sex' onChange={handleChange} value={character.sex} as='select'>
             <option>Male</option>
             <option>Female</option>
