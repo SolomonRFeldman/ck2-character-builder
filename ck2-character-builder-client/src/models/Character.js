@@ -52,16 +52,22 @@ export default class Character {
     this.sex = sex;
     this.traits = [];
     
-    for(const trait of traits) { this.traits.push(new Trait(trait)) };
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
+    for(const trait of traits) { this.addTrait(new Trait(trait)) };
     this.age = this.calculateAge()
   }
 
   calculateAge() {
     let age = Object.values(this.attributes).reduce( (age, attr) => {
-      return age + ((attr.bonus + attr.base - attr.minVal) * (attr.cost / attr.increment))
+      return age + ((attr.base - attr.minVal) * (attr.cost / attr.increment))
     }, 16)
     if (this.marriage_status) { age += 2 };
+    age = this.traits.reduce((age, trait) => age + trait.cost, age)
     return Math.round(age)
+  }
+
+  addTrait(trait) {
+    this.traits.push(trait)
+    for(const effect in trait.effects) { if(this.attributes[effect]) this.attributes[effect].bonus += trait.effects[effect] }
   }
 }
