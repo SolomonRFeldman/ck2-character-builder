@@ -49,7 +49,7 @@ it('adds a trait to the character when a user clicks a trait in the dropdown', a
   expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility + 10}% )`)
 })
 
-it('parse the effects when the character provided to the characterCard has a trait', async() => {
+it('parses the effects when the character provided to the characterCard has a trait', async() => {
   await act(async () => characterCard = render(<CharacterCard character={{traits: [strongTrait]}} />))
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
   const characterTraits = characterCard.getByLabelText('Character Traits')
@@ -71,7 +71,7 @@ it('parse the effects when the character provided to the characterCard has a tra
   expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility + 10}% )`)
 })
 
-it('parse the effects when a trait is removed', async() => {
+it('parses the effects when a trait is removed', async() => {
   await act(async () => characterCard = render(<CharacterCard character={{traits: [strongTrait]}} />))
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
   const characterTraits = characterCard.getByLabelText('Character Traits')
