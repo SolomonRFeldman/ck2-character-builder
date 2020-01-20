@@ -70,3 +70,27 @@ it('parse the effects when the character provided to the characterCard has a tra
   expect(characterHealth).toHaveTextContent(`${DEFAULT_ATTR.health.toFixed(2)} ( ${(DEFAULT_ATTR.health + 1).toFixed(2)} )`)
   expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility + 10}% )`)
 })
+
+it('parse the effects when a trait is removed', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={{traits: [strongTrait]}} />))
+  const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
+  const characterTraits = characterCard.getByLabelText('Character Traits')
+  const characterTrait = within(characterTraits).getByAltText('Strong')
+  const characterAttrs = characterCard.getByLabelText('Attribute Card')
+  const characterDiplomacy = within(characterAttrs).getByText('Diplomacy', { exact: false })
+  const characterHealth = within(characterAttrs).getByText('Health', { exact: false })
+  const characterFertility = within(characterAttrs).getByText('Fertility', { exact: false })
+
+  await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
+  const traitItem = within(traitDropdown).getByText('Strong')
+  const traitOpposite = within(traitDropdown).getByText('Weak')
+  fireEvent.click(characterTrait)
+
+  expect(traitItem).toBeVisible()
+  expect(traitOpposite).toBeVisible()
+  expect(characterTrait).not.toBeInTheDocument()
+  expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE}`)
+  expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy} )`)
+  expect(characterHealth).toHaveTextContent(`${DEFAULT_ATTR.health.toFixed(2)} ( ${(DEFAULT_ATTR.health).toFixed(2)} )`)
+  expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility}% )`)
+})
