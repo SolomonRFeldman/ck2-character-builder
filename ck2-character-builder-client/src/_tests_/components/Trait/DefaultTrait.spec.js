@@ -37,9 +37,11 @@ it('adds a trait to the character when a user clicks a trait in the dropdown', a
 
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
   const traitItem = within(traitDropdown).getByText('Strong')
+  const traitOpposite = within(traitDropdown).getByText('Weak')
   fireEvent.click(traitItem)
 
   expect(traitItem).not.toBeVisible()
+  expect(traitOpposite).not.toBeVisible()
   expect(within(characterTraits).getByAltText('Strong')).toBeInTheDocument()
   expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE + 25}`)
   expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy + 1} )`)
