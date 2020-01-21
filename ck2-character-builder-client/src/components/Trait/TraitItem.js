@@ -44,7 +44,7 @@ export default function TraitItem({trait, character, setCharacter, windowWidth})
           hide: { enabled: false }
         }
       }}
-      overlay={<Tooltip><TraitTooltip trait={trait} /></Tooltip>}
+      overlay={<Tooltip aria-label={`${trait.name} Trait Tooltip`}><TraitTooltip trait={trait} /></Tooltip>}
     >
       <Button 
         className='dropdown-item px-3 py-1'
