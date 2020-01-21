@@ -3,6 +3,8 @@ import { render, fireEvent, within } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
 import { act } from 'react-dom/test-utils'
 import { DEFAULT_AGE, DEFAULT_ATTR } from '../../constants'
+import TraitTooltip from '../../../components/Trait/TraitTooltip'
+import Trait from '../../../models/Trait'
 
 const strongTrait = {
   "id": 47,
@@ -93,4 +95,15 @@ it('parses the effects when a trait is removed', async() => {
   expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy} )`)
   expect(characterHealth).toHaveTextContent(`${DEFAULT_ATTR.health.toFixed(2)} ( ${(DEFAULT_ATTR.health).toFixed(2)} )`)
   expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility}% )`)
+})
+
+it('pops up trait tooltip when a trait item is hovered over', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+  const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
+
+  await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
+  const traitItem = within(traitDropdown).getByText('Strong')
+  await act(async () => fireEvent.mouseOver(traitItem))
+
+  expect(characterCard.queryByLabelText('Strong Trait Tooltip')).toBeInTheDocument()
 })
