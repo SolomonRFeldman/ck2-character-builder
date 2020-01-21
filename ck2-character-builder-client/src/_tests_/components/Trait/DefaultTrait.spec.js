@@ -3,8 +3,6 @@ import { render, fireEvent, within } from '@testing-library/react'
 import CharacterCard from '../../../components/Character/CharacterCard'
 import { act } from 'react-dom/test-utils'
 import { DEFAULT_AGE, DEFAULT_ATTR } from '../../constants'
-import TraitTooltip from '../../../components/Trait/TraitTooltip'
-import Trait from '../../../models/Trait'
 
 const strongTrait = {
   "id": 47,
