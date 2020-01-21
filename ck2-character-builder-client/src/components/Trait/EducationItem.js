@@ -47,7 +47,7 @@ export default function EducationItem({trait, character, setCharacter, windowWid
           hide: { enabled: false }
         }
       }}
-      overlay={<Tooltip><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
+      overlay={<Tooltip aria-label={`${trait.name} Education Tooltip`}><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
     >
       <Dropdown.Item
         as={Button}
