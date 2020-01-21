@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect'
 import fetchMock from 'fetch-mock'
+import './_tests_/matchers'
 
 global.document.createRange = () => ({
   setStart: () => {},
