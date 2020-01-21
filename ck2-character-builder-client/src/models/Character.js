@@ -39,7 +39,8 @@ export default class Character {
       culture = "Norse",
       marriage_status = false,
       sex = 'Male',
-      traits = []
+      traits = [],
+      education
     } = {}) {
 
     this.attributes = {}
@@ -54,6 +55,8 @@ export default class Character {
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     for(const trait of traits) { this.addTrait(new Trait(trait)) };
+    if(education) { this.setEducation(education) }
+
     this.age = this.calculateAge()
   }
 
@@ -63,11 +66,21 @@ export default class Character {
     }, 16)
     if (this.marriage_status) { age += 2 };
     age = this.traits.reduce((age, trait) => age + trait.cost, age)
+    if(this.education) { age = age + this.education.cost }
     return Math.round(age)
+  }
+
+  setEducation(education) {
+    this.education = new Trait(education)
+    this.parseTraitEffects(education.effects)
   }
 
   addTrait(trait) {
     this.traits.push(trait)
-    for(const effect in trait.effects) { if(this.attributes[effect]) this.attributes[effect].bonus += trait.effects[effect] }
+    this.parseTraitEffects(trait.effects)
+  }
+
+  parseTraitEffects(effects) {
+    for(const effect in effects) { if(this.attributes[effect]) this.attributes[effect].bonus += effects[effect] }
   }
 }
