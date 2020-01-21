@@ -40,8 +40,8 @@ it('adds a trait to the character when a user clicks a trait in the dropdown', a
   const traitOpposite = within(traitDropdown).getByText('Weak')
   fireEvent.click(traitItem)
 
-  expect(traitItem).not.toBeVisible()
-  expect(traitOpposite).not.toBeVisible()
+  expect(traitItem).toBeHidden()
+  expect(traitOpposite).toBeHidden()
   expect(within(characterTraits).getByAltText('Strong')).toBeInTheDocument()
   expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE + 25}`)
   expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy + 1} )`)
@@ -62,8 +62,8 @@ it('parses the effects when the character provided to the characterCard has a tr
   const traitItem = within(traitDropdown).getByText('Strong')
   const traitOpposite = within(traitDropdown).getByText('Weak')
 
-  expect(traitItem).not.toBeVisible()
-  expect(traitOpposite).not.toBeVisible()
+  expect(traitItem).toBeHidden()
+  expect(traitOpposite).toBeHidden()
   expect(within(characterTraits).getByAltText('Strong')).toBeInTheDocument()
   expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE + 25}`)
   expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy + 1} )`)
@@ -86,8 +86,8 @@ it('parses the effects when a trait is removed', async() => {
   const traitOpposite = within(traitDropdown).getByText('Weak')
   fireEvent.click(characterTrait)
 
-  expect(traitItem).toBeVisible()
-  expect(traitOpposite).toBeVisible()
+  expect(traitItem).not.toBeHidden()
+  expect(traitOpposite).not.toBeHidden()
   expect(characterTrait).not.toBeInTheDocument()
   expect(characterCard.getByLabelText('Age')).toHaveTextContent(`Age: ${DEFAULT_AGE}`)
   expect(characterDiplomacy).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy} )`)
