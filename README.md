@@ -1,5 +1,7 @@
 Ruby Version 2.6.4
 
+Deployed App: https://ck2characterbuilder.solomonfeldman.dev/
+
 # Crusader Kings II Character Builder
 Crusader Kings II Character Builder is a JS/Rails app that allows users to create characters, similar to how the ruler designer in Crusader Kings II works, so the user has another place to do it instead of just in-game. This comes with the benifit of not relying on having the game open on one menu to keep your character sheet and being able to persist your character.
 
