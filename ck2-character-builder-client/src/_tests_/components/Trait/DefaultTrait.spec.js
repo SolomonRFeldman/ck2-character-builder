@@ -105,3 +105,12 @@ it('pops up trait tooltip when a trait item is hovered over', async() => {
 
   expect(characterCard.queryByLabelText('Strong Trait Tooltip')).toBeInTheDocument()
 })
+
+it('pops up trait tooltip when a character trait is hovered over', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={{traits: [strongTrait]}} />))
+  const characterTraits = characterCard.getByLabelText('Character Traits')
+  const characterTrait = within(characterTraits).getByAltText('Strong')
+  await act(async () => fireEvent.mouseOver(characterTrait))
+
+  expect(characterCard.queryByLabelText('Strong Trait Tooltip')).toBeInTheDocument()
+})
