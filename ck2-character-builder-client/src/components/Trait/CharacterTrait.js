@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image } from 'react-bootstrap'
+import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import TraitTooltip from './TraitTooltip'
 
 export default function CharacterTrait({trait, character, setCharacter}) {
   const path = `../trait_icons/${trait.nameSlug}.png`
@@ -19,6 +20,17 @@ export default function CharacterTrait({trait, character, setCharacter}) {
   }
 
   return(
-    <Image alt={trait.name} onClick={handleClick} src={path} style={{touchAction: 'manipulation'}} className='d-inline-block' />
+    <OverlayTrigger 
+      popperConfig={{
+        modifiers: {
+          preventOverflow: { enabled: false },
+          hide: { enabled: false }
+        }
+      }} 
+      placement='bottom' 
+      overlay={<Tooltip aria-label={`${trait.name} Trait Tooltip`}><TraitTooltip trait={trait} /></Tooltip>}
+    >
+      <Image alt={trait.name} onClick={handleClick} src={path} style={{touchAction: 'manipulation'}} className='d-inline-block' />
+    </OverlayTrigger>
   )
 }
