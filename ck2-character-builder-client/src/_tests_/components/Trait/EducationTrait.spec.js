@@ -79,7 +79,7 @@ it('parses the effects when an education is provided to the CharacterCard', asyn
   expect(characterFertility).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility - 5}% )`)
 })
 
-it('pops up trait tooltip when a trait item is hovered over', async() => {
+it('pops up trait tooltip when an education item is hovered over', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
   const educationDropdown = characterCard.getByLabelText('Education Dropdown')
 
@@ -88,4 +88,12 @@ it('pops up trait tooltip when a trait item is hovered over', async() => {
   await act(async () => fireEvent.mouseOver(educationItem))
 
   expect(characterCard.queryByLabelText('Mastermind Theologian Education Tooltip')).toBeInTheDocument()
+})
+
+it('pops up trait tooltip when a characters education is hovered over', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+  const characterEducation = characterCard.getByAltText('Amateurish Plotter Character Education')
+  await act(async () => fireEvent.mouseOver(characterEducation))
+
+  expect(characterCard.queryByLabelText('Amateurish Plotter Trait Tooltip')).toBeInTheDocument()
 })
