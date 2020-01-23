@@ -18,7 +18,7 @@ class Character < ApplicationRecord
   end
 
   def education_is_trait_type_education
-    errors.add(:education, 'must be type Education') if education.type != 'Education'
+    errors.add(:education, 'must be type Education') if education && education.type != 'Education'
   end
 
   class << self
