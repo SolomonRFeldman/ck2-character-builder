@@ -125,6 +125,17 @@ RSpec.describe Character, :type => :model do
     it "can serialize its education" do
       expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_education.to_json)
     end
-
   end
+
+  context "when a character has a default trait set as its education" do
+    before do
+      valid_character.education_id = valid_trait.id
+      valid_character.save
+    end
+
+    fit "fails to validate" do
+      expect(valid_character).to_not be_valid
+    end
+  end
+
 end
