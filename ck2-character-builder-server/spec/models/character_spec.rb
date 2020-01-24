@@ -118,6 +118,10 @@ RSpec.describe Character, :type => :model do
       expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(secondary_trait.to_json)
     end
 
+    it "belongs to an education" do
+      expect(valid_character.education).to be(valid_education)
+    end
+
     it "can serialize its education" do
       expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_education.to_json)
     end
