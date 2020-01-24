@@ -133,7 +133,7 @@ RSpec.describe Character, :type => :model do
       valid_character.save
     end
 
-    fit "fails to validate" do
+    it "fails to validate" do
       expect(valid_character).to_not be_valid
     end
   end
