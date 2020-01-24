@@ -57,7 +57,13 @@ RSpec.describe Character, :type => :model do
     end
 
     it "can be serialized" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include('"name":"Ragnarr","dynasty":"Loðbrók"')
+      serialized_character = CharacterSerializer.new(Character.all.last).to_serialized_json
+      expect(serialized_character).to include('"name":"Ragnarr"')
+      expect(serialized_character).to include('"dynasty":"Loðbrók"')
+      expect(serialized_character).to include('"marriage_status":true')
+      expect(serialized_character).to include('"culture":"Norse"')
+      expect(serialized_character).to include('"religion":"Germanic",')
+      expect(serialized_character).to include('"sex":"Male"')
     end
 
     it "can serialize it's attributes" do
