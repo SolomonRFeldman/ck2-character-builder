@@ -45,6 +45,21 @@ RSpec.describe Character, :type => :model do
     }
   end
 
+  let(:valid_education) do
+    Education.create({
+      name: "Amateurish Plotter",
+      description: <<~DESC.strip,
+        The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.
+      DESC
+      cost: 0,
+      effects: {
+        intrigue: 1,
+        stewardship: -1,
+        personal_combat_skill: 4
+      }
+    })
+  end
+
   it "is valid with a name, dynasty, marriage_status, religion, culture, and sex" do
     expect(Character.create(valid_character)).to be_valid
   end
@@ -54,6 +69,8 @@ RSpec.describe Character, :type => :model do
       character = Character.create(valid_character)
       character.character_attribute = CharacterAttribute.create(valid_character_attribute)
       character.traits = [Trait.create(valid_trait)]
+      character.education = valid_education
+      character.save
     end
 
     it "can be serialized" do
@@ -76,6 +93,10 @@ RSpec.describe Character, :type => :model do
 
     it "can serialize its traits" do
       expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(Trait.all.first.to_json)
+    end
+
+    it "can serialize its education" do
+      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(valid_education.to_json)
     end
 
   end
