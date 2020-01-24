@@ -91,6 +91,10 @@ RSpec.describe Character, :type => :model do
       expect(valid_character.character_attribute).to eq(valid_character_attribute)
     end
 
+    it "has many traits" do
+      expect(valid_character.traits).to include(valid_trait)
+    end
+
     it "can serialize its traits" do
       expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_trait.to_json)
     end
