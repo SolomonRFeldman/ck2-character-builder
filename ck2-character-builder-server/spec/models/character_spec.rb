@@ -45,6 +45,23 @@ RSpec.describe Character, :type => :model do
     })
   end
 
+  let(:secondary_trait) do
+    Trait.create({
+      name: "Hunter",
+      description: <<~DESC.strip,
+        This character only feels truly alive when killing God's little creatures.
+      DESC
+      cost: 10,
+      effects: {
+        pursuit: 20,
+        martial: 2,
+        diplomacy: 1,
+        personal_combat_skill: 10,
+        same_trait_opinion: 10
+      }
+    })
+  end
+
   let(:valid_education) do
     Education.create({
       name: "Amateurish Plotter",
@@ -68,7 +85,7 @@ RSpec.describe Character, :type => :model do
     before do
       character = valid_character
       character.character_attribute = valid_character_attribute
-      character.traits = [valid_trait]
+      character.traits = [valid_trait, secondary_trait]
       character.education = valid_education
       character.save
     end
@@ -93,10 +110,12 @@ RSpec.describe Character, :type => :model do
 
     it "has many traits" do
       expect(valid_character.traits).to include(valid_trait)
+      expect(valid_character.traits).to include(secondary_trait)
     end
 
     it "can serialize its traits" do
       expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_trait.to_json)
+      expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(secondary_trait.to_json)
     end
 
     it "can serialize its education" do
