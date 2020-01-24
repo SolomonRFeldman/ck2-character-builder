@@ -18,6 +18,7 @@ class Character < ApplicationRecord
   end
 
   def education_is_trait_type_education
+    education = Trait.find_by(id: education_id)
     errors.add(:education, 'must be type Education') if education && education.type != 'Education'
   end
 
