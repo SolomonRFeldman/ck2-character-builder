@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe Character, :type => :model do
   let(:valid_character) do
-    {
+    Character.create({
       name: "Ragnarr",
       dynasty: "Loðbrók",
       marriage_status: true,
       culture: "Norse",
       religion: "Germanic",
       sex: "Male"
-    }
+    })
   end
 
   let(:valid_character_attribute) do
-    {
+    CharacterAttribute.create({
       diplomacy: 5,
       martial: 5,
       stewardship: 5,
@@ -23,11 +23,11 @@ RSpec.describe Character, :type => :model do
       fertility: 50,
       sons: 0,
       daughters: 0
-    }
+    })
   end
 
   let(:valid_trait) do
-    {
+    Trait.create({
       name: "Kind",
       description: <<~DESC.strip,
         This character is kind and full of empathy. \
@@ -42,7 +42,7 @@ RSpec.describe Character, :type => :model do
         same_trait_opinion: 5,
         opposite_trait_opinion: -5
       }
-    }
+    })
   end
 
   let(:valid_education) do
@@ -61,14 +61,14 @@ RSpec.describe Character, :type => :model do
   end
 
   it "is valid with a name, dynasty, marriage_status, religion, culture, and sex" do
-    expect(Character.create(valid_character)).to be_valid
+    expect(valid_character).to be_valid
   end
 
   context "when a valid character has been created" do
     before do
-      character = Character.create(valid_character)
-      character.character_attribute = CharacterAttribute.create(valid_character_attribute)
-      character.traits = [Trait.create(valid_trait)]
+      character = valid_character
+      character.character_attribute = valid_character_attribute
+      character.traits = [valid_trait]
       character.education = valid_education
       character.save
     end
@@ -84,19 +84,19 @@ RSpec.describe Character, :type => :model do
     end
 
     it "can serialize it's attributes" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(CharacterAttribute.all.last.to_json(except: [:id, :character_id]))
+      expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_character_attribute.to_json(except: [:id, :character_id]))
     end
 
     it "has one attribute set" do
-      expect(Character.all.last.character_attribute).to eq(CharacterAttribute.all.last)
+      expect(valid_character.character_attribute).to eq(valid_character_attribute)
     end
 
     it "can serialize its traits" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(Trait.all.first.to_json)
+      expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_trait.to_json)
     end
 
     it "can serialize its education" do
-      expect(CharacterSerializer.new(Character.all.last).to_serialized_json).to include(valid_education.to_json)
+      expect(CharacterSerializer.new(valid_character).to_serialized_json).to include(valid_education.to_json)
     end
 
   end
