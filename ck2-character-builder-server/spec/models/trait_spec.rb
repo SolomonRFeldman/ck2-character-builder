@@ -20,8 +20,42 @@ RSpec.describe Character, :type => :model do
     })
   end
 
+  let(:primary_character) do
+    Character.create({
+      name: "Ragnarr",
+      dynasty: "Loðbrók",
+      marriage_status: true,
+      culture: "Norse",
+      religion: "Germanic",
+      sex: "Male"
+    })
+  end
+
+  let(:secondary_character) do
+    Character.create({
+      name: "William",
+      dynasty: "de Normandy",
+      marriage_status: true,
+      culture: "Norman",
+      religion: "Catholic",
+      sex: "Male"
+    })
+  end
+
   it "is valid with a name, description, cost, group, and effects" do
     expect(valid_trait).to be_valid
+  end
+
+  context "when multiple characters have this trait" do
+    before do
+      valid_trait.characters = [primary_character, secondary_character]
+      valid_trait.save
+    end
+
+    it "has many characters" do
+      expect(valid_trait.characters).to include(primary_character)
+      expect(valid_trait.characters).to include(secondary_character)
+    end
   end
 
 end
