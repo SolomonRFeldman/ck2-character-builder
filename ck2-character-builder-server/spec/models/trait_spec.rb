@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Character, :type => :model do
+RSpec.describe Trait, :type => :model do
   let(:valid_trait) do 
     Trait.create({
       name: "Kind",
