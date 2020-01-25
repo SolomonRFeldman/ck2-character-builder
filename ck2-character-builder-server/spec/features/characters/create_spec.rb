@@ -104,5 +104,20 @@ describe 'Character Features', :type => :feature do
     end
   end
 
+  context "when a post request for an invalid new character is sent" do
+    before do
+      character_traits = { education_id: valid_education.id, trait_ids: [valid_trait.id, secondary_trait.id] }
+      page.driver.submit :post, characters_path, character: valid_character.merge(character_traits).merge(name: "")
+    end
+
+    it "returns a 400 status" do
+      expect(page.status_code).to be(400)
+    end
+    
+    it "returns the error" do
+      expect(page).to have_content("\"name\":[\"can't be blank\"]")
+    end
+  end
+
 
 end
