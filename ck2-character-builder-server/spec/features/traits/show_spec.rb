@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'Trait Features', :type => :feature do
 
-  let(:valid_trait) do 
-    {
+  let(:primary_trait) do 
+    Trait.create({
       name: "Kind",
       description: <<~DESC.strip,
         This character is kind and full of empathy. \
@@ -18,11 +18,11 @@ describe 'Trait Features', :type => :feature do
         same_trait_opinion: 5,
         opposite_trait_opinion: -5
       }
-    }
+    })
   end
 
-  let(:valid_trait_2) do
-    {
+  let(:secondary_trait) do
+    Trait.create({
       name: "Left-Handed",
       description: <<~DESC.strip,
         This character is left-handed. \
@@ -35,16 +35,13 @@ describe 'Trait Features', :type => :feature do
         muslim_opinion: -10,
         same_trait_opinion: 5
       }
-    }
-  end
-
-  before do
-    Trait.create(valid_trait)
-    Trait.create(valid_trait_2)
+    })
   end
 
   context "when a get request is sent to /traits" do
     before do
+      primary_trait
+      secondary_trait
       page.driver.submit :get, traits_path, {}
     end
 
