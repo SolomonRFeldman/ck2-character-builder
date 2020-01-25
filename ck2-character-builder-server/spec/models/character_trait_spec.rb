@@ -2,32 +2,18 @@ require 'rails_helper'
 
 RSpec.describe CharacterTrait, :type => :model do
   let(:valid_character) do
-    {
+    Character.create({
       name: "Ragnarr",
       dynasty: "Loðbrók",
       marriage_status: true,
       culture: "Norse",
       religion: "Germanic",
       sex: "Male"
-    }
-  end
-
-  let(:valid_character_attribute) do
-    {
-      diplomacy: 5,
-      martial: 5,
-      stewardship: 5,
-      intrigue: 5,
-      learning: 5,
-      health: 5,
-      fertility: 50,
-      sons: 0,
-      daughters: 0
-    }
+    })
   end
 
   let(:valid_trait) do 
-    {
+    Trait.create({
       name: "Kind",
       description: <<~DESC.strip,
         This character is kind and full of empathy. \
@@ -42,19 +28,23 @@ RSpec.describe CharacterTrait, :type => :model do
         same_trait_opinion: 5,
         opposite_trait_opinion: -5
       }
-    }
+    })
+  end
+
+  let(:character_trait) do
+    CharacterTrait.new()
   end
 
   context "when a valid character and trait exist and their ids are assigned" do
     before do
-      char = Character.create(valid_character.merge(character_attribute: CharacterAttribute.create(valid_character_attribute)))
-      trait = Trait.create(valid_trait)
-      CharacterTrait.create(character_id: char.id, trait_id: trait.id)
+      character_trait.character_id = valid_character.id
+      character_trait.trait_id = valid_trait.id
+      character_trait.save
     end
 
     it "belongs to a character and a trait" do
-      expect(CharacterTrait.all.last.trait).to eq(Trait.all.last)
-      expect(CharacterTrait.all.last.character).to eq(Character.all.last)
+      expect(character_trait.trait).to eq(valid_trait)
+      expect(character_trait.character).to eq(valid_character)
     end
   end
 
