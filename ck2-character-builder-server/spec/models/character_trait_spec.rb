@@ -30,6 +30,23 @@ RSpec.describe CharacterTrait, :type => :model do
       }
     })
   end
+
+  let(:opposite_trait) do
+    Trait.create({
+      name: "Cruel",
+      description: <<~DESC.strip,
+        This character is an evil sadist, taking pleasure in the suffering of others.
+      DESC
+      cost: 0,
+      effects: {
+        morale_damage: 10,
+        intrigue: 1,
+        diplomacy: -1,
+        personal_combat_skill: 3,
+        vassal_opinion: -5
+      }
+    })
+  end
   
   let(:valid_education) do
     Education.create({
@@ -81,8 +98,26 @@ RSpec.describe CharacterTrait, :type => :model do
       character_trait.trait_id = valid_trait.id
       character_trait.save
     end
+
     it "is not valid" do
       expect(CharacterTrait.create(character_id: valid_character.id, trait_id: valid_trait.id)).to_not be_valid
+    end
+  end
+
+  context "when a character gets accociated with a trait that is an opposite of one of its current traits" do
+    before do
+      valid_trait.opposites = [opposite_trait.id]
+      opposite_trait.opposites = [valid_trait.id]
+      valid_trait.save && opposite_trait.save
+      CharacterTrait.create(character_id: valid_character.id, trait_id: valid_trait.id)
+
+      character_trait.character_id = valid_character.id
+      character_trait.trait_id = opposite_trait.id
+      character_trait.save
+    end
+
+    it "is not valid" do
+      expect(character_trait).to_not be_valid
     end
   end
 
