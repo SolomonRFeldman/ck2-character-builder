@@ -75,4 +75,15 @@ RSpec.describe CharacterTrait, :type => :model do
     end
   end
 
+  context "when a character is accociated with the same trait twice" do
+    before do
+      character_trait.character_id = valid_character.id
+      character_trait.trait_id = valid_trait.id
+      character_trait.save
+    end
+    it "is not valid" do
+      expect(CharacterTrait.create(character_id: valid_character.id, trait_id: valid_trait.id)).to_not be_valid
+    end
+  end
+
 end
