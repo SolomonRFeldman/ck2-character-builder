@@ -159,4 +159,24 @@ RSpec.describe Character, :type => :model do
     end
   end
 
+  context "when a character has an invalid religion" do
+    before do
+      valid_character.religion = "Flying Spaghetti Monster"
+    end
+
+    it "is not valid" do
+      expect(valid_character).to_not be_valid
+    end
+  end
+
+  context "when a character has an invalid culture" do
+    before do
+      valid_character.culture = "Martian"
+    end
+
+    it "is not valid" do
+      expect(valid_character).to_not be_valid
+    end
+  end
+
 end
