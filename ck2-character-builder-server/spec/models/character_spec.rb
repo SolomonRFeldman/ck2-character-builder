@@ -199,4 +199,38 @@ RSpec.describe Character, :type => :model do
     end
   end
 
+  context "when a character has the same name as another in its dynasty" do
+    before do
+      Character.create({
+        name: "Ragnarr",
+        dynasty: "Loðbrók",
+        marriage_status: false,
+        culture: "Swedish",
+        religion: "Catholic",
+        sex: "Female"
+      })
+    end
+
+    it "is not valid" do
+      expect(valid_character).to be_invalid
+    end
+  end
+
+  context "when a character has the same name as another in another dynasty" do
+    before do
+      Character.create({
+        name: "Ragnarr",
+        dynasty: "Gorm",
+        marriage_status: false,
+        culture: "Swedish",
+        religion: "Catholic",
+        sex: "Female"
+      })
+    end
+
+    it "is valid" do
+      expect(valid_character).to be_valid
+    end
+  end
+
 end
