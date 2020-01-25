@@ -77,6 +77,8 @@ RSpec.describe Character, :type => :model do
     })
   end
 
+  let(:character_trait) { CharacterTrait.new }
+
   it "is valid with a name, dynasty, marriage_status, religion, culture, and sex" do
     expect(valid_character).to be_valid
   end
@@ -135,6 +137,25 @@ RSpec.describe Character, :type => :model do
 
     it "fails to validate" do
       expect(valid_character).to_not be_valid
+    end
+  end
+
+  context "when a character is destroyed" do
+    before do
+      valid_character.character_attribute = valid_character_attribute
+      valid_character.save
+      character_trait.trait = valid_trait
+      character_trait.character = valid_character
+      character_trait.save
+      valid_character.destroy
+    end
+
+    it "destroys its character_trait links" do
+      expect(CharacterTrait.find_by(id: character_trait.id)).to be_nil
+    end
+
+    it "destroys its character_attributes" do
+      expect(CharacterAttribute.find_by(id: valid_character_attribute.id)).to be_nil
     end
   end
 
