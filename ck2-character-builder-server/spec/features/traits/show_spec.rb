@@ -2,6 +2,21 @@ require 'rails_helper'
 
 describe 'Trait Features', :type => :feature do
 
+  let(:primary_education) do
+    Education.create({
+      name: "Amateurish Plotter",
+      description: <<~DESC.strip,
+        The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.
+      DESC
+      cost: 0,
+      effects: {
+        intrigue: 1,
+        stewardship: -1,
+        personal_combat_skill: 4
+      }
+    })
+  end
+
   let(:primary_trait) do 
     Trait.create({
       name: "Kind",
@@ -40,13 +55,15 @@ describe 'Trait Features', :type => :feature do
 
   context "when a get request is sent to /traits" do
     before do
+      primary_education
       primary_trait
       secondary_trait
       page.driver.submit :get, traits_path, {}
     end
 
-    it "serializes all the traits" do
-      expect(page).to have_content(Trait.all.to_json)
+    it "serializes all the traits and separates educational and default" do
+      expect(page).to have_content('"default":'"#{Trait.all.where(type: nil).to_json}"'')
+      expect(page).to have_content('"education":'"#{Education.all.to_json}"'')
     end
   end
 
