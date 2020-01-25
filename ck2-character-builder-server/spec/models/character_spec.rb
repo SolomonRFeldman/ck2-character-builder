@@ -179,4 +179,24 @@ RSpec.describe Character, :type => :model do
     end
   end
 
+  context "when a character has no name" do
+    before do
+      valid_character.name = ""
+    end
+
+    it "is not valid" do
+      expect(valid_character).to_not be_valid
+    end
+  end
+
+  context "when a character has no dynasty" do
+    before do
+      valid_character.dynasty = ""
+    end
+
+    it "is not valid" do
+      expect(valid_character).to_not be_valid
+    end
+  end
+
 end
