@@ -30,6 +30,21 @@ RSpec.describe CharacterTrait, :type => :model do
       }
     })
   end
+  
+  let(:valid_education) do
+    Education.create({
+      name: "Amateurish Plotter",
+      description: <<~DESC.strip,
+        The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.
+      DESC
+      cost: 0,
+      effects: {
+        intrigue: 1,
+        stewardship: -1,
+        personal_combat_skill: 4
+      }
+    })
+  end
 
   let(:character_trait) do
     CharacterTrait.new()
@@ -45,6 +60,18 @@ RSpec.describe CharacterTrait, :type => :model do
     it "belongs to a character and a trait" do
       expect(character_trait.trait).to eq(valid_trait)
       expect(character_trait.character).to eq(valid_character)
+    end
+  end
+
+  context "when an education is joined to a character" do
+    before do
+      character_trait.character_id = valid_character.id
+      character_trait.trait_id = valid_education.id
+      character_trait.save
+    end
+
+    it "is not valid" do
+      expect(character_trait).to_not be_valid
     end
   end
 
