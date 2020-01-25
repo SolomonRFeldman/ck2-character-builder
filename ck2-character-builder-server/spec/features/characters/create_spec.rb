@@ -77,8 +77,8 @@ describe 'Character Features', :type => :feature do
 
   context "when a post request for a new character is sent" do
     before do
-      character_traits = { education_id: valid_education.id }
-      page.driver.submit :post, characters_path, character: valid_character.merge(character_traits), character_trait_ids: [valid_trait.id, secondary_trait.id]
+      character_traits = { education_id: valid_education.id, trait_ids: [valid_trait.id, secondary_trait.id] }
+      page.driver.submit :post, characters_path, character: valid_character.merge(character_traits)
     end
 
     it "creates the character" do
