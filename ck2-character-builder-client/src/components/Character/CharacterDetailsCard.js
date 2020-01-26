@@ -2,6 +2,7 @@ import React from 'react'
 import Card from "react-bootstrap/Card";
 import CharacterIdentityCard from './CharacterIdentityCard';
 import TraitCard from '../Trait/TraitCard';
+import CharacterPersistanceCard from './CharacterPersistanceCard';
 
 export default function CharacterDetailsCard(props) {
   return(
@@ -13,6 +14,7 @@ export default function CharacterDetailsCard(props) {
       <Card.Body className='px-0 py-0'>
         <CharacterIdentityCard {...props} />
         <TraitCard {...props} />
+        <CharacterPersistanceCard {...props} />
       </Card.Body>
     </Card>
   )
