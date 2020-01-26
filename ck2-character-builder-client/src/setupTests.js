@@ -97,4 +97,7 @@ const mockTraits = {
 fetchMock.get('/traits', mockTraits)
 
 fetchMock.get('/characters', mockCharacters)
-fetchMock.post('/characters', {...hallow, id: 0})
+fetchMock.post('/characters', () => {
+  const char = JSON.parse(fetchMock.lastOptions().body).character
+  return char.id ? char : {...char, id: 0}
+})
