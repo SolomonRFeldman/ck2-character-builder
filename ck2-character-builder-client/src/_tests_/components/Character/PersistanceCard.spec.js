@@ -4,6 +4,8 @@ import { act } from 'react-dom/test-utils'
 import CharacterCard from '../../../components/Character/CharacterCard'
 import { eleanor } from '../../../__mocks__/characters_fetch'
 import Character from '../../../models/Character'
+import { hallow } from '../../test_models/test_characters'
+import fetchMock from 'fetch-mock'
 
 let characterCard
 
@@ -52,4 +54,40 @@ it(`loads a character's info into the card when a user clicks to load a characte
   expect(characterCard.queryByAltText('Grey Eminence Character Education')).toBeInTheDocument()
   expect(within(educationDropdown).getByText("Grey Eminence")).toBeHidden()
   expect(within(educationDropdown).getByText("Amateurish Plotter")).not.toBeHidden()
+})
+
+it('sends the correct params to the server when a user clicks the save button', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const params = JSON.parse(fetchMock.lastOptions().body).character
+  expect(params.id).toBe(undefined)
+  expect(params.character_attribute).toMatchObject(hallow.character_attribute)
+  expect(params.name).toBe(hallow.name)
+  expect(params.marriage_status).toBe(true)
+  expect(params.education_id).toBe(hallow.education.id)
+  expect(params.trait_ids).toEqual(hallow.traits.map(trait => trait.id))
+})
+
+it('sends the id and other correct params to the server when a user loads a character then clicks the save button', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+
+  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const loadedChar = new Character(eleanor)
+  fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
+  await act(async () => fireEvent.click(characterLoadButton))
+
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const params = JSON.parse(fetchMock.lastOptions().body).character
+  expect(params.id).toBe(eleanor.id)
+  expect(params.character_attribute).toMatchObject(eleanor.character_attribute)
+  expect(params.name).toBe(eleanor.name)
+  expect(params.marriage_status).toBe(eleanor.marriage_status)
+  expect(params.education_id).toBe(eleanor.education.id)
+  expect(params.trait_ids).toEqual(eleanor.traits.map(trait => trait.id))
 })

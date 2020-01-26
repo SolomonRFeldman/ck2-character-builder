@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect'
 import fetchMock from 'fetch-mock'
 import './_tests_/matchers'
 import mockCharacters from './__mocks__/characters_fetch'
+import { hallow } from './_tests_/test_models/test_characters';
 
 global.document.createRange = () => ({
   setStart: () => {},
@@ -96,3 +97,4 @@ const mockTraits = {
 fetchMock.get('/traits', mockTraits)
 
 fetchMock.get('/characters', mockCharacters)
+fetchMock.post('/characters', {...hallow, id: 0})
