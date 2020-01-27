@@ -10,27 +10,33 @@ export default function TraitCard(props) {
   const [defaultTraits, setDefaultTraits] = useState([])
   const [educationTraits, setEducationTraits] = useState([])
 
+  const setEducation = education => {
+    const effectiveAttributes = {}
+    Object.keys(props.character.attributes).forEach(key => {
+      effectiveAttributes[key] = {
+        ...props.character.attributes[key], 
+        bonus: props.character.attributes[key].bonus + (education.effects[key] || 0)}
+    })
+    props.setCharacter({
+      ...props.character, 
+      education: education, 
+      age: props.character.age + education.cost, 
+      attributes: effectiveAttributes
+    })
+  }
+
   useEffect(() => {
     fetch('/traits').then(response => response.json()).then(traits => {
       setDefaultTraits(traits.default.map((trait) => new Trait(trait)))
       const educations = traits.education.map((trait) => new Trait(trait))
       setEducationTraits(educations)
-      if(!props.character.education) {
-        const effectiveAttributes = {}
-        Object.keys(props.character.attributes).forEach(key => {
-          effectiveAttributes[key] = {
-            ...props.character.attributes[key], 
-            bonus: props.character.attributes[key].bonus + (educations[0].effects[key] || 0)}
-        })
-        props.setCharacter({
-          ...props.character, 
-          education: educations[0], 
-          age: props.character.age + educations[0].cost, 
-          attributes: effectiveAttributes
-        })
-      }
+      if(!props.character.education) { setEducation(educations[0]) }
     })
   }, [])
+
+  useEffect(() => { 
+    if(props.character.education === undefined && educationTraits.length !== 0) { setEducation(educationTraits[0]) } 
+  }, [props.character.education])
   
   return(
     <Card>
