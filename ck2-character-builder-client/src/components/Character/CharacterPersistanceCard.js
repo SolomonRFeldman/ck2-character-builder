@@ -19,10 +19,11 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
         <ButtonToolbar>
           <CharacterSaveButton 
             className='mr-2' 
-            characters={characters} 
+            character={character}
+            setCharacter={setCharacter}
+            characters={characters}
             setCharacters={setCharacters} 
             selectedChar={selectedChar} 
-            character={character} 
           />
           <CharacterLoadButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
           <CharacterLoadSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
