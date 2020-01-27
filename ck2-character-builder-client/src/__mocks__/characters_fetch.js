@@ -57,7 +57,7 @@ export const eleanor = {
   ]
 }
 
-const sigurd = {
+export const sigurd = {
   "id": 3,
   "name": "Sigurd",
   "dynasty": "af Munso",
