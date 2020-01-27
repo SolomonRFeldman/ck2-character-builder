@@ -6,6 +6,7 @@ import { eleanor, sigurd } from '../../../__mocks__/characters_fetch'
 import Character from '../../../models/Character'
 import { hallow } from '../../test_models/test_characters'
 import fetchMock from 'fetch-mock'
+import { DEFAULT_AGE, DEFAULT_ATTR } from '../../constants'
 
 let characterCard
 
@@ -272,4 +273,73 @@ it('selects the updated character in the load list', async() => {
   await act(async () => fireEvent.click(characterSaveButton))
 
   expect(characterLoadSelect).toHaveValue(eleanor.id.toString())
+})
+
+it('wipes all character data on clicking new button', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+
+  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterNewButton = characterCard.getByLabelText('Character New Button')
+  const loadedChar = new Character(eleanor)
+  fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
+  await act(async () => fireEvent.click(characterLoadButton))
+
+  const header = characterCard.getByTestId('detailsHeader')
+  const nameField = characterCard.getByPlaceholderText('Name')
+  const religionField = characterCard.getByLabelText('Religion')
+  const marriedField = characterCard.getByLabelText('Married')
+  const sexField = characterCard.getByLabelText('Sex')
+  const age = characterCard.getByText('Age:', { exact: false })
+  const diplomacyRow = characterCard.getByText('Diplomacy', { exact: false})
+  const healthRow = characterCard.getByText('Health', { exact: false})
+  const fertilityRow = characterCard.getByText('Fertility', { exact: false})
+  const sonsRow = characterCard.getByText('Sons', { exact: false})
+  const characterTraits = characterCard.getByLabelText('Character Traits') 
+  const characterTrait = within(characterTraits).getByAltText('Strong') 
+  const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+
+  await act(async () => fireEvent.click(characterNewButton))
+  await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+
+
+  expect(header).not.toHaveTextContent('Eleanor')
+  expect(nameField).toHaveValue('')
+  expect(religionField).toHaveTextContent('Catholic')
+  expect(marriedField).toHaveValue('false')
+  expect(sexField).toHaveValue('Male')
+
+  expect(age).toHaveTextContent(`Age: ${DEFAULT_AGE}`)
+  expect(diplomacyRow).toHaveTextContent(`${DEFAULT_ATTR.diplomacy} ( ${DEFAULT_ATTR.diplomacy} )`)
+  expect(healthRow).toHaveTextContent(`${DEFAULT_ATTR.health.toFixed(2)} ( ${(DEFAULT_ATTR.health).toFixed(2)} )`)
+  expect(fertilityRow).toHaveTextContent(`${DEFAULT_ATTR.fertility}% ( ${DEFAULT_ATTR.fertility}% )`)
+  expect(sonsRow).toHaveTextContent(DEFAULT_ATTR.sons)
+
+  expect(characterTrait).not.toBeInTheDocument()
+  expect(within(traitDropdown).getByText('Strong')).not.toBeHidden()
+
+  expect(characterCard.queryByAltText('Amateurish Plotter Character Education')).toBeInTheDocument()
+  expect(within(educationDropdown).getByText("Amateurish Plotter")).toBeHidden()
+  expect(within(educationDropdown).getByText("Grey Eminence")).not.toBeHidden()
+})
+
+
+it(`doesn't overwrite previously loaded character when new is clicked and then save is clicked`, async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+
+  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const loadedChar = new Character(eleanor)
+  fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
+  await act(async () => fireEvent.click(characterLoadButton))
+
+  const characterNewButton = characterCard.getByLabelText('Character New Button')
+  await act(async () => fireEvent.click(characterNewButton))
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const params = JSON.parse(fetchMock.lastOptions().body).character
+  expect(params.id).toBe(undefined)
 })
