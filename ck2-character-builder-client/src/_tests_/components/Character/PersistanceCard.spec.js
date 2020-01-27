@@ -237,3 +237,14 @@ it(`updates the character to the load select when a user clicks the save button 
   expect(within(educationDropdown).getByText("Mastermind Theologian")).toBeHidden()
   expect(within(educationDropdown).getByText("Amateurish Plotter")).not.toBeHidden()
 })
+
+it('assignes character an id on save so a second save request sends with an id', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const params = JSON.parse(fetchMock.lastOptions().body).character
+  expect(params.id).toBe(0)
+})
