@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Card, ButtonToolbar, Button, Row, Col } from 'react-bootstrap'
-import CharacterLoadSelect from './CharacterLoadSelect'
-import CharacterLoadButton from './CharacterLoadButton'
-import CharacterSaveButton from './CharacterSaveButton'
+import LoadCharacterSelect from './LoadCharacterSelect'
+import LoadCharacterButton from './LoadCharacterButton'
+import SaveCharacterButton from './SaveCharacterButton'
 import Character from '../../models/Character'
 
 export default function CharacterPersistanceCard({character, setCharacter}) {
@@ -20,8 +20,8 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
         <ButtonToolbar>
           <Col>
             <Row className='mb-2'>
-              <Button aria-label='Character New Button' onClick={() => setCharacter(new Character)}>New</Button>
-              <CharacterSaveButton 
+              <Button aria-label='New Character Button' onClick={() => setCharacter(new Character)}>New</Button>
+              <SaveCharacterButton
                 className='ml-2' 
                 character={character}
                 setCharacter={setCharacter}
@@ -32,8 +32,8 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
             </Row>
 
             <Row>
-              <CharacterLoadButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
-              <CharacterLoadSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
+              <LoadCharacterButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
+              <LoadCharacterSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
             </Row>
           </Col>
         </ButtonToolbar>

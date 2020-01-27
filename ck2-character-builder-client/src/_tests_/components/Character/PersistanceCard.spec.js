@@ -12,8 +12,8 @@ let characterCard
 
 it(`loads a character's info into the card when a user clicks to load a character`, async() => {
   await act(async () => characterCard = render(<CharacterCard />))
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
   const loadedChar = new Character(eleanor)
 
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
@@ -60,7 +60,7 @@ it(`loads a character's info into the card when a user clicks to load a characte
 it('sends the correct params to the server when a user clicks the save button', async() => {
   await act(async () => characterCard = render(<CharacterCard character={hallow} />))
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
 
   const params = JSON.parse(fetchMock.lastOptions().body).character
@@ -75,13 +75,13 @@ it('sends the correct params to the server when a user clicks the save button', 
 it('sends the id and other correct params to the server when a user loads a character then clicks the save button', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
   const loadedChar = new Character(eleanor)
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
   await act(async () => fireEvent.click(characterLoadButton))
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
 
   const params = JSON.parse(fetchMock.lastOptions().body).character
@@ -97,9 +97,9 @@ it(`adds the character to the load select when a user clicks the save button`, a
   await act(async () => characterCard = render(<CharacterCard character={hallow} />))
   const loadedChar = new Character(hallow)
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
 
   const { diplomacy, health, fertility, sons } = loadedChar.attributes
   const header = characterCard.getByTestId('detailsHeader')
@@ -162,13 +162,13 @@ it(`adds the character to the load select when a user clicks the save button`, a
 it(`updates the character to the load select when a user clicks the save button with a loaded character`, async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
   const loadedChar = new Character(eleanor)
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
   await act(async () => fireEvent.click(characterLoadButton))
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
 
   const { diplomacy, health, fertility, sons } = loadedChar.attributes
   const header = characterCard.getByTestId('detailsHeader')
@@ -242,7 +242,7 @@ it(`updates the character to the load select when a user clicks the save button 
 it('assignes character an id on save so a second save request sends with an id', async() => {
   await act(async () => characterCard = render(<CharacterCard character={hallow} />))
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
   await act(async () => fireEvent.click(characterSaveButton))
 
@@ -253,19 +253,19 @@ it('assignes character an id on save so a second save request sends with an id',
 it('selects the new saved character in the load list', async() => {
   await act(async () => characterCard = render(<CharacterCard character={hallow} />))
 
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
   expect(characterLoadSelect).toHaveValue('0')
 })
 
 it('selects the updated character in the load list', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
 
   fireEvent.change(characterLoadSelect, { target: { value: eleanor.id} })
   await act(async () => fireEvent.click(characterLoadButton))
@@ -278,9 +278,9 @@ it('selects the updated character in the load list', async() => {
 it('wipes all character data on clicking new button', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
-  const characterNewButton = characterCard.getByLabelText('Character New Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
+  const characterNewButton = characterCard.getByLabelText('New Character Button')
   const loadedChar = new Character(eleanor)
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
   await act(async () => fireEvent.click(characterLoadButton))
@@ -329,15 +329,15 @@ it('wipes all character data on clicking new button', async() => {
 it(`doesn't overwrite previously loaded character when new is clicked and then save is clicked`, async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
-  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
-  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
   const loadedChar = new Character(eleanor)
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
   await act(async () => fireEvent.click(characterLoadButton))
 
-  const characterNewButton = characterCard.getByLabelText('Character New Button')
+  const characterNewButton = characterCard.getByLabelText('New Character Button')
   await act(async () => fireEvent.click(characterNewButton))
-  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
 
   const params = JSON.parse(fetchMock.lastOptions().body).character

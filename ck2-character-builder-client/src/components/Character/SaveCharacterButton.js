@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-export default function CharacterSaveButton({className, character, setCharacter, characters, setCharacters, setSelectedChar}){
+export default function SaveCharacterButton({className, character, setCharacter, characters, setCharacters, setSelectedChar}){
   const handleClick = () => {
     const obj = {
       method: "POST",
@@ -37,6 +37,6 @@ export default function CharacterSaveButton({className, character, setCharacter,
   }
 
   return(
-    <Button className={className} variant='success' onClick={handleClick} aria-label='Character Save Button'>Save</Button>
+    <Button className={className} variant='success' onClick={handleClick} aria-label='Save Character Button'>Save</Button>
   )
 }
