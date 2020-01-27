@@ -30,7 +30,9 @@ class Character < ApplicationRecord
         character.assign_attributes(character_params.except(:id, :character_attribute))
         character
       else
-        Character.new(character_params.except(:id).merge(character_attribute: CharacterAttribute.new(character_params[:character_attribute])))
+        Character.new(character_params.except(:id).merge(
+          character_attribute: (CharacterAttribute.new(character_params[:character_attribute]) if character_params[:character_attribute])
+        ))
       end
     end
   end
