@@ -109,7 +109,7 @@ RSpec.describe Character, :type => :model do
 
   let(:character_attribute_data_attrs) do
     {
-      diplomacy: 5,
+      diplomacy: 6,
       martial: 5,
       stewardship: 5,
       intrigue: 5,
@@ -362,4 +362,46 @@ RSpec.describe Character, :type => :model do
       expect(@character.character_attribute).to be_nil
     end
   end
+
+  context "when a character without an attribute set is updated with one and passed into the class method find_or_create_with_attributes" do
+    before do
+      valid_character
+      @character = Character.find_or_create_with_attributes(
+        {
+          id: valid_character.id,
+          character_attribute: character_attribute_data_attrs
+        }
+      )
+      @character.save
+    end
+
+    it "is valid" do
+      expect(@character).to be_valid
+    end
+
+    it "creates an attribute set" do
+      expect(@character.character_attribute).to be_valid
+    end
+
+    it "assignes provided data" do
+      expect(@character.character_attribute.diplomacy).to eq(6)
+    end
+  end
+
+  context "when a character has an attribute set and is updated without one and passed into the class method find_or_create_with_attributes" do
+    before do
+      valid_character.character_attribute = valid_character_attribute
+      @character = Character.find_or_create_with_attributes(
+        {
+          id: valid_character.id
+        }
+      )
+      @character.save
+    end
+
+    it "does not edit the character's attr set" do
+      expect(@character.character_attribute).to eq(valid_character_attribute)
+    end
+  end
+
 end
