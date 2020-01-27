@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Card, ButtonToolbar } from 'react-bootstrap'
+import { Card, ButtonToolbar, Button } from 'react-bootstrap'
 import CharacterLoadSelect from './CharacterLoadSelect'
 import CharacterLoadButton from './CharacterLoadButton'
 import CharacterSaveButton from './CharacterSaveButton'
+import Character from '../../models/Character'
 
 export default function CharacterPersistanceCard({character, setCharacter}) {
   const [characters, setCharacters] = useState([])
@@ -17,6 +18,7 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
     <Card>
       <Card.Body>
         <ButtonToolbar>
+          <Button aria-label='Character New Button' onClick={() => setCharacter(new Character)}>New</Button>
           <CharacterSaveButton 
             className='mr-2' 
             character={character}
