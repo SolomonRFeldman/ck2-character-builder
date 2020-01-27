@@ -23,7 +23,7 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
             setCharacter={setCharacter}
             characters={characters}
             setCharacters={setCharacters} 
-            selectedChar={selectedChar} 
+            setSelectedChar={setSelectedChar} 
           />
           <CharacterLoadButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
           <CharacterLoadSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />

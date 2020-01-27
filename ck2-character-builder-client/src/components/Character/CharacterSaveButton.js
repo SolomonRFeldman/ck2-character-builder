@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-export default function CharacterSaveButton({className, character, setCharacter, characters, setCharacters}){
+export default function CharacterSaveButton({className, character, setCharacter, characters, setCharacters, setSelectedChar}){
   const handleClick = () => {
     const obj = {
       method: "POST",
@@ -32,6 +32,7 @@ export default function CharacterSaveButton({className, character, setCharacter,
         newCharacters = [...characters, json]
       }
       setCharacters(newCharacters)
+      setSelectedChar(json.id)
     })
   }
 
