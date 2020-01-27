@@ -2,7 +2,7 @@ import React from 'react'
 import { render, within, fireEvent } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import CharacterCard from '../../../components/Character/CharacterCard'
-import { eleanor } from '../../../__mocks__/characters_fetch'
+import { eleanor, sigurd } from '../../../__mocks__/characters_fetch'
 import Character from '../../../models/Character'
 import { hallow } from '../../test_models/test_characters'
 import fetchMock from 'fetch-mock'
@@ -247,4 +247,29 @@ it('assignes character an id on save so a second save request sends with an id',
 
   const params = JSON.parse(fetchMock.lastOptions().body).character
   expect(params.id).toBe(0)
+})
+
+it('selects the new saved character in the load list', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  expect(characterLoadSelect).toHaveValue('0')
+})
+
+it('selects the updated character in the load list', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+
+  const characterLoadSelect = characterCard.getByLabelText('Character Load Select')
+  const characterLoadButton = characterCard.getByLabelText('Character Load Button')
+  const characterSaveButton = characterCard.getByLabelText('Character Save Button')
+
+  fireEvent.change(characterLoadSelect, { target: { value: eleanor.id} })
+  await act(async () => fireEvent.click(characterLoadButton))
+  fireEvent.change(characterLoadSelect, { target: { value: sigurd.id } })
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(characterLoadSelect).toHaveValue(eleanor.id.toString())
 })
