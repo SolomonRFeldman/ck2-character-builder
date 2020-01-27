@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-export default function CharacterSaveButton({className, character}){
+export default function CharacterSaveButton({className, character, characters, setCharacters}){
   const handleClick = () => {
     const obj = {
       method: "POST",
@@ -21,7 +21,17 @@ export default function CharacterSaveButton({className, character}){
         }
       })
     }
-    fetch('/characters', obj).then(resp => resp.json()).then(json => json)
+    fetch('/characters', obj).then(resp => resp.json()).then(json => {
+      const characterIndex = characters.findIndex(charToUpdate => charToUpdate.id === json.id)
+      let newCharacters
+      if(characterIndex !== -1) {
+        newCharacters = characters
+        newCharacters[characterIndex] = json
+      } else {
+        newCharacters = [...characters, json]
+      }
+      setCharacters(newCharacters)
+    })
   }
 
   return(
