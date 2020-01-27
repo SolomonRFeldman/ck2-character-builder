@@ -343,4 +343,23 @@ RSpec.describe Character, :type => :model do
     end
   end
 
+  context "when a character without an attribute set passed into the class method find_or_create_with_attributes" do
+    before do
+      @character = Character.find_or_create_with_attributes(
+        character_data_attrs.merge({
+          trait_ids: [valid_trait.id, secondary_trait.id], 
+          education_id: valid_education.id
+        })
+      )
+      @character.save
+    end
+
+    it "is valid" do
+      expect(@character).to be_valid
+    end
+
+    it "does not create an attribute set" do
+      expect(@character.character_attribute).to be_nil
+    end
+  end
 end
