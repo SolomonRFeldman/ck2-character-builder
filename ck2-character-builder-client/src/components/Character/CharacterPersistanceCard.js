@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, ButtonToolbar, Button } from 'react-bootstrap'
+import { Card, ButtonToolbar, Button, Row, Col } from 'react-bootstrap'
 import CharacterLoadSelect from './CharacterLoadSelect'
 import CharacterLoadButton from './CharacterLoadButton'
 import CharacterSaveButton from './CharacterSaveButton'
@@ -18,17 +18,24 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
     <Card>
       <Card.Body>
         <ButtonToolbar>
-          <Button aria-label='Character New Button' onClick={() => setCharacter(new Character)}>New</Button>
-          <CharacterSaveButton 
-            className='mr-2' 
-            character={character}
-            setCharacter={setCharacter}
-            characters={characters}
-            setCharacters={setCharacters} 
-            setSelectedChar={setSelectedChar} 
-          />
-          <CharacterLoadButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
-          <CharacterLoadSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
+          <Col>
+            <Row className='mb-2'>
+              <Button aria-label='Character New Button' onClick={() => setCharacter(new Character)}>New</Button>
+              <CharacterSaveButton 
+                className='ml-2' 
+                character={character}
+                setCharacter={setCharacter}
+                characters={characters}
+                setCharacters={setCharacters} 
+                setSelectedChar={setSelectedChar} 
+              />
+            </Row>
+
+            <Row>
+              <CharacterLoadButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
+              <CharacterLoadSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
+            </Row>
+          </Col>
         </ButtonToolbar>
       </Card.Body>
     </Card>
