@@ -77,7 +77,49 @@ RSpec.describe Character, :type => :model do
     })
   end
 
+  let(:secondary_education) do
+    Education.create({
+      name: "Scholarly Theologian",
+      description: <<~DESC.strip,
+        The Scholarly Theologian is wise and well read, with a deep understanding of philosophy and theology.
+      DESC
+      cost: 6,
+      effects: {
+        intrigue: -1,
+        diplomacy: 1,
+        stewardship: 1,
+        learning: 6,
+        fertility: -5
+      }
+    })
+  end
+
   let(:character_trait) { CharacterTrait.new }
+
+  let(:character_data_attrs) do 
+    {
+      name: "Ragnarr",
+      dynasty: "Loðbrók",
+      marriage_status: true,
+      culture: "Norse",
+      religion: "Germanic",
+      sex: "Male"
+    }
+  end
+
+  let(:character_attribute_data_attrs) do
+    {
+      diplomacy: 5,
+      martial: 5,
+      stewardship: 5,
+      intrigue: 5,
+      learning: 5,
+      health: 5,
+      fertility: 50,
+      sons: 0,
+      daughters: 0
+    }
+  end
 
   it "is valid with a name, dynasty, marriage_status, religion, culture, and sex" do
     expect(valid_character).to be_valid
@@ -230,6 +272,74 @@ RSpec.describe Character, :type => :model do
 
     it "is valid" do
       expect(valid_character).to be_valid
+    end
+  end
+
+  context "when a new character is passed into the class method find_or_create_with_attributes" do
+    before do
+      @character = Character.find_or_create_with_attributes(
+        character_data_attrs.merge({
+          character_attribute: character_attribute_data_attrs,
+          trait_ids: [valid_trait.id, secondary_trait.id], 
+          education_id: valid_education.id
+        })
+      )
+    end
+
+    it "is valid" do
+      expect(@character).to be_valid
+    end
+
+    it "has a valid attribute set" do
+      expect(@character.character_attribute).to be_valid
+    end
+
+    it "has an education" do
+      expect(@character.education).to eq(valid_education)
+    end
+
+    it "has both traits" do
+      expect(@character.traits).to include(valid_trait)
+      expect(@character.traits).to include(secondary_trait)
+    end
+  end
+
+  context "when an already created character is passed into the class method find_or_create_with_attributes" do
+    before do
+      valid_character.character_attribute = valid_character_attribute
+      valid_character.trait_ids = [valid_trait.id]
+      valid_character.education_id = valid_education.id
+      @character = Character.find_or_create_with_attributes(
+        {
+          id: valid_character.id,
+          name: "Yeet McFrangus",
+          character_attribute: { diplomacy: 17 },
+          trait_ids: [secondary_trait.id], 
+          education_id: secondary_education.id
+        }
+      )
+      @character.save
+    end
+
+    it "is valid" do
+      expect(@character).to be_valid
+    end
+
+    it "updates its data attribute" do
+      expect(@character.name).to eq("Yeet McFrangus")
+    end
+
+    it "updates its character attribute" do
+      expect(@character.character_attribute.diplomacy).to be(17)
+    end
+
+    it "updates its traits" do
+      expect(@character.traits).to include(secondary_trait)
+      expect(@character.traits).to_not include(valid_trait)
+    end
+
+    it "updates its education" do
+      expect(@character.education).to eq(secondary_education)
     end
   end
 
