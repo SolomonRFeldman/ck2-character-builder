@@ -285,6 +285,21 @@ it('selects the updated character in the load list', async() => {
   expect(characterLoadSelect).toHaveValue(eleanor.id.toString())
 })
 
+it('puts the new updated character at the top of the list', async() => {
+  await act(async () => characterCard = render(<CharacterCard />))
+
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  const characterLoadButton = characterCard.getByLabelText('Load Character Button')
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
+
+  fireEvent.change(characterLoadSelect, { target: { value: eleanor.id} })
+  await act(async () => fireEvent.click(characterLoadButton))
+  fireEvent.change(characterLoadSelect, { target: { value: sigurd.id } })
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(characterLoadSelect.children[0]).toHaveValue(eleanor.id.toString())
+})
+
 it('wipes all character data on clicking new button', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
