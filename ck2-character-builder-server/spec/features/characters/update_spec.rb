@@ -156,4 +156,38 @@ describe 'Character Features', :type => :feature do
     end
   end
 
+  context "when a post request is sent to update only a characters attributes" do
+    before do
+      character_traits = { education_id: valid_education.id, trait_ids: [valid_trait.id, secondary_trait.id] }
+      page.driver.submit :post, characters_path, character: valid_character.merge(character_traits)
+      @before_update_updated_at = Character.all.last.updated_at
+      page.driver.submit :post, characters_path, character: valid_character.merge({ 
+        id: Character.all.last.id,
+        character_attribute: valid_character_attribute.merge({ diplomacy: 10 })
+      })
+      @after_update_updated_at = Character.all.last.updated_at
+    end
+
+    it "updates the character's updated_at attribute" do
+      expect(@before_update_updated_at).to be < @after_update_updated_at
+    end
+  end
+
+  context "when a post request is sent to update only a characters traits" do
+    before do
+      character_traits = { education_id: valid_education.id, trait_ids: [valid_trait.id, secondary_trait.id] }
+      page.driver.submit :post, characters_path, character: valid_character.merge(character_traits)
+      @before_update_updated_at = Character.all.last.updated_at
+      page.driver.submit :post, characters_path, character: valid_character.merge({ 
+        id: Character.all.last.id,
+        trait_ids: [valid_trait.id, tertiary_trait.id]
+      })
+      @after_update_updated_at = Character.all.last.updated_at
+    end
+
+    it "updates the character's updated_at attribute" do
+      expect(@before_update_updated_at).to be < @after_update_updated_at
+    end
+  end
+
 end
