@@ -26,11 +26,9 @@ export default function SaveCharacterButton({className, character, setCharacter,
       const characterIndex = characters.findIndex(charToUpdate => charToUpdate.id === json.id)
       let newCharacters
       if(characterIndex !== -1) {
-        newCharacters = [...characters]
-        newCharacters[characterIndex] = json
-      } else {
-        newCharacters = [json, ...characters]
+        characters.splice(characterIndex, 1)
       }
+      newCharacters = [json, ...characters]
       setCharacters(newCharacters)
       setSelectedChar(json.id)
     })
