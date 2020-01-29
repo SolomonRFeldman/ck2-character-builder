@@ -29,7 +29,7 @@ export default function SaveCharacterButton({className, character, setCharacter,
         newCharacters = [...characters]
         newCharacters[characterIndex] = json
       } else {
-        newCharacters = [...characters, json]
+        newCharacters = [json, ...characters]
       }
       setCharacters(newCharacters)
       setSelectedChar(json.id)
