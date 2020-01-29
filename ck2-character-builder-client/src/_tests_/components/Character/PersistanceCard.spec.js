@@ -260,6 +260,16 @@ it('selects the new saved character in the load list', async() => {
   expect(characterLoadSelect).toHaveValue('0')
 })
 
+it('puts the new saved character at the top of the list', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  const characterLoadSelect = characterCard.getByLabelText('Load Character Select')
+  expect(characterLoadSelect.children[0]).toHaveValue('0')
+})
+
 it('selects the updated character in the load list', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
 
