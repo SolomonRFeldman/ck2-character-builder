@@ -79,6 +79,9 @@ describe 'Character Features', :type => :feature do
   before do
     character_traits = { education_id: valid_education.id, trait_ids: [valid_trait.id, secondary_trait.id] }
     page.driver.submit :post, characters_path, character: valid_character.merge(character_traits)
+    page.driver.submit :post, characters_path, character: valid_character.merge(character_traits).merge(name: "Yes")
+    page.driver.submit :post, characters_path, character: valid_character.merge(character_traits).merge(name: "No")
+    page.driver.submit :post, characters_path, character: valid_character.merge(character_traits).merge(name: "Definatly", id: Character.where(name: "Yes").first.id)
   end
 
   context "when a get request is sent to /characters" do
@@ -86,8 +89,8 @@ describe 'Character Features', :type => :feature do
       page.driver.submit :get, characters_path, {}
     end
 
-    it "serializes all the characters" do
-      expect(page).to have_content(CharacterSerializer.new(Character.all).to_serialized_json)
+    it "serializes all the characters in updated DESC order" do
+      expect(page).to have_content(CharacterSerializer.new(Character.all.order(updated_at: :DESC)).to_serialized_json)
     end
   end
 
