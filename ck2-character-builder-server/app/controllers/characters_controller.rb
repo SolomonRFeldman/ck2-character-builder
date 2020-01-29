@@ -11,6 +11,7 @@ class CharactersController < ApplicationController
   def create
     character = Character.find_or_create_with_attributes(character_params)
     if character.save
+      character.touch(:updated_at)
       render json: CharacterSerializer.new(character).to_serialized_json, status: 200
     else
       return render json: { errors: { character: character.errors } }.to_json, status: 400
