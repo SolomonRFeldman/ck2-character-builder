@@ -1,7 +1,7 @@
 class CharactersController < ApplicationController
 
   def index
-    render json: CharacterSerializer.new(Character.preload(:character_attribute, :education, :traits).all).to_serialized_json
+    render json: CharacterSerializer.new(Character.preload(:character_attribute, :education, :traits).all.order(updated_at: :DESC)).to_serialized_json
   end
 
   def show
