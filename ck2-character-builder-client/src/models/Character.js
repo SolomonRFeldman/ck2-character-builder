@@ -52,6 +52,7 @@ export default class Character {
     this.marriage_status = marriage_status;
     this.sex = sex;
     this.traits = [];
+    this.errors = {};
     
     for(const attr in DEFAULT_ATTR) { this.attributes[attr] = CHARACTER_ATTR[attr](character_attribute[attr]) };
     for(const trait of traits) { this.addTrait(new Trait(trait)) };

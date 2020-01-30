@@ -23,7 +23,15 @@ export default function CharacterIdentityForm({character, setCharacter}) {
 
         <Form.Group as={Col}>
           <Form.Label>Name</Form.Label>
-          <Form.Control id='name' onChange={handleChange} type='text' placeholder='Name' value={character.name}/>
+          <Form.Control 
+            id='name' 
+            onChange={handleChange} 
+            type='text' 
+            placeholder='Name' 
+            value={character.name} 
+            isInvalid={character.errors.name}
+          />
+          <Form.Control.Feedback aria-label='Name Error' type="invalid">{character.errors.name}</Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group as={Col}>
@@ -42,7 +50,15 @@ export default function CharacterIdentityForm({character, setCharacter}) {
 
         <Form.Group as={Col}>
         <Form.Label>Dynasty</Form.Label>
-          <Form.Control id='dynasty' onChange={handleChange} type='text' placeholder='Dynasty' value={character.dynasty} />
+          <Form.Control 
+            id='dynasty' 
+            onChange={handleChange} 
+            type='text' 
+            placeholder='Dynasty' 
+            value={character.dynasty} 
+            isInvalid={character.errors.dynasty} 
+          />
+          <Form.Control.Feedback aria-label='Dynasty Error' type="invalid">{character.errors.dynasty}</Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group as={Col}>
