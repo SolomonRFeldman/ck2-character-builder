@@ -14,7 +14,7 @@ class CharactersController < ApplicationController
       character.touch(:updated_at)
       render json: CharacterSerializer.new(character).to_serialized_json, status: 200
     else
-      return render json: { errors: { character: character.errors } }.to_json, status: 400
+      return render json: { errors: { character: character.errors } }.to_json, status: 200
     end
   end
 
