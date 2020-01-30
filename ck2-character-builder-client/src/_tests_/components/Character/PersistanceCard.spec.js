@@ -368,3 +368,22 @@ it(`doesn't overwrite previously loaded character when new is clicked and then s
   const params = JSON.parse(fetchMock.lastOptions().body).character
   expect(params.id).toBe(undefined)
 })
+
+it('displays errors for username and dynasty', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+  const nameField = characterCard.getByPlaceholderText('Name')
+  const dynastyField = characterCard.getByPlaceholderText('Dynasty')
+  fireEvent.change(nameField, { target: { value: '' } })
+  fireEvent.change(dynastyField, { target: { value: '' } })
+  
+  const errorResponse = () => {
+    const char = JSON.parse(fetchMock.lastOptions().body).character
+    return { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } }
+  }
+  fetchMock.post('/characters', errorResponse, {overwriteRoutes: true})
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(characterCard.getByLabelText('Name Error')).toHaveTextContent("can't be blank (name)")
+  expect(characterCard.getByLabelText('Dynasty Error')).toHaveTextContent("can't be blank (dynasty)")
+})
