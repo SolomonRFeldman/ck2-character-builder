@@ -22,11 +22,10 @@ export default function SaveCharacterButton({className, character, setCharacter,
       })
     }
     fetch('/characters', obj).then(resp => resp.json()).then(json => {
-      if(Object.entries(json.errors).length > 0) {
+      if(json.errors && Object.entries(json.errors).length > 0) {
         setCharacter({ ...character, errors: json.errors.character })
-        console.log(character)
       } else {
-        if(!character.id) { setCharacter({...character, id: json.id}) }
+        setCharacter({...character, id: json.id, errors: {} })
         const characterIndex = characters.findIndex(charToUpdate => charToUpdate.id === json.id)
         let newCharacters
         if(characterIndex !== -1) {
