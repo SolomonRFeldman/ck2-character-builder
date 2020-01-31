@@ -7,21 +7,15 @@ export default function NestedDropDownMenu({id, handleChange, items}) {
     event.target.value=''
   }
 
-  const preventEvents = event => {
-    event.stopPropagation()
-    event.preventDefault()
-  }
-
   return(
     <Dropdown.Menu className='px-2' onClick={event => event.stopPropagation()} style={{maxHeight: '200px', overflowX: 'hidden'}}>
       {
         Object.keys(items).map((itemGroup) => {
           return(
-            <div className='dropdown-item p-0 my-2' onClick={event => event.stopPropagation()} key={itemGroup}>
+            <div className='dropdown-item p-0 my-2' key={itemGroup}>
               <Form.Control
                 id={id}
                 aria-label={`${itemGroup} Group`}
-                onClick={preventEvents}
                 defaultValue=''
                 onChange={handleSelect}
                 as="select"
