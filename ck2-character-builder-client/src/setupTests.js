@@ -20,14 +20,23 @@ const mockCultures = { "North Germanic": ["Norse", "Swedish"], "Celtic": ["Irish
 fetchMock.get('/cultures', mockCultures)
 
 const mockTraits = {
-  default: [ 
+  "default": [ 
     {
-      id: 21,
-      name: "Stressed",
-      description: "This character finds the burdens of work and life almost too much to handle.",
-      cost: -14,
-      effects: {intrigue: -1, stewardship: -1, fertility: -10, health: -1, personal_combat_skill: -10},
-      opposites: []
+      "id": 21,
+      "name": "Stressed",
+      "description": "This character finds the burdens of work and life almost too much to handle.",
+      "cost": -14,
+      "effects": {
+        "intrigue": -1,
+        "stewardship": -1,
+        "fertility": -10,
+        "health": -1.0,
+        "personal_combat_skill": -10
+      },
+      "opposites": [
+        
+      ],
+      "type": null
     },
     {
       "id": 47,
@@ -46,7 +55,8 @@ const mockTraits = {
       },
       "opposites": [
         48
-      ]
+      ],
+      "type": null
     },
     {
       "id": 48,
@@ -64,33 +74,59 @@ const mockTraits = {
       },
       "opposites": [
         47
-      ]
-    },
+      ],
+      "type": null
+    }
   ],
-  education: [
+  "education": [
     {
-      id: 1,
-      name: "Amateurish Plotter",
-      description: "The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.",
-      cost: 0,
-      effects: {intrigue: 1, stewardship: -1, personal_combat_skill: 4},
-      opposites:[]
+      "id": 1,
+      "name": "Amateurish Plotter",
+      "description": "The Amateurish Plotter has received an education emphasizing intrigue skills. Unfortunately, it didn't stick.",
+      "cost": 0,
+      "effects": {
+        "intrigue": 1,
+        "stewardship": -1,
+        "personal_combat_skill": 4
+      },
+      "opposites": [
+        
+      ],
+      "type": "Education"
     },
     {
-      id: 8,
-      name: "Grey Eminence",
-      description: "The Grey Eminence is the epitome of statesmenship having fully mastered the art of diplomacy.",
-      cost: 14,
-      effects: {martial: -1, intrigue: 2, diplomacy: 9, learning: 2, fertility: 10},
-      opposites: []
+      "id": 8,
+      "name": "Grey Eminence",
+      "description": "The Grey Eminence is the epitome of statesmenship having fully mastered the art of diplomacy.",
+      "cost": 14,
+      "effects": {
+        "martial": -1,
+        "intrigue": 2,
+        "diplomacy": 9,
+        "learning": 2,
+        "fertility": 10
+      },
+      "opposites": [
+        
+      ],
+      "type": "Education"
     },
     {
-      id: 20,
-      name: "Mastermind Theologian",
-      description: "The Mastermind Theologian is recognized as one of the top scholars of the Faith.",
-      cost: 11,
-      effects: {intrigue: -1, diplomacy: 2, stewardship: 2, learning: 9, fertility: -5},
-      opposites: []
+      "id": 20,
+      "name": "Mastermind Theologian",
+      "description": "The Mastermind Theologian is recognized as one of the top scholars of the Faith.",
+      "cost": 11,
+      "effects": {
+        "intrigue": -1,
+        "diplomacy": 2,
+        "stewardship": 2,
+        "learning": 9,
+        "fertility": -5
+      },
+      "opposites": [
+        
+      ],
+      "type": "Education"
     }
   ]
 }
