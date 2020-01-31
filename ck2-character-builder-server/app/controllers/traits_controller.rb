@@ -1,7 +1,11 @@
 class TraitsController < ApplicationController
 
   def index
-    render json: { default: Trait.order(:id).where(type: nil), education: Trait.order(:id).where(type: "Education") }.to_json
+    trait = Trait.all
+    render json: { 
+      default: trait.select{ |trait| trait.type === nil }, 
+      education: trait.select{ |trait| trait.type === "Education" } 
+    }.to_json
   end
 
 end
