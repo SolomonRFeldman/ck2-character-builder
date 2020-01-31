@@ -62,8 +62,8 @@ describe 'Trait Features', :type => :feature do
     end
 
     it "serializes all the traits and separates educational and default" do
-      expect(page).to have_content('"default":'"#{Trait.all.where(type: nil).to_json}"'')
-      expect(page).to have_content('"education":'"#{Education.all.to_json}"'')
+      expect(page).to have_content('"default":'"#{Trait.all.where(type: nil).to_json(methods: :type)}"'')
+      expect(page).to have_content('"education":'"#{Education.all.to_json(methods: :type)}"'')
     end
   end
 
