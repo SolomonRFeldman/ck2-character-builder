@@ -7,7 +7,7 @@ import CharacterPersistanceCard from './CharacterPersistanceCard';
 export default function CharacterDetailsCard(props) {
   return(
     <Card>
-      <Card.Header data-testid='detailsHeader' style={{minHeight: '49px'}}>
+      <Card.Header aria-label='Details Header' style={{minHeight: '49px'}}>
         <span>{props.character.name} </span>
         <span>{props.character.dynasty}</span>
       </Card.Header>

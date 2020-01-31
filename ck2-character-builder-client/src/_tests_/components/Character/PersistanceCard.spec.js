@@ -20,7 +20,7 @@ it(`loads a character's info into the card when a user clicks to load a characte
   await act(async () => fireEvent.click(characterLoadButton))
 
   const { diplomacy, health, fertility, sons } = loadedChar.attributes
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
   const nameField = characterCard.getByPlaceholderText('Name')
   const religionField = characterCard.getByLabelText('Religion')
   const marriedField = characterCard.getByLabelText('Married')
@@ -102,7 +102,7 @@ it(`adds the character to the load select when a user clicks the save button`, a
   const characterLoadButton = characterCard.getByLabelText('Load Character Button')
 
   const { diplomacy, health, fertility, sons } = loadedChar.attributes
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
   const nameField = characterCard.getByPlaceholderText('Name')
   const religionField = characterCard.getByLabelText('Religion')
   const marriedField = characterCard.getByLabelText('Married')
@@ -171,7 +171,7 @@ it(`updates the character to the load select when a user clicks the save button 
   const characterSaveButton = characterCard.getByLabelText('Save Character Button')
 
   const { diplomacy, health, fertility, sons } = loadedChar.attributes
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
   const nameField = characterCard.getByPlaceholderText('Name')
   const religionField = characterCard.getByLabelText('Religion')
   const marriedField = characterCard.getByLabelText('Married')
@@ -310,7 +310,7 @@ it('wipes all character data on clicking new button', async() => {
   fireEvent.change(characterLoadSelect, { target: { value: loadedChar.id} })
   await act(async () => fireEvent.click(characterLoadButton))
 
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
   const nameField = characterCard.getByPlaceholderText('Name')
   const religionField = characterCard.getByLabelText('Religion')
   const marriedField = characterCard.getByLabelText('Married')

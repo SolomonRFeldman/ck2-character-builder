@@ -12,7 +12,7 @@ it(`renders char names in the header and input when a character's name and dynas
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
   fireEvent.change(nameField, { target: { value: 'Marshmallow' } })
   fireEvent.change(dynastyField, { target: { value: 'Mann' } })
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
 
   expect(header).toHaveTextContent('Marshmallow')
   expect(header).toHaveTextContent('Mann')
@@ -24,7 +24,7 @@ it(`renders character names when provided to the CharCard component`, async() =>
   await act(async () => characterCard = render(<CharacterCard character={{name: 'Marshmallow', dynasty: 'Mann'}} />))
   const nameField = characterCard.getByPlaceholderText('Name')
   const dynastyField = characterCard.getByPlaceholderText('Dynasty')
-  const header = characterCard.getByTestId('detailsHeader')
+  const header = characterCard.getByLabelText('Details Header')
 
   expect(header).toHaveTextContent('Marshmallow')
   expect(header).toHaveTextContent('Mann')
