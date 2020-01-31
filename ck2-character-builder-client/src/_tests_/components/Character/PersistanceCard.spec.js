@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, within, fireEvent } from '@testing-library/react'
+import { render, within, fireEvent, wait } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import CharacterCard from '../../../components/Character/CharacterCard'
 import { eleanor, sigurd } from '../../../__mocks__/characters_fetch'
@@ -380,10 +380,39 @@ it('displays errors for username and dynasty', async() => {
     const char = JSON.parse(fetchMock.lastOptions().body).character
     return { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } }
   }
-  fetchMock.post('/characters', errorResponse, {overwriteRoutes: true})
+  fetchMock.postOnce('/characters', errorResponse, {overwriteRoutes: true})
   const characterSaveButton = characterCard.getByLabelText('Save Character Button')
   await act(async () => fireEvent.click(characterSaveButton))
 
   expect(characterCard.getByLabelText('Name Error')).toHaveTextContent("can't be blank (name)")
   expect(characterCard.getByLabelText('Dynasty Error')).toHaveTextContent("can't be blank (dynasty)")
+})
+
+it('removes errors for username and dynasty when a valid char is submitted', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+  const nameField = characterCard.getByPlaceholderText('Name')
+  const dynastyField = characterCard.getByPlaceholderText('Dynasty')
+
+  fireEvent.change(nameField, { target: { value: '' } })
+  fireEvent.change(dynastyField, { target: { value: '' } })
+  const errorResponse = () => {
+    return { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } }
+  }
+  fetchMock.postOnce('/characters', errorResponse, {overwriteRoutes: true})
+  const characterSaveButton = characterCard.getByLabelText('Save Character Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  fireEvent.change(nameField, { target: { value: 'Funny' } })
+  fireEvent.change(dynastyField, { target: { value: 'Guy' } })
+  fetchMock.post('/characters', () => {
+    const char = JSON.parse(fetchMock.lastOptions().body).character
+    delete char.errors
+    return {...char, id: 0}
+  }, {overwriteRoutes: true})
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(characterCard.getByLabelText('Name Error')).not.toHaveTextContent("can't be blank (name)")
+  expect(characterCard.getByLabelText('Dynasty Error')).not.toHaveTextContent("can't be blank (dynasty)")
+  expect(nameField.className).not.toContain("is-invalid")
+  expect(dynastyField.className).not.toContain("is-invalid")
 })
