@@ -110,8 +110,8 @@ describe 'Character Features', :type => :feature do
       page.driver.submit :post, characters_path, character: valid_character.merge(character_traits).merge(name: "")
     end
 
-    it "returns a 400 status" do
-      expect(page.status_code).to be(400)
+    it "returns a 200 status" do
+      expect(page.status_code).to be(200)
     end
     
     it "returns the error" do
