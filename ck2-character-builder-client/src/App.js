@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import NavBar from './components/NavBar/NavBar';
 import CharacterCard from './components/Character/CharacterCard';
 

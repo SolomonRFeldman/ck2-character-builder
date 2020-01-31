@@ -19,10 +19,10 @@ export default function Attribute({name, attribute, character, setCharacter}) {
       <div className='float-right'>
         {attribute.display(attribute)}
         <Button className='mx-2' variant='success' size='sm' onClick={() => handleClick(1)} style={{touchAction: 'manipulation'}}>
-          <span role='img' aria-label='plus'>➕</span>
+          <span style={{color: '#222222'}} className='fa fa-plus' aria-label='Plus' />
         </Button>
         <Button variant='danger' size='sm' onClick={() => handleClick(-1)} style={{touchAction: 'manipulation'}}>
-          <span role='img' aria-label='minus'>➖</span>
+          <span style={{color: '#222222'}} className='fa fa-minus' aria-label='Minus' />
         </Button>
       </div>
     </ListGroupItem>
