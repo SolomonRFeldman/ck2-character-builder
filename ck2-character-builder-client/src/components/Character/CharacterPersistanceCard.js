@@ -20,7 +20,7 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
         <ButtonToolbar>
           <Col>
             <Row className='mb-2'>
-              <Button aria-label='New Character Button' onClick={() => setCharacter(new Character)}>New</Button>
+              <Button aria-label='New Character Button' onClick={() => setCharacter(new Character())}>New</Button>
               <SaveCharacterButton
                 className='ml-2' 
                 character={character}
