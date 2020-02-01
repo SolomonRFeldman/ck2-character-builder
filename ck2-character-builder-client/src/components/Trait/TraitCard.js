@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Card from "react-bootstrap/Card";
 import DefaultTraitsDropdown from './DefaultTraitsDropdown';
 import Trait from '../../models/Trait';
-import CharacterTraits from './CharacterTraits';
+import CharacterDefaultTraits from './CharacterDefaultTraits';
 import EducationTraitsDropdown from './EducationTraitsDropdown';
-import CharacterEducation from './CharacterEducation';
+import CharacterTrait from './CharacterTrait';
 
 export default function TraitCard(props) {
   const [defaultTraits, setDefaultTraits] = useState([])
@@ -49,9 +49,10 @@ export default function TraitCard(props) {
     <Card>
       <Card.Body style={{maxHeight: '65.8px'}}>
           <EducationTraitsDropdown traits={educationTraits} windowWidth={windowWidth} {...props} />
-          {props.character.education ? <CharacterEducation {...props} /> : null}
+          {props.character.education && 
+          <CharacterTrait trait={props.character.education} alt={`${props.character.education.name} Character Education`} />}
           <DefaultTraitsDropdown traits={defaultTraits} windowWidth={windowWidth} {...props} />
-          <CharacterTraits {...props} />
+          <CharacterDefaultTraits {...props} />
       </Card.Body>
     </Card>
   )

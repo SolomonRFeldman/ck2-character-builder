@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
-import CharacterTrait from './CharacterTrait'
+import CharacterDefaultTrait from './CharacterDefaultTrait'
 
-export default function CharacterTraits(props) {
+export default function CharacterDefaultTraits(props) {
   const characterTraits = useRef(null)
   const handleWheel = event => {
     event.preventDefault()
@@ -28,7 +28,7 @@ export default function CharacterTraits(props) {
         paddingBottom: '20px'
       }}
     >
-      {props.character.traits.map(trait => <CharacterTrait key={trait.id} trait={trait} {...props} />)}
+      {props.character.traits.map(trait => <CharacterDefaultTrait key={trait.id} trait={trait} {...props} />)}
     </span>
   )
 }
