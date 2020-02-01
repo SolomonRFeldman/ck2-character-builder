@@ -1,15 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Image, OverlayTrigger, Tooltip, Button, Dropdown } from 'react-bootstrap'
-import TraitTooltip from './TraitTooltip'
+import React, { useEffect, useState } from 'react'
+import TraitItem from './TraitItem'
 
-export default function EducationItem({trait, character, setCharacter, windowWidth}) {
-  const path = `../trait_icons/${trait.nameSlug}.png`
+export default function EducationItem({trait, character, setCharacter, onClick, windowWidth}) {
   const [hidden, setHidden] = useState(false)
-  const tooltip = useRef(null)
-  const item = useRef(null)
   
   const handleClick = () => {
-    tooltip.current.hide()
     const effectiveAttributes = {}
     Object.keys(character.attributes).forEach(key => {
       effectiveAttributes[key] = {
@@ -23,46 +18,15 @@ export default function EducationItem({trait, character, setCharacter, windowWid
       age: character.age + trait.cost - character.education.cost, 
       attributes: effectiveAttributes
     })
+    onClick()
   }
 
   const isHidden = () => character.education && character.education.id === trait.id
   useEffect(() => {
     setHidden(isHidden())
   }, [character.education])
-  
-  const handleTouchMove = () => {
-    tooltip.current.hide()
-    if(document.activeElement) { document.activeElement.blur() }
-  }
-  const handleMouseEnter = () => item.current.parentNode.addEventListener("touchmove", handleTouchMove)
-  const handleMouseLeave = () => item.current.parentNode.removeEventListener("touchmove", handleTouchMove)
 
   return(
-    <OverlayTrigger 
-      ref={tooltip}
-      placement={windowWidth > 540 ? 'right' : 'bottom'}
-      popperConfig={{
-        modifiers: {
-          preventOverflow: { enabled: false },
-          hide: { enabled: false }
-        }
-      }}
-      overlay={<Tooltip aria-label={`${trait.name} Education Tooltip`}><TraitTooltip trigger={tooltip} trait={trait} /></Tooltip>}
-    >
-      <Dropdown.Item
-        as={Button}
-        className='px-3 py-1'
-        ref={item}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onClick={handleClick} 
-        hidden={hidden} 
-        style={{overflow: 'visible', touchAction: 'manipulation'}}
-      >
-        <Image src={path} className='mr-2'/> 
-        {trait.name} 
-        <div className="float-right ml-2">{trait.cost}</div>
-      </Dropdown.Item>
-    </OverlayTrigger>
+    <TraitItem trait={trait} hidden={hidden} onClick={handleClick} windowWidth={windowWidth} />
   )
 }

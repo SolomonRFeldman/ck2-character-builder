@@ -1,31 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Image, OverlayTrigger, Tooltip, Button } from 'react-bootstrap'
+import React, { useRef } from 'react'
+import { OverlayTrigger, Button, Tooltip, Image } from 'react-bootstrap'
 import TraitTooltip from './TraitTooltip'
 
-export default function TraitItem({trait, character, setCharacter, windowWidth}) {
+export default function TraitItem({trait, hidden, onClick, windowWidth}) {
   const path = `../trait_icons/${trait.nameSlug}.png`
-  const [hidden, setHidden] = useState(false)
   const tooltip = useRef(null)
   const item = useRef(null)
-  
+
   const handleClick = () => {
     tooltip.current.hide()
-    const effectiveAttributes = {}
-    Object.keys(character.attributes).forEach(key => {
-      effectiveAttributes[key] = {...character.attributes[key], bonus: character.attributes[key].bonus + (trait.effects[key] || 0)}
-    })
-    setCharacter({
-      ...character, 
-      traits: [...character.traits, trait], 
-      age: character.age + trait.cost, 
-      attributes: effectiveAttributes
-    })
+    onClick()
   }
-
-  const isHidden = () => character.traits.some(charTrait => (charTrait.id === trait.id) || trait.opposites.some(opposite => opposite === charTrait.id))
-  useEffect(() => {
-    setHidden(isHidden())
-  }, [character.traits])
 
   const handleTouchMove = () => {
     tooltip.current.hide()
@@ -44,14 +29,14 @@ export default function TraitItem({trait, character, setCharacter, windowWidth})
           hide: { enabled: false }
         }
       }}
-      overlay={<Tooltip aria-label={`${trait.name} Trait Tooltip`}><TraitTooltip trait={trait} /></Tooltip>}
+      overlay={<Tooltip aria-label={`${trait.name} ${trait.type || "Trait"} Tooltip`}><TraitTooltip trait={trait} /></Tooltip>}
     >
-      <Button 
+      <Button
         className='dropdown-item px-3 py-1'
         ref={item}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={handleClick} 
+        onClick={handleClick}
         hidden={hidden} 
         style={{overflow: 'visible', touchAction: 'manipulation'}}
       >
@@ -60,5 +45,5 @@ export default function TraitItem({trait, character, setCharacter, windowWidth})
         <div className="float-right ml-2">{trait.cost}</div>
       </Button>
     </OverlayTrigger>
-  )
-}
+    )
+  }
