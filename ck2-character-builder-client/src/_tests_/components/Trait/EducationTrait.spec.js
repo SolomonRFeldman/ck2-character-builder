@@ -17,12 +17,12 @@ let characterCard
 
 it('parses the effects of the characters default education', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   const characterAttrs = characterCard.getByLabelText('Attribute Card')
   const characterStewardship = within(characterAttrs).getByText('Stewardship', { exact: false })
   const characterIntrigue = within(characterAttrs).getByText('Intrigue', { exact: false })
 
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
   const educationItem = within(educationDropdown).getByText('Amateurish Plotter')
 
   expect(educationItem).toBeHidden()
@@ -34,14 +34,14 @@ it('parses the effects of the characters default education', async() => {
 
 it('parses the effects when a user selects an education', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   const characterAttrs = characterCard.getByLabelText('Attribute Card')
   const characterStewardship = within(characterAttrs).getByText('Stewardship', { exact: false })
   const characterIntrigue = within(characterAttrs).getByText('Intrigue', { exact: false })
   const characterLearning = within(characterAttrs).getByText('Learning', { exact: false })
   const characterFertility = within(characterAttrs).getByText('Fertility', { exact: false })
 
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
   const prevEducationItem = within(educationDropdown).getByText('Amateurish Plotter')
   const educationItem = within(educationDropdown).getByText('Mastermind Theologian')
   fireEvent.click(educationItem)
@@ -58,14 +58,14 @@ it('parses the effects when a user selects an education', async() => {
 
 it('parses the effects when an education is provided to the CharacterCard', async() => {
   await act(async () => characterCard = render(<CharacterCard character={{education: mastermindTrait}} />))
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   const characterAttrs = characterCard.getByLabelText('Attribute Card')
   const characterStewardship = within(characterAttrs).getByText('Stewardship', { exact: false })
   const characterIntrigue = within(characterAttrs).getByText('Intrigue', { exact: false })
   const characterLearning = within(characterAttrs).getByText('Learning', { exact: false })
   const characterFertility = within(characterAttrs).getByText('Fertility', { exact: false })
 
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
   const prevEducationItem = within(educationDropdown).getByText('Amateurish Plotter')
   const educationItem = within(educationDropdown).getByText('Mastermind Theologian')
 
@@ -81,9 +81,9 @@ it('parses the effects when an education is provided to the CharacterCard', asyn
 
 it('pops up trait tooltip when an education item is hovered over', async() => {
   await act(async () => characterCard = render(<CharacterCard />))
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
 
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
   const educationItem = within(educationDropdown).getByText('Mastermind Theologian')
   await act(async () => fireEvent.mouseOver(educationItem))
 

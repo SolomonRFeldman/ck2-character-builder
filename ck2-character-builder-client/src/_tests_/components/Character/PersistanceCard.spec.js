@@ -32,9 +32,9 @@ it(`loads a character's info into the card when a user clicks to load a characte
   const sonsRow = characterCard.getByText('Sons', { exact: false})
   const characterTraits = characterCard.getByLabelText('Character Traits')  
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
 
   expect(header).toHaveTextContent(loadedChar.name)
   expect(nameField).toHaveValue(loadedChar.name)
@@ -114,9 +114,9 @@ it(`adds the character to the load select when a user clicks the save button`, a
   const sonsRow = characterCard.getByText('Sons', { exact: false})
   const characterTraits = characterCard.getByLabelText('Character Traits')  
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
 
   await act(async () => fireEvent.click(characterSaveButton))
 
@@ -137,7 +137,7 @@ it(`adds the character to the load select when a user clicks the save button`, a
   await act(async () => fireEvent.click(characterLoadButton))
 
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
 
   expect(header).toHaveTextContent(loadedChar.name)
   expect(nameField).toHaveValue(loadedChar.name)
@@ -183,10 +183,10 @@ it(`updates the character to the load select when a user clicks the save button 
   const sonsRow = characterCard.getByText('Sons', { exact: false})
   const characterTraits = characterCard.getByLabelText('Character Traits')  
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
   const religionDropdown = characterCard.getByLabelText('Religion Dropdown')
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
 
   fireEvent.change(nameField, { target: { value: 'Marshmallow' } })
   fireEvent.change(marriedField, { target: { value: "false"} })
@@ -323,11 +323,11 @@ it('wipes all character data on clicking new button', async() => {
   const characterTraits = characterCard.getByLabelText('Character Traits') 
   const characterTrait = within(characterTraits).getByAltText('Strong') 
   const traitDropdown = characterCard.getByLabelText('Traits Dropdown')
-  const educationDropdown = characterCard.getByLabelText('Education Dropdown')
+  const educationDropdown = characterCard.getByLabelText('Educations Dropdown')
 
   await act(async () => fireEvent.click(characterNewButton))
   await act(async () => fireEvent.click(within(traitDropdown).getByAltText('Traits Dropdown Toggle')))
-  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Education Dropdown Toggle')))
+  await act(async () => fireEvent.click(within(educationDropdown).getByAltText('Educations Dropdown Toggle')))
 
 
   expect(header).not.toHaveTextContent('Eleanor')
