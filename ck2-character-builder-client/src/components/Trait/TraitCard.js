@@ -37,13 +37,20 @@ export default function TraitCard(props) {
   useEffect(() => { 
     if(props.character.education === undefined && educationTraits.length !== 0) { setEducation(educationTraits[0]) } 
   }, [props.character.education])
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
   
   return(
     <Card>
       <Card.Body style={{maxHeight: '65.8px'}}>
-          <EducationTraitsDropdown traits={educationTraits} {...props} />
+          <EducationTraitsDropdown traits={educationTraits} windowWidth={windowWidth} {...props} />
           {props.character.education ? <CharacterEducation {...props} /> : null}
-          <DefaultTraitsDropdown traits={defaultTraits} {...props} />
+          <DefaultTraitsDropdown traits={defaultTraits} windowWidth={windowWidth} {...props} />
           <CharacterTraits {...props} />
       </Card.Body>
     </Card>
