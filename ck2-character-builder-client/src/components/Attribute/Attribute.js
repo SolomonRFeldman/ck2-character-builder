@@ -18,10 +18,10 @@ export default function Attribute({name, attribute, character, setCharacter}) {
       {name[0].toUpperCase() + name.slice(1)}
       <div className='float-right'>
         {attribute.display(attribute)}
-        <Button className='mx-2' variant='success' size='sm' onClick={() => handleClick(1)} style={{touchAction: 'manipulation'}}>
+        <Button className='mx-2' variant='success' size='sm' onClick={() => handleClick(1)}>
           <span style={{color: '#222222'}} className='fa fa-plus' aria-label='Plus' />
         </Button>
-        <Button variant='danger' size='sm' onClick={() => handleClick(-1)} style={{touchAction: 'manipulation'}}>
+        <Button variant='danger' size='sm' onClick={() => handleClick(-1)}>
           <span style={{color: '#222222'}} className='fa fa-minus' aria-label='Minus' />
         </Button>
       </div>
