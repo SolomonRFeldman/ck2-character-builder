@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import './TraitCard.css'
 import Card from "react-bootstrap/Card";
 import DefaultTraitsDropdown from './DefaultTraitsDropdown';
 import Trait from '../../models/Trait';
@@ -46,8 +47,8 @@ export default function TraitCard(props) {
   }, [])
   
   return(
-    <Card>
-      <Card.Body style={{maxHeight: '65.8px'}}>
+    <Card className='trait-card'>
+      <Card.Body className='body'>
           <EducationTraitsDropdown traits={educationTraits} windowWidth={windowWidth} {...props} />
           {props.character.education && 
           <CharacterTrait trait={props.character.education} alt={`${props.character.education.name} Character Education`} />}

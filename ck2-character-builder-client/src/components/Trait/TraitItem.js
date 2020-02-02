@@ -37,8 +37,7 @@ export default function TraitItem({trait, hidden, onClick, windowWidth}) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
-        hidden={hidden} 
-        style={{overflow: 'visible', touchAction: 'manipulation'}}
+        hidden={hidden}
       >
         <Image src={path} className='mr-2' /> 
         {trait.name} 

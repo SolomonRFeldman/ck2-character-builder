@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react'
+import './CharacterDefaultTraits.css'
 import CharacterDefaultTrait from './CharacterDefaultTrait'
 
 export default function CharacterDefaultTraits(props) {
@@ -15,19 +16,7 @@ export default function CharacterDefaultTraits(props) {
   }, [])
 
   return(
-    <span 
-      ref={characterTraits}
-      aria-label='Character Traits'
-      className='float-right'
-      style={{
-        overflowY: 'hidden', 
-        overflowX: 'scroll', 
-        width: 'calc(100% - 90px)',
-        display: 'inline-block', 
-        whiteSpace: 'nowrap',
-        paddingBottom: '20px'
-      }}
-    >
+    <span ref={characterTraits} aria-label='Character Traits' className='float-right character-default-traits'>
       {props.character.traits.map(trait => <CharacterDefaultTrait key={trait.id} trait={trait} {...props} />)}
     </span>
   )

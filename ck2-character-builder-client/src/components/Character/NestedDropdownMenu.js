@@ -1,4 +1,5 @@
 import React from 'react'
+import './NestedDropdownMenu.css'
 import { Dropdown, Form } from 'react-bootstrap'
 
 export default function NestedDropDownMenu({id, handleChange, items}) {
@@ -8,7 +9,7 @@ export default function NestedDropDownMenu({id, handleChange, items}) {
   }
 
   return(
-    <Dropdown.Menu className='px-2' onClick={event => event.stopPropagation()} style={{maxHeight: '200px', overflowX: 'hidden'}}>
+    <Dropdown.Menu className='px-2 nested-dropdown-menu' onClick={event => event.stopPropagation()}>
       {
         Object.keys(items).map((itemGroup) => {
           return(

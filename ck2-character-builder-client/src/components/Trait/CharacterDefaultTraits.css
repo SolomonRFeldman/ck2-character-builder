@@ -1,0 +1,8 @@
+.character-default-traits {
+  overflow-y: hidden; 
+  overflow-x: scroll;
+  width: calc(100% - 90px);
+  display: inline-block; 
+  white-space: nowrap;
+  padding-bottom: 20px;
+}

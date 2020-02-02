@@ -1,4 +1,5 @@
 import React from 'react'
+import './TraitsDropdown.css'
 import { Dropdown, Image } from 'react-bootstrap'
 
 export default function TraitsDropdown(props) {
@@ -6,13 +7,13 @@ export default function TraitsDropdown(props) {
 
   return(
     <Dropdown
-      className={props.className}
+      className={`traits-dropdown ${props.className}`}
       aria-label={`${typeDisplay} Dropdown`}
       show={props.show}
       onToggle={props.onToggle}
     >
       <Dropdown.Toggle alt={`${typeDisplay} Dropdown Toggle`} as={Image} src={`../trait_icons/add_${props.type}.png`} />
-      <Dropdown.Menu style={{maxHeight: '200px', overflowX: 'hidden', width: '270px'}}>
+      <Dropdown.Menu className='menu'>
         {props.children}
       </Dropdown.Menu>
     </Dropdown>

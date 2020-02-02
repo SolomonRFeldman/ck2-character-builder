@@ -1,4 +1,5 @@
 import React from 'react'
+import './CharacterDetailsCard.css'
 import Card from "react-bootstrap/Card";
 import CharacterIdentityCard from './CharacterIdentityCard';
 import TraitCard from '../Trait/TraitCard';
@@ -6,8 +7,8 @@ import CharacterPersistanceCard from './CharacterPersistanceCard';
 
 export default function CharacterDetailsCard(props) {
   return(
-    <Card>
-      <Card.Header aria-label='Details Header' style={{minHeight: '49px'}}>
+    <Card className='character-details-card'>
+      <Card.Header className='header' aria-label='Details Header'>
         <span>{props.character.name} </span>
         <span>{props.character.dynasty}</span>
       </Card.Header>

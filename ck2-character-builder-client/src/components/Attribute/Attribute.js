@@ -1,4 +1,5 @@
 import React from 'react'
+import './Attribute.css'
 import { Button, ListGroupItem } from 'react-bootstrap'
 
 export default function Attribute({name, attribute, character, setCharacter}) {
@@ -12,17 +13,18 @@ export default function Attribute({name, attribute, character, setCharacter}) {
       }
     })}
   }
+  const displayName = name[0].toUpperCase() + name.slice(1)
 
   return(
     <ListGroupItem>
-      {name[0].toUpperCase() + name.slice(1)}
+      {displayName}
       <div className='float-right'>
         {attribute.display(attribute)}
         <Button className='mx-2' variant='success' size='sm' onClick={() => handleClick(1)}>
-          <span style={{color: '#222222'}} className='fa fa-plus' aria-label='Plus' />
+          <span className='fa fa-plus attr-glyph' aria-label='Plus' />
         </Button>
         <Button variant='danger' size='sm' onClick={() => handleClick(-1)}>
-          <span style={{color: '#222222'}} className='fa fa-minus' aria-label='Minus' />
+          <span className='fa fa-minus attr-glyph' aria-label='Minus' />
         </Button>
       </div>
     </ListGroupItem>
