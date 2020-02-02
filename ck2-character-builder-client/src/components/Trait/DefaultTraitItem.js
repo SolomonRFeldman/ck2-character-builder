@@ -17,8 +17,12 @@ export default function DefaultTraitItem({trait, character, setCharacter, window
     })
   }
 
-  const isHidden = () => character.traits.some(charTrait => (charTrait.id === trait.id) || trait.opposites.some(opposite => opposite === charTrait.id))
-  useEffect(() => {
+  useEffect(() => {  
+    const isHidden = () => {
+      return character.traits.some(charTrait => {
+        return (charTrait.id === trait.id) || trait.opposites.some(opposite => opposite === charTrait.id)
+      })
+    }
     setHidden(isHidden())
   }, [character.traits])
 

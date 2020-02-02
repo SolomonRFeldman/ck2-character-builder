@@ -21,10 +21,10 @@ export default function EducationItem({trait, character, setCharacter, onClick, 
     onClick()
   }
 
-  const isHidden = () => character.education && character.education.id === trait.id
   useEffect(() => {
+    const isHidden = () => character.education && character.education.id === trait.id
     setHidden(isHidden())
-  }, [character.education])
+  }, [character.education, character.education.id, trait.id])
 
   return(
     <TraitItem trait={trait} hidden={hidden} onClick={handleClick} windowWidth={windowWidth} />
