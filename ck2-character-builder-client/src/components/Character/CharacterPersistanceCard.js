@@ -9,6 +9,7 @@ import { fetchUntilSuccess } from '../../fetch'
 export default function CharacterPersistanceCard({character, setCharacter}) {
   const [characters, setCharacters] = useState([])
   const [selectedChar, setSelectedChar] = useState()
+  const [serverError, setServerError] = useState()
 
   useEffect(() => { fetchUntilSuccess('/characters').then(resp => resp.json()).then(json => {
     setCharacters(json)
@@ -18,7 +19,7 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
   return(
     <Card>
       <Card.Body>
-        <ButtonToolbar>
+        <ButtonToolbar aria-label='Character Persistance Card'>
           <Col>
             <Row className='mb-2'>
               <Button aria-label='New Character Button' onClick={() => setCharacter(new Character())}>New</Button>
@@ -29,12 +30,18 @@ export default function CharacterPersistanceCard({character, setCharacter}) {
                 characters={characters}
                 setCharacters={setCharacters} 
                 setSelectedChar={setSelectedChar} 
+                setServerError={setServerError}
               />
             </Row>
 
             <Row>
               <LoadCharacterButton className='mr-2' setCharacter={setCharacter} selectedChar={selectedChar} characters={characters} />
-              <LoadCharacterSelect characters={characters} selectedChar={selectedChar} setSelectedChar={setSelectedChar} />
+              <LoadCharacterSelect 
+                characters={characters} 
+                selectedChar={selectedChar} 
+                setSelectedChar={setSelectedChar} 
+                serverError={serverError}
+              />
             </Row>
           </Col>
         </ButtonToolbar>
