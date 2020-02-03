@@ -16,3 +16,7 @@ export function fetchUntilSuccess(path, options) {
     fetchTry()
   })
 }
+
+export function jsonFetch(path) {
+  return fetchUntilSuccess(path, { headers: { 'Accept': 'application/json' } }).then(resp => resp.json())
+}
