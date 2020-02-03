@@ -4,12 +4,13 @@ import LoadCharacterSelect from './LoadCharacterSelect'
 import LoadCharacterButton from './LoadCharacterButton'
 import SaveCharacterButton from './SaveCharacterButton'
 import Character from '../../models/Character'
+import { fetchUntilSuccess } from '../../fetch'
 
 export default function CharacterPersistanceCard({character, setCharacter}) {
   const [characters, setCharacters] = useState([])
   const [selectedChar, setSelectedChar] = useState()
 
-  useEffect(() => { fetch('/characters').then(resp => resp.json()).then(json => {
+  useEffect(() => { fetchUntilSuccess('/characters').then(resp => resp.json()).then(json => {
     setCharacters(json)
     if(json[0]) { setSelectedChar(json[0].id) }
   }) }, [])

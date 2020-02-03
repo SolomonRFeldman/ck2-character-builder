@@ -6,6 +6,7 @@ import Trait from '../../models/Trait';
 import CharacterDefaultTraits from './CharacterDefaultTraits';
 import EducationTraitsDropdown from './EducationTraitsDropdown';
 import CharacterTrait from './CharacterTrait';
+import { fetchUntilSuccess } from '../../fetch';
 
 export default function TraitCard(props) {
   const [defaultTraits, setDefaultTraits] = useState([])
@@ -27,7 +28,7 @@ export default function TraitCard(props) {
   }
 
   useEffect(() => {
-    fetch('/traits').then(response => response.json()).then(traits => {
+    fetchUntilSuccess('/traits').then(response => response.json()).then(traits => {
       setDefaultTraits(traits.default.map((trait) => new Trait(trait)))
       const educations = traits.education.map((trait) => new Trait(trait))
       setEducationTraits(educations)

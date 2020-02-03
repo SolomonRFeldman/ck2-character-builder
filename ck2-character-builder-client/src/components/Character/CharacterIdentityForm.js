@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Dropdown, Col, Form, ButtonGroup, Button } from 'react-bootstrap'
 import NestedDropDownMenu from './NestedDropdownMenu'
+import { fetchUntilSuccess } from '../../fetch'
 
 export default function CharacterIdentityForm({character, setCharacter}) {
   const handleChange = event => setCharacter({ ...character, [event.target.id]: event.target.value })
@@ -14,8 +15,8 @@ export default function CharacterIdentityForm({character, setCharacter}) {
   const [religions, setReligions] = useState({})
   const [cultures, setCultures] = useState({})
 
-  useEffect(() => { fetch('/religions').then(response => response.json()).then(json => setReligions(json)) }, [])
-  useEffect(() => { fetch('/cultures').then(response => response.json()).then(json => setCultures(json)) }, [])
+  useEffect(() => { fetchUntilSuccess('/religions').then(response => response.json()).then(json => setReligions(json)) }, [])
+  useEffect(() => { fetchUntilSuccess('/cultures').then(response => response.json()).then(json => setCultures(json)) }, [])
 
   return(
     <Form>
