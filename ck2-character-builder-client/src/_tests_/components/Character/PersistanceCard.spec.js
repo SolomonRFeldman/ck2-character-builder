@@ -414,4 +414,39 @@ it('removes errors for username and dynasty when a valid char is submitted', asy
   expect(characterCard.getByLabelText('Dynasty Error')).not.toHaveTextContent("can't be blank (dynasty)")
   expect(nameField.className).not.toContain("is-invalid")
   expect(dynastyField.className).not.toContain("is-invalid")
+  fetchMock.post('/characters', () => {
+    const char = JSON.parse(fetchMock.lastOptions().body).character
+    return char.id ? char : {...char, id: 0}
+  }, {overwriteRoutes: true})
+})
+
+it('displays server error if character fails to save', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+  
+  fetchMock.postOnce('/characters', 500, {overwriteRoutes: true})
+  const characterPersistanceCard = characterCard.getByLabelText('Character Persistance Card')
+  const characterSaveButton = within(characterPersistanceCard).getByLabelText('Save Character Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(within(characterPersistanceCard).getByLabelText('Save Error')).toHaveTextContent("failed to reach server")
+  fetchMock.post('/characters', () => {
+    const char = JSON.parse(fetchMock.lastOptions().body).character
+    return char.id ? char : {...char, id: 0}
+  }, {overwriteRoutes: true})
+})
+
+it('gets rid of error on successful save', async() => {
+  await act(async () => characterCard = render(<CharacterCard character={hallow} />))
+  
+  fetchMock.postOnce('/characters', 500, {overwriteRoutes: true})
+  const characterPersistanceCard = characterCard.getByLabelText('Character Persistance Card')
+  const characterSaveButton = within(characterPersistanceCard).getByLabelText('Save Character Button')
+  await act(async () => fireEvent.click(characterSaveButton))
+  fetchMock.post('/characters', () => {
+    const char = JSON.parse(fetchMock.lastOptions().body).character
+    return char.id ? char : {...char, id: 0}
+  }, {overwriteRoutes: true})
+  await act(async () => fireEvent.click(characterSaveButton))
+
+  expect(within(characterPersistanceCard).getByLabelText('Save Error')).not.toHaveTextContent("failed to reach server")
 })
