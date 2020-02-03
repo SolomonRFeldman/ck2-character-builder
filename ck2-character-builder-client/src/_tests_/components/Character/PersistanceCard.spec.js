@@ -377,8 +377,7 @@ it('displays errors for username and dynasty', async() => {
   fireEvent.change(dynastyField, { target: { value: '' } })
   
   const errorResponse = () => {
-    const char = JSON.parse(fetchMock.lastOptions().body).character
-    return { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } }
+    return { status: 400, body: { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } } }
   }
   fetchMock.postOnce('/characters', errorResponse, {overwriteRoutes: true})
   const characterSaveButton = characterCard.getByLabelText('Save Character Button')
@@ -396,7 +395,7 @@ it('removes errors for username and dynasty when a valid char is submitted', asy
   fireEvent.change(nameField, { target: { value: '' } })
   fireEvent.change(dynastyField, { target: { value: '' } })
   const errorResponse = () => {
-    return { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } }
+    return { status: 400, body: { errors: { character: { name: "can't be blank (name)", dynasty: "can't be blank (dynasty)" } } } }
   }
   fetchMock.postOnce('/characters', errorResponse, {overwriteRoutes: true})
   const characterSaveButton = characterCard.getByLabelText('Save Character Button')

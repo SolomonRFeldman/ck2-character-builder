@@ -24,17 +24,16 @@ export default function SaveCharacterButton({className, character, setCharacter,
       })
     }
 
-    fetch('/characters', obj).then(resp => resp.json()).then(json => {
-      if(json.errors && Object.entries(json.errors).length > 0) {
-        setCharacter({ ...character, errors: json.errors.character })
-      } else {
-        setCharacter({...character, id: json.id, errors: {} })
-
-        const characterIndex = characters.findIndex(charToRemove => charToRemove.id === json.id)
-        if(characterIndex !== -1) { characters.splice(characterIndex, 1) }
-        const newCharacters = [json, ...characters]
-        setCharacters(newCharacters)
-        setSelectedChar(json.id)
+    fetch('/characters', obj).then(resp => { if(resp.ok) { return resp.json() } else { throw resp } }).then(json => {
+      setCharacter({...character, id: json.id, errors: {} })
+      const characterIndex = characters.findIndex(charToRemove => charToRemove.id === json.id)
+      if(characterIndex !== -1) { characters.splice(characterIndex, 1) }
+      const newCharacters = [json, ...characters]
+      setCharacters(newCharacters)
+      setSelectedChar(json.id)
+    }).catch(response => {
+      if(response.status === 400) {
+        response.json().then(json => setCharacter({ ...character, errors: json.errors.character }))
       }
     })
   }
