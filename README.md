@@ -10,7 +10,7 @@ To run the webapp in a development setting you need to first setup postgresql. T
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/SolomonRFeldman/good-writes. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/SolomonRFeldman/ck2-character-builder. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
