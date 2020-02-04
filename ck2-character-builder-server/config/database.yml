@@ -82,4 +82,6 @@ test:
 #
 production:
   <<: *default
+  host: db
   database: ck2_character_builder_server_production
+  username: postgres

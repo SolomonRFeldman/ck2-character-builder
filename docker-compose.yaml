@@ -1,0 +1,24 @@
+version: "3"
+services:
+  proxy:
+    build: ./
+    ports:
+      - ${PORT:-3000}:3000
+    depends_on: 
+      - client
+      - server
+  db:
+    image: postgres
+    environment: 
+      - POSTGRES_PASSWORD
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  client:
+    build: ./ck2-character-builder-client
+  server:
+    build: ./ck2-character-builder-server
+    environment: 
+      - RAILS_MASTER_KEY
+      - DB_PASSWORD
+    depends_on:
+      - db
